@@ -1,0 +1,513 @@
+code_site	Itineraire	X	Y	commune	cours_eau	date_visite	Annee	Mois	Jour	observateurs	statut_observation	description	observation	bilan_choix_site	nombre_epreinte	nb_ep_tot	nb_ep_w	nb_ep_dnf	nb_ep_df
+1	1	48.585217	 -3.573359	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+2	1	48.62083	 -3.590561	Plufur	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	NA	NA	NA	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+16	2	48.65719	 -3.57631	Tréduder	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+24	1	48.622,	 -3.603	Trémel	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+45	2	48.59425	 -3.57095	Plufur	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+46	3	48.632757	 -3.562284	Plufur	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+53	2	48.61999	 -3.5675	Plufur	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+54	2	48.60418	 -3.5697	Plufur	Yar	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+58	1	48.599651,	 -3.601555	Trémel	Yar	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+61	1	48.566940	  -3.563340	Plounérin	Yar	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+62	1	48.560412	 -3.569003	Plounérin	Yar	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+64	1	48.554	- 3.578	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+65	1	48.553	 - 3.580	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+68	3	48.572835	 -3.551346	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+70	3	48.57807,	 -3.54197	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+732	3	48.58358,	-3.52669	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	NA	NA	NA	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+80	1	48.572,	 -3.574	Plounérin	Yar	NA	NA	NA	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+84	1	48.567684	 -3.568024	Plounérin	Yar	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+85	1	48.567294	 -3.563966	Plounérin	Yar	NA	NA	NA	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+86	1	48.566896	 -3.561653	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	NA	NA	NA	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+113	1	48.56544	-3.563496	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+114	1	48.564550	  -3.561585	Plounérin	Yar	NA	NA	NA	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+115	2	48.5952	 -3.59922	Plufur	Yar	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+124	2	48.628623	  -3.583876	Plufur	Yar	NA	NA	NA	NA	NA	NA	NA	NA	Favorable	NA	NA	NA	NA	NA
+1	1	48.585217	 -3.573359	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+2	1	48.62083	 -3.590561	Plufur	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	NA	2020	10	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Très favorable	NA	Peut-être	NA	NA	NA
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	NA	2020	10	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+16	2	48.65719	 -3.57631	Tréduder	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+24	1	48.622,	 -3.603	Trémel	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	NA	2020	10	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+45	2	48.59425	 -3.57095	Plufur	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+46	3	48.632757	 -3.562284	Plufur	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+53	2	48.61999	 -3.5675	Plufur	Yar	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+54	2	48.60418	 -3.5697	Plufur	Yar	NA	2020	10	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+58	1	48.599651,	 -3.601555	Trémel	Yar	NA	2020	10	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+61	1	48.566940	  -3.563340	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+62	1	48.560412	 -3.569003	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	NA	NA	1	NA	NA	NA
+64	1	48.554	- 3.578	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+65	1	48.553	 - 3.580	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+68	3	48.572835	 -3.551346	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+70	3	48.57807,	 -3.54197	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	2020	10	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	NA	2020	10	NA	NA	0	NA	NA	Très favorable	NA	0	NA	NA	NA
+732	3	48.58358,	-3.52669	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+80	1	48.572,	 -3.574	Plounérin	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+84	1	48.567684	 -3.568024	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+85	1	48.567294	 -3.563966	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+86	1	48.566896	 -3.561653	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+113	1	48.56544	-3.563496	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+114	1	48.564550	  -3.561585	Plounérin	Yar	NA	2020	10	NA	NA	1	NA	NA	Favorable	NA	1	NA	NA	NA
+115	2	48.5952	 -3.59922	Plufur	Yar	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	NA	2020	10	NA	NA	Peut-être	NA	Marquage urinaire	Favorable	NA	Peut-être	NA	NA	NA
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+124	2	48.628623	  -3.583876	Plufur	Yar	NA	2020	10	NA	NA	0	NA	NA	Favorable	NA	0	NA	NA	NA
+1	1	48.585217	 -3.573359	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	1	Fraiche	NA	Favorable	NA	1	1	0	0
+2	1	48.62083	 -3.590561	Plufur	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	1	Sèche et disloquée	NA	Favorable	NA	1	0	0	1
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	23/03/2021	2021	3	23	Nicolas Boudereaux	1	NA	NA	Favorable	NA	1	NA	NA	NA
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	23/03/2021	2021	3	23	Nicolas Boudereaux	1	Sèche et disloquée	NA	Très favorable	NA	1	0	0	1
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	09/03/2021	2021	3	9	Nicolas Boudereaux	1	Séche et disloquée	NA	Très favorable	NA	1	0	0	1
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	1	NA	NA	Favorable	NA	1	NA	NA	NA
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	09/03/2021	2021	3	9	Nicolas Boudereaux	1	Séche et disloquée	NA	Favorable	NA	1	0	0	1
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Très favorable	NA	0	0	0	0
+16	2	48.65719	 -3.57631	Tréduder	Yar	23/03/2021	2021	3	23	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	23/03/2021	2021	3	23	David Menanteau	1	Sèche et disloquée	NA	Favorable	NA	1	0	0	1
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	23/03/2021	2021	3	23	David Menanteau	1	Sèche et disloquée	NA	Favorable	NA	1	0	0	1
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	23/03/2021	2021	3	23	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+24	1	48.622,	 -3.603	Trémel	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	09/03/2021	2021	3	9	Nicolas Boudereaux	1	NA	NA	Favorable	NA	1	NA	NA	NA
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	09/03/2021	2021	3	9	Nicolas Boudereaux	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+45	2	48.59425	 -3.57095	Plufur	Yar	24/02/2021	2021	2	24	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+46	3	48.632757	 -3.562284	Plufur	Yar	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+53	2	48.61999	 -3.5675	Plufur	Yar	23/03/2021	2021	3	23	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+54	2	48.60418	 -3.5697	Plufur	Yar	24/02/2021	2021	2	24	David Menanteau	0	NA	NA	Très favorable	NA	0	0	0	0
+58	1	48.599651,	 -3.601555	Trémel	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	1	Sèche et disloquée	NA	Très favorable	NA	1	0	0	1
+61	1	48.566940	  -3.563340	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	x	Nombreuses et diverses	NA	Très favorable	NA	0	x	x	x
+62	1	48.560412	 -3.569003	Plounérin	Yar	19/02/2021	2021	2	19	David Menanteau	1	Sèche et disloquée	NA	NA	NA	1	0	0	1
+64	1	48.554	- 3.578	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+65	1	48.553	 - 3.580	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+68	3	48.572835	 -3.551346	Plounérin	Yar	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+70	3	48.57807,	 -3.54197	Plounérin	Yar	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Très favorable	NA	NA	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Très favorable	NA	0	0	0	0
+732	3	48.58358,	-3.52669	Plounérin	Yar	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	24/02/2002	2002	2	24	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+80	1	48.572,	 -3.574	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	2	Fraiche	NA	Favorable	NA	1	1	0	0
+84	1	48.567684	 -3.568024	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	2	Fraiche	NA	Très favorable	NA	1	1	0	0
+85	1	48.567294	 -3.563966	Plounérin	Yar	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	1	Fraiche	NA	Très favorable	NA	1	1	0	0
+86	1	48.566896	 -3.561653	Plounérin	Yar	19/02/2021	2021	2	19	David Menanteau	1	Sèche et disloquée	NA	Favorable	NA	1	0	0	1
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	02/03/2021	2021	3	2	Nicolas Boudereaux / David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	23/03/2021	2021	3	23	David Menanteau	1	Sèche et disloquée	NA	Favorable	NA	1	0	0	1
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+113	1	48.56544	-3.563496	Plounérin	Yar	01/03/2021	2021	3	1	Nicolas Boudereaux / David Menanteau	1	Sèche et disloquée	Nicolas Boudereaux / David Menanteau	Favorable	NA	1	0	0	1
+114	1	48.564550	  -3.561585	Plounérin	Yar	01/03/2021	2021	3	1	Nicolas Boudereaux / David Menanteau	1	Sèche et disloquée	NA	Favorable	NA	1	0	0	1
+115	2	48.5952	 -3.59922	Plufur	Yar	24/02/2002	2002	2	24	David Menanteau	2	Fraiche	NA	Favorable	NA	1	1	0	0
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	23/03/2021	2021	3	23	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	08/03/2021	2021	3	8	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	23/03/2021	2021	3	23	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	09/03/2021	2021	3	9	Nicolas Boudereaux	0	NA	NA	Favorable	NA	0	0	0	0
+124	2	48.628623	  -3.583876	Plufur	Yar	23/03/2021	2021	3	23	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+1	1	48.585217	 -3.573359	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+2	1	48.62083	 -3.590561	Plufur	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Seche et Fragmentée	 + marquage urine	Favorable	NA	1	0	0	1
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Humide	2H+2SI+1SF	Très favorable	NA	5	2	2	1
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Humide	1H+1SI+1SF+Fécès ragondin	Favorable	NA	3	1	1	1
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	1	Humide	NA	Très favorable	NA	1	1	0	0
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	Tvx en cours	Favorable	NA	0	0	0	0
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Seche et Intacte	NA	Favorable	NA	1	0	1	0
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	NA	Favorable	NA	1	1	0	0
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Très favorable	NA	0	0	0	0
+16	2	48.65719	 -3.57631	Tréduder	Yar	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	FS Renard + Héron cendré	Favorable	NA	0	0	0	0
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	15/10/2021	2021	10	15	Maxime CHAPELLE, Morgane GELEBART et Marine IHUEL	1	Seche et Fragmentée	 3 SF	Favorable	NA	3	0	0	3
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+24	1	48.622,	 -3.603	Trémel	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	en amont trons c'arbres disparus	Favorable	NA	0	0	0	0
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Humide	multitudes emrpeintes ragondins + micromammifères	Favorable	NA	1	1	0	0
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Seche et Fragmentée	2SF+musc+féces rat musqué	Favorable	NA	2	0	0	2
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Seche et Intacte	2SI	Très favorable	NA	2	0	2	0
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+45	2	48.59425	 -3.57095	Plufur	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+46	3	48.632757	 -3.562284	Plufur	Yar	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	1	Humide	NA	Favorable	NA	1	1	0	0
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+53	2	48.61999	 -3.5675	Plufur	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+54	2	48.60418	 -3.5697	Plufur	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Très favorable	NA	0	0	0	0
+58	1	48.599651,	 -3.601555	Trémel	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Seche et Fragmentée	ilot entretenu récemment	Très favorable	NA	1	0	0	1
+61	1	48.566940	  -3.563340	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	Vues aux 2 entrées + loutroduc	Très favorable	NA	1	1	0	0
+62	1	48.560412	 -3.569003	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	NA	NA	NA	1	1	0	0
+64	1	48.554	- 3.578	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+65	1	48.553	 - 3.580	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+68	3	48.572835	 -3.551346	Plounérin	Yar	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	Urine possible	Favorable	NA	0	0	0	0
+70	3	48.57807,	 -3.54197	Plounérin	Yar	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Très favorable	NA	NA	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Très favorable	NA	0	0	0	0
+732	3	48.58358,	-3.52669	Plounérin	Yar	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Seche et Intacte	2 sèches + FS de martres	Favorable	NA	2	0	2	0
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+80	1	48.572,	 -3.574	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	NA	Favorable	NA	1	1	0	0
+84	1	48.567684	 -3.568024	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Seche et Intacte	NA	Très favorable	NA	1	0	1	0
+85	1	48.567294	 -3.563966	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	Nbreuses fraiches + anciennes	Très favorable	NA	1	1	0	0
+86	1	48.566896	 -3.561653	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	Nombreuses	Favorable	NA	1	1	0	0
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Seche et Intacte	FS Hermine/Belette	Favorable	NA	1	0	1	0
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Seche et Intacte	1SI+1SF+féces mustélidé	Favorable	NA	2	0	1	1
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+113	1	48.56544	-3.563496	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	Nbreuses + Crottes ragondins	Favorable	NA	1	1	NA	NA
+114	1	48.564550	  -3.561585	Plounérin	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+115	2	48.5952	 -3.59922	Plufur	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	1	Humide	4 anciennes + 1 récentes	Favorable	NA	0	5?	0	0
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	1	Seche et Intacte	NA	Favorable	NA	1	0	1	0
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	1	Seche et Intacte	epreinte 500 m plus loin	Favorable	NA	1	0	1	0
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	marquage urine	Favorable	NA	0	0	0	0
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	1	Humide	NA	Favorable	NA	1	1	0	0
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	0	NA	NA	Favorable	NA	0	0	0	0
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	14/10/2021	2021	10	14	Maxime CHAPELLE et David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	15/10/2021	2021	10	15	Morgane GELEBART et Marine IHUEL	1	Humide	NA	Favorable	NA	1	1	0	0
+124	2	48.628623	  -3.583876	Plufur	Yar	14/10/2021	2021	10	14	Morgane GELEBART et Marine IHUEL	0	NA	empreintes chevreuils	Favorable	NA	0	0	0	0
+1	1	48.585217	 -3.573359	Plounérin	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	1	Humide	1 H + 1 SF	Favorable	NA	2	1	0	1
+2	1	48.62083	 -3.590561	Plufur	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	28/03/2022	2022	3	28	David Menanteau	1	Humide	NA	Favorable	NA	1	1	0	0
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	28/03/2022	2022	3	28	David Menanteau	1	Seche et Intacte	NA	Très favorable	NA	1	0	1	0
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	28/03/2022	2022	3	28	David Menanteau	1	Humide	NA	Favorable	NA	1	1	0	0
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	28/03/2022	2022	3	28	Marine Ihuel et Amélie Desmas	1	Humide	NA	Très favorable	NA	1	1	0	0
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	28/03/2022	2022	3	28	Marine Ihuel et Amélie Desmas	1	Seche et Fragmentée	Tvx en cours	Favorable	NA	1	0	0	1
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	1	Seche et Intacte	NA	Favorable	NA	1	0	1	0
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	25/03/2022	2022	3	25	Marine Ihuel et Amélie Desmas	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	25/03/2022	2022	3	25	Marine Ihuel et Amélie Desmas	1	Humide	NA	Très favorable	NA	1	1	0	0
+16	2	48.65719	 -3.57631	Tréduder	Yar	25/03/2022	2022	3	25	David Menanteau	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	25/03/2022	2022	3	25	David Menanteau	1	Humide	NA	Favorable	NA	1	1	0	0
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	25/03/2022	2022	3	25	David Menanteau	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	25/03/2022	2022	3	25	David Menanteau	1	Seche et Intacte	NA	Favorable	NA	1	0	1	0
+24	1	48.622,	 -3.603	Trémel	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	en amont trons c'arbres disparus	Favorable	NA	0	0	0	0
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	28/03/2022	2022	3	28	David Menanteau	1	Humide	NA	Favorable	NA	1	1	0	0
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	28/03/2022	2022	3	28	David Menanteau	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	28/03/2022	2022	3	28	David Menanteau	1	Humide	NA	Très favorable	NA	1	1	0	0
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+45	2	48.59425	 -3.57095	Plufur	Yar	25/03/2022	2022	3	25	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+46	3	48.632757	 -3.562284	Plufur	Yar	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	1	NA	Empreinte	Favorable	NA	1	NA	NA	NA
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	25/03/2022	2022	3	25	Marine Ihuel et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+53	2	48.61999	 -3.5675	Plufur	Yar	25/03/2022	2022	3	25	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+54	2	48.60418	 -3.5697	Plufur	Yar	25/03/2022	2022	3	25	David Menanteau	0	NA	NA	Très favorable	NA	0	0	0	0
+58	1	48.599651,	 -3.601555	Trémel	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	1	Seche et Fragmentée	NA	Très favorable	NA	1	0	0	1
+61	1	48.566940	  -3.563340	Plounérin	Yar	25/03/2022	2022	3	25	David Menanteau	1	Humide	Vue en haut du loutroduc	Très favorable	NA	1	1	0	0
+62	1	48.560412	 -3.569003	Plounérin	Yar	25/03/2022	2022	3	25	David Menanteau	1	Seche et Fragmentée	NA	NA	NA	1	0	0	1
+64	1	48.554	- 3.578	Plounérin	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+65	1	48.553	 - 3.580	Plounérin	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+68	3	48.572835	 -3.551346	Plounérin	Yar	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	0	NA	NA	Favorable	NA	0	0	0	0
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	0	NA	Urine possible	Favorable	NA	0	0	0	0
+70	3	48.57807,	 -3.54197	Plounérin	Yar	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	1	Seche et Fragmentée	Ragondin + emprinte de chevreuil	Favorable	NA	1	0	0	1
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Très favorable	NA	NA	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	0	NA	NA	Très favorable	NA	0	0	0	0
+732	3	48.58358,	-3.52669	Plounérin	Yar	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	0	NA	NA	Favorable	NA	0	0	0	0
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	25/03/2022	2022	3	25	David Menanteau	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+80	1	48.572,	 -3.574	Plounérin	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	Humide	NA	Favorable	NA	1	1	0	0
+84	1	48.567684	 -3.568024	Plounérin	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	1	Humide	2SI + 2H	Très favorable	NA	4	2	2	0
+85	1	48.567294	 -3.563966	Plounérin	Yar	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	1	Humide	Très nombreuses	Très favorable	NA	0	x	0	0
+86	1	48.566896	 -3.561653	Plounérin	Yar	25/03/2022	2022	3	25	David Menanteau	1	Humide	Nombreuses	Favorable	NA	0	x	0	0
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	25/03/2022	2022	3	25	Maxime CHAPELLE et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	25/03/2022	2022	3	25	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	28/03/2022	2022	3	28	David Menanteau	1	Seche et Intacte	NA	Favorable	NA	1	0	1	0
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+113	1	48.56544	-3.563496	Plounérin	Yar	25/03/2022	2022	3	25	David Menanteau	1	Humide	Nbreuses + Crottes ragondins	Favorable	NA	0	x	0	0
+114	1	48.564550	  -3.561585	Plounérin	Yar	25/03/2022	2022	3	25	David Menanteau	1	Humide	Nbreuses + Crottes ragondins	Favorable	NA	0	x	0	0
+115	2	48.5952	 -3.59922	Plufur	Yar	25/03/2022	2022	3	25	David Menanteau	1	Humide	NA	Favorable	NA	1	1	0	0
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	25/03/2022	2022	3	25	Marine Ihuel et Loane Rouiller	1	Humide	NA	Favorable	NA	1	1	0	0
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	25/03/2022	2022	3	25	Marine Ihuel et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	25/03/2022	2022	3	25	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	28/03/2022	2022	3	28	David Menanteau	1	Humide	NA	Favorable	NA	1	1	0	0
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	28/03/2022	2022	3	28	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	25/03/2022	2022	3	25	Marine Ihuel et Amélie Desmas	0	NA	NA	Favorable	NA	0	0	0	0
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	28/03/2022	2022	3	28	Marine Ihuel et Amélie Desmas	1	Seche et Fragmentée	NA	Favorable	NA	1	0	0	1
+124	2	48.628623	  -3.583876	Plufur	Yar	25/03/2022	2022	3	25	David Menanteau	0	NA	NA	Favorable	NA	0	0	0	0
+1	1	48.585217	 -3.573359	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1H+2SI	NA	Favorable	NA	3	1	2	0
+2	1	48.62083	 -3.590561	Plufur	Yar	20-oct	2022	10	20	Camille LABONNE, Océane BLEUNVEN, Marine IHUEL	1	2H+2SF	NA	Favorable	NA	4	2	0	2
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	05/12/2022	2022	12	5	David MENANTEAU	1	1H	NA	Très favorable	NA	1	1	0	0
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	05/12/2022	2022	12	5	David MENANTEAU	1	1SF	NA	Favorable	NA	1	0	0	1
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	05/12/2022	2022	12	5	Océane BLEUNVEN	1	4SF	NA	Très favorable	NA	4	0	0	4
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	06/12/2022	2022	12	6	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	1	1SF	NA	Favorable	NA	1	0	0	1
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	06/12/2022	2022	12	6	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	06/12/2022	2022	12	6	Océane BLEUNVEN	1	2H	NA	Très favorable	NA	2	2	0	0
+16	2	48.65719	 -3.57631	Tréduder	Yar	06/12/2022	2022	12	6	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	06/12/2022	2022	12	6	Océane BLEUNVEN	1	1SI + 2SF	NA	Favorable	NA	3	0	1	2
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	06/12/2022	2022	12	6	Océane BLEUNVEN	1	2SI	NA	Favorable	NA	2	0	2	0
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	06/12/2022	2022	12	6	Océane BLEUNVEN	1	1H	NA	Favorable	NA	1	1	0	0
+24	1	48.622,	 -3.603	Trémel	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	0	NA	NA	Favorable	NA	0	0	0	0
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	05/12/2022	2022	12	5	David MENANTEAU	1	1SF	NA	Favorable	NA	1	0	0	1
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Très favorable	NA	0	0	0	0
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	2SF	NA	Favorable	NA	2	0	0	2
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1SF	NA	Favorable	NA	1	0	0	1
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1SF	NA	Favorable	NA	1	0	0	1
+45	2	48.59425	 -3.57095	Plufur	Yar	28/10/2022	2022	10	28	Camille LABONNE, Alizée KIRCH	0	NA	NA	Favorable	NA	0	0	0	0
+46	3	48.632757	 -3.562284	Plufur	Yar	05/12/2022	2022	12	5	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	05/12/2022	2022	12	5	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+53	2	48.61999	 -3.5675	Plufur	Yar	28/10/2022	2022	10	28	Camille LABONNE, Alizée KIRCH	0	NA	NA	Favorable	NA	0	0	0	0
+54	2	48.60418	 -3.5697	Plufur	Yar	28/10/2022	2022	10	28	Camille LABONNE, Alizée KIRCH	0	NA	NA	Très favorable	NA	0	0	0	0
+58	1	48.599651,	 -3.601555	Trémel	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1SI	NA	Très favorable	NA	1	0	1	0
+61	1	48.566940	  -3.563340	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	2H+1SF	NA	Très favorable	NA	3	2	0	1
+62	1	48.560412	 -3.569003	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1H+2SF	NA	NA	NA	3	1	0	2
+64	1	48.554	- 3.578	Plounérin	Yar	07-déc	2022	12	7	David MENANTEAU, Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+65	1	48.553	 - 3.580	Plounérin	Yar	07-déc	2022	12	7	David MENANTEAU, Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+68	3	48.572835	 -3.551346	Plounérin	Yar	05/12/2022	2022	12	5	Océane BLEUNVEN	1	1H	NA	Favorable	NA	1	1	0	0
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	05/12/2022	2022	12	5	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+70	3	48.57807,	 -3.54197	Plounérin	Yar	05/12/2022	2022	12	5	Océane BLEUNVEN	1	2SF	NA	Favorable	NA	2	0	0	2
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Très favorable	NA	NA	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	05/12/2022	2022	12	5	Océane BLEUNVEN	0	NA	NA	Très favorable	NA	0	0	0	0
+732	3	48.58358,	-3.52669	Plounérin	Yar	05/12/2022	2022	12	5	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	28/10/2022	2022	10	28	Camille LABONNE, Alizée KIRCH	1	1SI+3SF	NA	Favorable	NA	4	0	1	3
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+80	1	48.572,	 -3.574	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1H	NA	Favorable	NA	1	1	0	0
+84	1	48.567684	 -3.568024	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	2SF	NA	Très favorable	NA	2	0	0	2
+85	1	48.567294	 -3.563966	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1H+1SI+1SF	NA	Très favorable	NA	3	1	1	1
+86	1	48.566896	 -3.561653	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1SI	NA	Favorable	NA	1	0	1	0
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	0	NA	NA	Favorable	NA	0	0	0	0
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	06/12/2022	2022	12	6	Océane BLEUNVEN	1	1SI	NA	Favorable	NA	1	0	1	0
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+113	1	48.56544	-3.563496	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1SI	NA	Favorable	NA	1	0	1	0
+114	1	48.564550	  -3.561585	Plounérin	Yar	20-oct	2022	10	20	Océane BLEUNVEN, Marine IHUEL, Camille LABONNE	1	1SI	NA	Favorable	NA	1	0	1	0
+115	2	48.5952	 -3.59922	Plufur	Yar	21-oct	2022	10	21	Camille LABONNE	1	1H+4SF	NA	Favorable	NA	5	1	0	4
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	05/12/2022	2022	12	5	Océane BLEUNVEN	1	1H	NA	Favorable	NA	1	1	0	0
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	06/12/2022	2022	12	6	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	28/10/2022	2022	10	28	Camille LABONNE, Alizée KIRCH	0	NA	NA	Favorable	NA	0	0	0	0
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	05/12/2022	2022	12	5	Océane BLEUNVEN	1	1H+1SF	NA	Favorable	NA	2	1	0	1
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	05/12/2022	2022	12	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	06/12/2022	2022	12	6	Océane BLEUNVEN	1	1SI	NA	Favorable	NA	1	0	1	0
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	06/12/2022	2022	12	6	Océane BLEUNVEN	1	1SI	NA	Favorable	NA	1	0	1	0
+124	2	48.628623	  -3.583876	Plufur	Yar	06/12/2022	2022	12	6	Océane BLEUNVEN	0	NA	NA	Favorable	NA	0	0	0	0
+1	1	48.585217	 -3.573359	Plounérin	Yar	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	Crotte ragondin	Favorable	NA	0	0	0	0
+2	1	48.62083	 -3.590561	Plufur	Yar	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	1	H	NA	Favorable	NA	1	1	0	0
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	SF	NA	Favorable	NA	1	0	0	1
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	2 F ET 1 SI	NA	Très favorable	NA	3	2	1	0
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	F	NA	Favorable	NA	1	1	0	0
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	18/04/2023	2023	4	18	Amandine GYOMLAI et Erminia ZAMBON	1	1 SF et 1 F	NA	Très favorable	NA	2	1	0	1
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	18/04/2023	2023	4	18	Amandine GYOMLAI et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	18/04/2023	2023	4	18	Amandine GYOMLAI et Erminia ZAMBON	1	2	NA	Favorable	NA	0	NA	NA	NA
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	18/04/2023	2023	4	18	Amandine GYOMLAI et Erminia ZAMBON	1	F	NA	Très favorable	NA	1	1	0	0
+16	2	48.65719	 -3.57631	Tréduder	Yar	19/04/2023	2023	4	19	David MENANTEAU	1	H	NA	Favorable	NA	1	1	0	0
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	19/04/2023	2023	4	19	Amandine GYOMLAI et Marion RUVOEN	1	1 SF et 2 H	NA	Favorable	NA	3	2	0	1
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	19/04/2023	2023	4	19	Amandine GYOMLAI et Marion RUVOEN	1	2 SF	NA	Favorable	NA	2	0	0	2
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	19/04/2023	2023	4	19	Amandine GYOMLAI et Marion RUVOEN	1	1 H	NA	Favorable	NA	2	0	0	2
+24	1	48.622,	 -3.603	Trémel	Yar	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	NA	Favorable	NA	0	0	0	0
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	18-avr	2023	4	18	Maxime CHAPELLE et Romain SALAUN	1	SI	NA	Favorable	NA	1	0	1	0
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	SI	NA	Très favorable	NA	1	0	1	0
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	NA	Favorable	NA	0	0	0	0
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	NA	Favorable	NA	0	0	0	0
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	NA	Favorable	NA	0	0	0	0
+45	2	48.59425	 -3.57095	Plufur	Yar	18/04/2023	2023	4	18	Maxime CHAPELLE et Romain SALUN	0	NA	NA	Favorable	NA	0	0	0	0
+46	3	48.632757	 -3.562284	Plufur	Yar	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	18/04/2023	2023	4	18	Amandine GYOMLAI et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+53	2	48.61999	 -3.5675	Plufur	Yar	18/04/2023	2023	4	18	Maxime CHAPELLE et Romain SALUN	0	NA	NA	Favorable	NA	0	0	0	0
+54	2	48.60418	 -3.5697	Plufur	Yar	18/04/2023	2023	4	18	Maxime CHAPELLE et Romain SALUN	0	NA	NA	Très favorable	NA	0	0	0	0
+58	1	48.599651,	 -3.601555	Trémel	Yar	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	1	1 SF et 2 H	NA	Très favorable	NA	3	2	0	1
+61	1	48.566940	  -3.563340	Plounérin	Yar	19-avr	2023	4	19	Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU	1	SI	NA	Très favorable	NA	1	0	1	0
+62	1	48.560412	 -3.569003	Plounérin	Yar	19-avr	2023	4	19	Amandine GYOMLAI et David MENANTEAU	0	NA	NA	NA	NA	0	0	0	0
+64	1	48.554	- 3.578	Plounérin	Yar	05-avr	2023	4	5	David MENANTEAU	0	NA	NA	Favorable	NA	0	0	0	0
+65	1	48.553	 - 3.580	Plounérin	Yar	05-avr	2023	4	5	David MENANTEAU	1	SF	Amas	Favorable	NA	1	0	0	1
+68	3	48.572835	 -3.551346	Plounérin	Yar	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	1	1 SF	NA	Favorable	NA	1	0	0	1
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+70	3	48.57807,	 -3.54197	Plounérin	Yar	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	1	1 SF	NA	Favorable	NA	1	0	0	1
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)		NA	NA	NA	NA	NA	NA	NA	Très favorable	NA	NA	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	1	NA	NA	Très favorable	NA	1	NA	NA	NA
+732	3	48.58358,	-3.52669	Plounérin	Yar	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	18/04/2023	2023	4	18	Maxime CHAPELLE et Romain SALUN	1	H	NA	Favorable	NA	1	1	0	0
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	18/04/2023	2023	4	18	Amandine GYOMLAI et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+80	1	48.572,	 -3.574	Plounérin	Yar	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	NA	Favorable	NA	0	0	0	0
+84	1	48.567684	 -3.568024	Plounérin	Yar	05-avr	2023	4	5	David MENANTEAU	1	SF	NA	Très favorable	NA	1	0	0	1
+85	1	48.567294	 -3.563966	Plounérin	Yar	05-avr	2023	4	5	David MENANTEAU	1	SF	NA	Très favorable	NA	1	0	0	1
+86	1	48.566896	 -3.561653	Plounérin	Yar	19-avr	2023	4	19	Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU	1	SI	NA	Favorable	NA	1	0	1	0
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	11-avr	2023	4	11	Maxime CHAPELLE et Amandine GYOMLAI	0	NA	NA	Favorable	NA	0	0	0	0
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	19/04/2023	2023	4	19	Amandine GYOMLAI et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	SI	NA	Favorable	NA	1	0	1	0
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	2 F ET 1 SF	NA	Favorable	NA	3	2	0	1
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	1	SI	NA	Favorable	NA	1	0	1	0
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+113	1	48.56544	-3.563496	Plounérin	Yar	19-avr	2023	4	19	Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU	1	SI	NA	Favorable	NA	1	0	1	0
+114	1	48.564550	  -3.561585	Plounérin	Yar	19-avr	2023	4	19	Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU	1	SI	NA	Favorable	NA	1	0	1	0
+115	2	48.5952	 -3.59922	Plufur	Yar	19-avr	2023	4	19	David MENANTEAU	1	H	NA	Favorable	NA	1	1	0	0
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	1	2 SI	NA	Favorable	NA	2	0	2	0
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	19/04/2022	2022	4	19	David MENANTEAU 	1	F	NA	Favorable	NA	1	1	0	0
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	18/04/2023	2023	4	18	Maxime CHAPELLE et Romain SALUN	1	1 FI et 1 H	NA	Favorable	NA	1	1	NA	NA
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	11/04/2023	2023	4	11	Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON	0	NA	NA	Favorable	NA	0	0	0	0
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	18-avr	2023	4	18	David MENANTEAU et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	19/04/2022	2022	4	19	David MENANTEAU 	0	NA	NA	Favorable	NA	0	0	0	0
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	18-avr	2023	4	18	Maxime CHAPELLE et Romain SALAUN	0	NA	NA	Favorable	NA	0	0	0	0
+124	2	48.628623	  -3.583876	Plufur	Yar	19/04/2023	2023	4	19	Amandine GYOMLAI et Marion RUVOEN	0	NA	NA	Favorable	NA	0	0	0	0
+1	1	48.585217	 -3.573359	Plounérin	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	Favorable	2	1	0	0	1
+2	1	48.62083	 -3.590561	Plufur	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	Favorable	1	1	0	0	1
+3	4	48.61123	 -3.51294	Plouaret	Roscoat	31/10/2024	2024	10	31	David M / Elias Michat / Le Scair	1	Non précisé	Marquage à l'urine	Favorable	2	0	NA	NA	NA
+5	4	48.62734	 -3.51969	Plouaret	Roscoat	31/10/2024	2024	10	31	David M / Elias Michat / Le Scair	1	Une fraiche et une pas fraiche	NA	Très favorable	2	1	1	NA	NA
+6	4	48.62862	 -3.53029	Lanvellec	Roscoat	31/10/2024	2024	10	31	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+7	3	48.63302	 -3.543	Lanvellec	Roscoat	23/10/2024	2024	10	23	Maxime Henry / Nathan Le Dolley	1	Non précisé	NA	Très favorable	2	0	NA	NA	NA
+8	3	48.64132	-3.55326	Plouzélambre	Roscoat	18/10/2024	2024	10	18	Maxime Henry / Romain W	0	NA	NA	Favorable	0	0	0	0	0
+9	4	48.4682	 -3.53988	Plouzélambre	Roscoat (affluent)	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+12	3	48.674833	 -3.572990	St Michel en Grève	Roscoat	18/10/2024	2024	10	18	Maxime Henry / Romain Worme	0	NA	NA	Favorable	0	0	0	0	0
+14	3	48.67091	 -3.57926	Plestin les grèves	Yar	18/10/2024	2024	10	18	Maxime Henry / Romain Worme	0	NA	NA	Très favorable	0	0	0	0	0
+16	2	48.65719	 -3.57631	Tréduder	Yar	23/10/2024	2024	10	23	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+19	2	48.64695	 -3.57763	Plestin les grèves	Yar	22/10/2024	2024	10	22	Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	Favorable	1	1	0	0	1
+20	2	48.64267	 -3.58159	Plestin les grèves	Yar	22/10/2024	2024	10	22	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+21	2	48.63795	 -3.5832	Plestin les grèves	Yar	23/10/2024	2024	10	23	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+24	1	48.622,	 -3.603	Trémel	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+27	4	48.68482	 -3.56188	St Michel en Grève	Kerdu	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+29	4	48.67589	 -3.54265	St Michel en Grève	Kerdu	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	1	Non précisé	NA	Favorable	1	0	NA	NA	NA
+30	4	48.67459	 -3.53511	Ploumilliau	Kerdu	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	0	NA	Marquage de campagnol amphibie	Favorable	0	0	0	0	0
+31	4	48.67299	 -3.53261	Ploumilliau	Kerdu	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+36	4	48.663573	 -3.517329	Ploumilliau	Kerdu	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	0	NA	NA	Très favorable	0	0	0	0	0
+372	1	48.663	 -3.601	Plestin les grèves	Quinquis	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+41	1	48.653	 -3.603	Plestin les grèves	Quinquis	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+42	1	48.655505	 -3.599438	Plestin les grèves	Quinquis	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+45	2	48.59425	 -3.57095	Plufur	Yar	18/10/2024	2024	10	18	Enzo Ruiz / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+46	3	48.632757	 -3.562284	Plufur	Yar	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	Favorable	1	1	0	0	1
+52	3	48.632757	 -3.562284	Lanvellec	Yar (Dour Elego)	23/10/2024	2024	10	23	Maxime Henry / Nathan Le Dolley	1	Non précisé	NA	Favorable	2	0	NA	NA	NA
+53	2	48.61999	 -3.5675	Plufur	Yar	18/10/2024	2024	10	18	Enzo Ruiz / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+54	2	48.60418	 -3.5697	Plufur	Yar	18/10/2024	2024	10	18	Enzo Ruiz / Nathan Le Dolley	0	NA	NA	Très favorable	0	0	0	0	0
+58	1	48.599651,	 -3.601555	Trémel	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Très favorable	0	0	0	0	0
+61	1	48.566940	  -3.563340	Plounérin	Yar	16/10/2024	2024	10	16	Maxime Henry / Nathan Le Dolley	1	Nombreuses et sèches	NA	Très favorable	5	0	x	0	0
+62	1	48.560412	 -3.569003	Plounérin	Yar	14/10/2024	2024	10	14	David M / Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	NA	1	1	0	0	1
+64	1	48.554	- 3.578	Plounérin	Yar	14/10/2024	2024	10	14	David M / Maxime Henry / Nathan Le Dolley	0	NA	Empreinte possible 	Favorable	0	0	0	0	0
+65	1	48.553	 - 3.580	Plounérin	Yar	14/10/2024	2024	10	14	David M / Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+68	3	48.572835	 -3.551346	Plounérin	Yar	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+69	3	48.56967	 -3.52704	Plounérin	Yar (Dour Elego)	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+70	3	48.57807,	 -3.54197	Plounérin	Yar	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+72	NA	NA	NA	Plounérin	Yar (Dour Elego)	NA	NA	NA	NA	NA	NA	NA	NA	Très favorable	NA	NA	NA	NA	NA
+73	3	48.58387	-3.52232	Plounérin	Yar (Dour Elego)	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Très favorable	0	0	0	0	0
+732	3	48.58358,	-3.52669	Plounérin	Yar	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+74	2	48.62057	 -3.54953	Plufur	Yar (Dour Elego)	18/10/2024	2024	10	18	Enzo Ruiz / Nathan Le Dolley	1	Sèches	NA	Favorable	2	0	0	NA	NA
+79	3	48.614383	 -3.535376	Lanvellec	Roscoat (affluent)	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+80	1	48.572,	 -3.574	Plounérin	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+84	1	48.567684	 -3.568024	Plounérin	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Très favorable	0	0	0	0	0
+85	1	48.567294	 -3.563966	Plounérin	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	1	Nombreuses et sèches	NA	Très favorable	5	0	x	0	0
+86	1	48.566896	 -3.561653	Plounérin	Yar	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	1	Nombreuses et sèches	NA	Favorable	4	0	x	0	0
+91	1	48.669011	 -3.595285	Saint Efflam	Quinquis	15/10/2024	2024	10	15	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+93	2	48.64606	 -3.57688	Plestin les Grèves	Yar (Dour Elego)	22/10/2024	2024	10	22	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+97	4	48.646675	 -3.523823	Plouzélambre	Roscoat (affluent)	31/10/2024	2024	10	31	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+98	4	48.63718	 -3.52098	Plouzélambre	Roscoat	31/10/2024	2024	10	31	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+108	4	48.61957	-3.53	Lanvellec	Roscoat (affluent)	31/10/2024	2024	10	31	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+109	4	48.61617	 -3.53018	Lanvellec	Roscoat (affluent)	31/10/2024	2024	10	31	David M / Elias Michat / Le Scair	0	NA	NA	Favorable	0	0	0	0	0
+110	4	48.61152	 -3.51675	Lanvellec	Roscoat (affluent)	31/10/2024	2024	10	31	David M / Elias Michat / Le Scair	0	NA	NA	Favorable	0	0	0	0	0
+113	1	48.56544	-3.563496	Plounérin	Yar	16/10/2024	2024	10	16	Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	Favorable	7	1	0	0	1
+114	1	48.564550	  -3.561585	Plounérin	Yar	16/10/2024	2024	10	16	Maxime Henry / Nathan Le Dolley	1	Sèche et disloquée	NA	Favorable	1	1	0	0	1
+115	2	48.5952	 -3.59922	Plufur	Yar	18/10/2024	2024	10	18	Enzo Ruiz / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+116	3	48.59376	-3.54209	Lanvellec	Yar (Dour Elego)	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	1	Humides	NA	Favorable	2	1	1	0	0
+117	3	48.65818	 -3.55925	Tréduder	Roscoat	18/10/2024	2024	10	18	Maxime Henry / Romain Worme	0	NA	NA	Favorable	0	0	0	0	0
+118	4	48.62591	 -3.53416	Lanvellec	Roscoat (affluent)	31/10/2024	2024	10	31	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+119	2	48.625,	 -3.567	Plufur	Yar (Dour Elego)	18/10/2024	2024	10	18	Enzo Ruiz / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+120	3	 48.60933	 -3.5501	Lanvellec	Yar (Dour Elego)	24/10/2024	2024	10	24	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+121	4	48.4606	-3.527	Lanvellec	Roscoat (affluent)	31/10/2024	2024	10	31	David M / Elias Michat / Le Scair	0	NA	NA	Favorable	0	0	0	0	0
+122	3	48.64888	-3.55396	Plouzelmabre	Roscoat	18/10/2024	2024	10	18	Maxime Henry / Romain Worme	0	NA	Marquage à l'urine	Favorable	0	0	0	0	0
+123	4	48.685150	 -3.567602	St Michel en Grève	Kerdu	28/10/2024	2024	10	28	Romain Worme / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
+124	2	48.628623	  -3.583876	Plufur	Yar	22/10/2024	2024	10	22	Maxime Henry / Nathan Le Dolley	0	NA	NA	Favorable	0	0	0	0	0
