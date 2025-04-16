@@ -3,9 +3,14 @@
 ################################################################################
 
 ################################################################################
+### Import packages
+library(tidyverse)
+library(gridExtra)
+
+################################################################################
 ### Data importation
 
-base_tregor <- read.table("loutre_petit_tregor.txt", 
+base_tregor <- read.table("processed_data/loutre_petit_tregor.txt", 
                    header= T,
                    stringsAsFactors = T,
                    sep ="\t")
@@ -18,13 +23,7 @@ base_lieu_de_greve <- read.table("loutre_lieu_de_greve.txt",
 
 
 
-################################################################################
-### Import packages
 
-library(dplyr)
-library(tidyverse)
-library(ggplot2)
-library(gridExtra)
 
 ################################################################################
 ### Verification importation dataset
