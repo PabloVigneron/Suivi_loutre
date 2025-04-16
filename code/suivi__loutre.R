@@ -6,9 +6,44 @@
 ### Import packages
 library(tidyverse)
 library(gridExtra)
+library(lubridate)
 
 ################################################################################
 ### Data importation
+base_tregor <-
+  readxl::read_xlsx(path = 'raw_data/export_suiviloutrelocal_telecharger_csv_2025_04_03_10h58m17.xlsx') %>%
+  select(
+    id_dataset,
+    code_secteur,
+    code_site,
+    nom_site,
+    x_l93,
+    y_l93,
+    date_visite,
+    observateurs,
+    condition_prospection,
+    nom_taxon,
+    nom_complet_taxon,
+    techn_observation,
+    statut_observation,
+    nb_ep_tot,
+    nb_ep_w,
+    nb_ep_dnf,
+    nb_ep_df
+  ) %>%
+  mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    nb_ep_w = abs(nb_ep_w),
+    statut_observation = ifelse(str_detect(statut_observation, '^Pr'), yes = 'Présent', no = 'Absent')
+  ) %>% 
+  filter(nom_complet_taxon =='Lutra lutra',
+         !(id_dataset == 85 & code_secteur == "FR5300006"),
+         code_secteur != "J401")
+
+
+
 
 base_tregor <- read.table("processed_data/loutre_petit_tregor.txt", 
                    header= T,
@@ -23,9 +58,67 @@ base_lieu_de_greve <- read.table("loutre_lieu_de_greve.txt",
 
 
 
-
+texte <- "DonnÃ©es Ã©tudes Loutre GMB"
+stringi::stri_enc_toascii(texte)
 
 ################################################################################
+
+sites_geo <- base_tregor %>% 
+  select(nom_site:y_l93) %>% 
+  sf::st_as_sf(coords = c("x_l93", "y_l93"),
+               crs = sf::st_crs(2154))
+
+mapview::mapview(sites_geo)
+
+
+
+
+#################################################
+# Stat descriptive
+
+base_tregor %>% 
+  filter(statut_observation =='Présent') %>% 
+  ggplot(aes(x = annee)) +
+    geom_bar(fill = "red") +
+    labs(x = "Année", y = "Nombre d'observations de présence")
+  
+base_tregor %>% 
+  ggplot(aes(x = annee, fill = statut_observation)) +
+  geom_bar() +
+  labs(x = "Année",
+       y = "Nombre d'observations de présence",
+       title = "Côtiers entre la baie de Morlaix et la baie de Lannion",
+       fill = "Observation")
+
+base_tregor %>% 
+  filter(code_secteur == 'J25') %>% 
+  ggplot(aes(x = date_visite,
+             y = code_site,
+             col = statut_observation)) +
+  geom_point() +
+  labs(x = "Année",
+       y = "Site",
+       title = "Côtiers entre la baie de Morlaix et la baie de Lannion",
+       fill = "Observation") 
+
+summary(base_tregor$date_visite)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Verification importation dataset
 summary(base_tregor)
 
