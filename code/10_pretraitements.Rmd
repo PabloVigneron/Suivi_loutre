@@ -21,6 +21,8 @@ library(gridExtra)
 library(lubridate)
 library(sf)
 library(mapview)
+library(maptiles)
+library(tidyterra)
 ```
 
 # Data importation
@@ -76,12 +78,56 @@ mapview::mapview(sites_geo)
 Sur la carte ci-dessous, ajouter les années 2021 et 2022 + fond de carte. 
 
 ```{r, fig.width = 9, fig.height = 9}
-sites_geo %>% 
-  filter(code_secteur == 'J25') %>% 
-  ggplot(aes(col = statut_observation,
-             fill = statut_observation)) +
-    geom_sf() +
-    facet_wrap(~annee)
+
+base_j25 <- base_tregor %>%
+  filter(code_secteur == "J25")
+
+sites_coord <- base_j25 %>%
+  select(code_site, x_l93, y_l93) %>%
+  distinct()
+
+sites_all_years <- expand_grid(
+  code_site = unique(base_j25$code_site),
+  annee = unique(base_j25$annee)
+)
+
+sites_status_full <- sites_all_years %>%
+  left_join(base_j25 %>% 
+              select(code_site, annee, statut_observation),
+            by = c("code_site", "annee")) %>%
+  left_join(sites_coord, by = "code_site") %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+sites_j25_sf <- sites_status_full %>%
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+
+basemap <- get_tiles(sites_j25_sf, provider = "OpenStreetMap", crop = TRUE, zoom = 12)
+
+ggplot() +
+  geom_spatraster_rgb(data = basemap) +
+  geom_sf(data = sites_j25_sf, aes(color = statut_final), size = 1.5, alpha = 0.9) +
+  facet_wrap(~ annee) +
+  scale_color_manual(
+    values = c("Présent" = "green4", "Absent" = "red", "Non prospecté" = "grey20")
+  ) +
+  labs(
+    title = "Sites de prospection, Petit Trégor - Secteur J25",
+    color = "Statut d'observation"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    strip.background = element_rect(fill = "grey90"),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+
 ```
 
 # Stat descriptive
@@ -96,7 +142,7 @@ summary(base_tregor$date_visite)
 base_tregor %>% 
   filter(statut_observation =='Présent') %>% 
   ggplot(aes(x = annee)) +
-    geom_bar(fill = "red") +
+    geom_bar(fill = "black") +
     labs(x = "Année", y = "Nombre d'observations de présence")
 ```
 
