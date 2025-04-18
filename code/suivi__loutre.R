@@ -50,55 +50,28 @@ base_tregor <-
 texte <- "DonnÃ©es Ã©tudes Loutre GMB"
 stringi::stri_enc_toascii(texte)
 
+
+################################################################################
+
+
+
 ################################################################################
 # Create a map with all sites 
-
 sites_geo <- base_tregor %>% 
-  select(nom_site:y_l93) %>% 
+  select(nom_site:y_l93,
+         statut_observation,
+         code_secteur,
+         annee) %>% 
   sf::st_as_sf(coords = c("x_l93", "y_l93"),
                crs = sf::st_crs(2154))
 
-mapview::mapview(sites_geo)
+mapview::mapview(sites_geo, 
+                 zcol = "code_secteur",
+                 col.regions = c("FR5300006" = "indianred1", 
+                                 "J25" = "darkseagreen3"))
 
 ################################################################################
 # Create a map with all presence and absence of the otters between years
-
-
-sites_j25 <- sites_geo %>%
-  filter(code_secteur == 'J25')
-
-bbox_j25 <- sf::st_bbox(sites_j25)
-
-basemap <- get_tiles(sites_j25,
-                     provider = "OpenStreetMap",
-                     crop = TRUE,
-                     zoom = 12)
-ggplot() +
-  geom_spatraster_rgb(data = basemap) +
-  geom_sf(
-    data = sites_j25,
-    aes(color = statut_observation),
-    size = 1.5,
-    alpha = 0.8
-  ) +
-  facet_wrap( ~ annee) +
-  scale_color_manual(values = c("Présent" = "green4", "Absent" = "red")) +
-  theme_gray() +
-  theme(
-    panel.border = element_rect(
-      color = "transparent",
-      fill = NA,
-      linewidth = 0.8
-    ),
-    strip.background = element_rect(fill = "grey80", color = "transparent"),
-    legend.background = element_rect(fill = "grey80"),
-    plot.title = element_text(hjust = 0.5)
-  ) +
-  labs(title = "Sites de prospection, Petit Tregor", color = "Statut d'observation")
-
-################################################################################
-# Ajouter les sites non prospecté dans le graphique 
-
 
 # Étape 1 : filtrer dès le début le secteur J25
 base_j25 <- base_tregor %>%
@@ -157,35 +130,102 @@ ggplot() +
   )
 
 
-#################################################
-# Stat descriptive
+################################################################################
+### Stat descriptive
 
-base_tregor %>% 
-  filter(statut_observation =='Présent') %>% 
+
+################################################################################
+# Nombre d'observations de présence de la loutre en fonction des années
+
+base_tregor %>%
+  filter(statut_observation == 'Présent') %>%
   ggplot(aes(x = annee)) +
-    geom_bar(fill = "black") +
-    labs(x = "Année", y = "Nombre d'observations de présence")
-  
-base_tregor %>% 
+  geom_bar(fill = "black") +
+  labs(x = "Année", 
+       y = "Nombre d'observations de présence de la loutre", 
+       title = "Suivi des sites de prospection - Secteur Petit Tregor") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA)
+  )
+
+################################################################################
+# Nombre d'observations de présence et absence de la loutre en fonction des années
+
+base_tregor %>%
   ggplot(aes(x = annee, fill = statut_observation)) +
   geom_bar() +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1"
+  )) +
   labs(x = "Année",
-       y = "Nombre d'observations de présence",
-       title = "Côtiers entre la baie de Morlaix et la baie de Lannion",
-       fill = "Observation")
+       y = "Nombre d'observations de présence  et absence de loutre",
+       title = "Suivi des sites de prospection - Secteur Petit Tregor",
+       fill = "Observation") +
+  theme (
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
 
-base_tregor %>% 
-  filter(code_secteur == 'J25') %>% 
-  ggplot(aes(x = date_visite,
-             y = code_site,
-             col = statut_observation)) +
-  geom_point() +
+################################################################################
+# Statut d'observation des sites prospectée en fonction des années 
+
+base_j25 <- base_j25 %>%
+  mutate(annee = year(date_visite))
+
+all_combos <- expand_grid(code_site = unique(base_j25$code_site),
+                          annee = unique(base_j25$annee))
+
+obs_complete <- all_combos %>%
+  left_join(base_j25 %>% select(code_site, annee, statut_observation),
+            by = c("code_site", "annee")) %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(
+    values = c(
+      "Présent" = "darkseagreen3",
+      "Absent" = "indianred1",
+      "Non prospecté" = "grey80"
+    )
+  ) +
   labs(x = "Année",
        y = "Site",
-       title = "Côtiers entre la baie de Morlaix et la baie de Lannion",
-       fill = "Observation") 
+       title = "Suivi des sites de prospection - Secteur Petit Tregor",
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
 
-summary(base_tregor$date_visite)
+
+################################################################################
+### Est ce que les conditions de prospection influe sur la présence de l'espèce ?
+
+
+
+################################################################################
+### Nombre d'épreintes total sites en fonction des années ?
+
+
+
+
+
+
+
+
+
 
 
 
@@ -207,4 +247,4 @@ convert_to_factor <- function(dataframe, n_col, col_indices) {
   return(dataframe)
 }
 
-
+################################################################################
