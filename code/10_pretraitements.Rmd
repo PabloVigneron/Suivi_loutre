@@ -66,7 +66,7 @@ base_tregor <-
 
 # Représentation cartographique des secteurs d'étude et des sites correspondants
 
-```{r, eval = TRUE, fig.height=9, fig.width = 9}
+```{r, eval = TRUE, fig.width = 9, fig.height = 6}
 sites_geo <- base_tregor %>% 
   select(nom_site:y_l93,
          statut_observation,
@@ -83,7 +83,7 @@ mapview::mapview(sites_geo,
 ```
 
 
-```{r, fig.width = 9, fig.height = 9}
+```{r, fig.width = 9, fig.height = 8}
 
 base_j25 <- base_tregor %>%
   filter(code_secteur == "J25")
@@ -144,7 +144,7 @@ summary(base_tregor$date_visite)
 ```
 
 
-```{r, fig.cap="Nombre d'observations de présence de la loutre en fonction des années",fig.width = 9, fig.height = 9}
+```{r, fig.cap="Nombre d'observations de présence de la loutre en fonction des années",fig.width = 9, fig.height = 6}
 base_tregor %>%
   filter(statut_observation == 'Présent') %>%
   ggplot(aes(x = annee)) +
@@ -159,7 +159,7 @@ base_tregor %>%
   
 ```
 
-```{r,fig.cap="Nombre d'observations de présence et absence de la loutre en fonction des années",fig.width = 9, fig.height = 9}
+```{r,fig.cap="Nombre d'observations de présence et absence de la loutre en fonction des années",fig.width = 9, fig.height = 6}
 base_tregor %>%
   ggplot(aes(x = annee, fill = statut_observation)) +
   geom_bar() +
@@ -180,7 +180,7 @@ base_tregor %>%
 
 ```
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 9}
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7}
 
 
 base_j25 <- base_j25 %>%
@@ -222,7 +222,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
 ```
 
 
-```{r,fig.cap="Pourcentages de présence de la loutre en fonction des années",fig.width = 9, fig.height = 9}
+```{r,fig.cap="Pourcentages de présence de la loutre en fonction des années",fig.width = 9, fig.height = 6}
 base_tregor %>%
   group_by(annee) %>%
   summarise(
