@@ -11,6 +11,9 @@ library(sf)
 library(mapview)
 library(maptiles)
 library(tidyterra)
+library(RVAideMemoire)
+library(emmeans)
+library(car)
 
 ################################################################################
 ### Data importation
@@ -40,15 +43,20 @@ base_tregor <-
     mois = month(date_visite),
     jour = day(date_visite),
     nb_ep_w = abs(nb_ep_w),
-    statut_observation = ifelse(str_detect(statut_observation, '^Pr'), yes = 'Présent', no = 'Absent')
+    statut_observation = ifelse(str_detect(statut_observation, '^Pr'), yes = 'Présent', no = 'Absent'), 
   ) %>% 
   filter(nom_complet_taxon =='Lutra lutra',
          !(id_dataset == 85 & code_secteur == "FR5300006"),
          code_secteur != "J401")
 
-
 texte <- "DonnÃ©es Ã©tudes Loutre GMB"
 stringi::stri_enc_toascii(texte)
+
+################################################################################
+
+
+
+
 
 
 ################################################################################
@@ -201,7 +209,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   ) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Petit Tregor",
+       title = "Suivi des sites de prospection - Secteur Petit Tregor (J25)",
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
@@ -209,6 +217,15 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
     panel.border = element_rect(color = "black", fill = NA),
     legend.background = element_rect(fill = "grey95", color = "black")
   )
+##################################################################################
+
+
+
+
+
+
+
+
 
 
 ################################################################################
@@ -221,14 +238,47 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
 
 
 
+################################################################################
+### GLM - Le statut d'observation depend de l'année 
+
+base_j25 <- base_j25 %>% 
+  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
+
+## Definition des types de variables
+#Variable réponse : Statut d'observation  
+#Variable explicative : 
+# - Annee : facteur ordinale fixe
+
+
+## Poser le modèle 
+# Binaire: distribution Binomiale
+# Fonction de lien : logit 
+
+mod1 <- glm(statut_presence~annee, family=binomial(link = "logit"), data = base_j25)
+mod1.1 <- glm(statut_presence~annee,quasibinomial(link = "logit"), data = base_j25)
+
+plotresid(mod1)
+plotresid(mod1.1)
+
+# On regarde la courbe rouge : c'est ok 
+# Distrib de poisson : regarder le rapport : 
+summary(mod1)
+summary(mod1.1)
+#Residual deviance: 505.20  on 412  degrees of freedown
+
+heteroscedasticite <- function(deviance_residuelle, dl_residuelle){
+  deviance_residuelle /dl_residuelle
+}
+
+heteroscedasticite(505.2, 412)
+
+#[1] 1.226214= > Seuil de 1, 5, remarque légère surdispersion des résidus
 
 
 
-
-
-
-
-
+###ANALYSE 
+Anova (mod1)
+Anova (mod1.1)
 
 ################################################################################
 ### FONCTION  : 
@@ -246,6 +296,10 @@ convert_to_factor <- function(dataframe, n_col, col_indices) {
   }
   
   return(dataframe)
+}
+
+heteroscedasticite <- function(deviance_residuelle, dl_residuelle){
+  deviance_residuelle /dl_residuelle
 }
 
 ################################################################################
