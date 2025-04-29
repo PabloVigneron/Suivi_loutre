@@ -245,8 +245,8 @@ base_j25 <- base_j25 %>%
   mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
 
 ## Definition des types de variables
-#Variable réponse : Statut d'observation  
-#Variable explicative : 
+# Variable réponse : Statut présence  
+# Variable explicative : 
 # - Annee : facteur ordinale fixe
 
 
@@ -261,9 +261,9 @@ plotresid(mod1)
 plotresid(mod1.1)
 
 # On regarde la courbe rouge : c'est ok 
-# Distrib de poisson : regarder le rapport : 
 summary(mod1)
 summary(mod1.1)
+
 #Residual deviance: 505.20  on 412  degrees of freedown
 
 heteroscedasticite <- function(deviance_residuelle, dl_residuelle){
@@ -279,6 +279,47 @@ heteroscedasticite(505.2, 412)
 ###ANALYSE 
 Anova (mod1)
 Anova (mod1.1)
+
+###############################################################################
+### GLM - Le nombre de marquage depend de l'année
+
+## Definition des types de variables
+# Variable réponse : nb_ep_tot : Quantitative discrète 
+# Variable explicative : 
+# - Annee : facteur ordinale fixe
+
+
+## Poser le modèle 
+# Comptage : distribution Poisson 
+# Fonction de lien : ln
+
+mod2 <- glm(nb_ep_tot~annee, family=poisson(link = "log"), data = base_j25)
+mod2.1 <- glm(nb_ep_tot~annee, family=poisson(link = "identity"), data = base_j25)
+
+plotresid(mod2)
+plotresid(mod2.1)
+
+# On regarde la courbe rouge : c'est ok 
+summary(mod2)
+summary(mod2.1)
+#Residual deviance: 669.99  on 412  degrees of freedom
+
+heteroscedasticite <- function(deviance_residuelle, dl_residuelle){
+  deviance_residuelle /dl_residuelle
+}
+
+heteroscedasticite(669.99, 412)
+
+#[1] 1.626189= > Seuil de 1, 5,  surdispersion des résidus
+
+###ANALYSE 
+Anova (mod2)
+
+
+
+
+
+
 
 ################################################################################
 ### FONCTION  : 
