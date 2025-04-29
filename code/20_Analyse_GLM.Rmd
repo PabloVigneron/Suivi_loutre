@@ -36,7 +36,7 @@ library(MASS)
 ```{r}
 base_tregor <-
   readxl::read_xlsx(path = '../raw_data/export_suiviloutrelocal_telecharger_csv_2025_04_03_10h58m17.xlsx') %>%
-  select(
+  dplyr::select(
     id_dataset,
     code_secteur,
     code_site,
@@ -234,10 +234,11 @@ mod2.1 <- glm(nb_ep_tot~annee, family=poisson(link = "identity"), data = base_j2
 ```{r, fig.cap="",fig.width = 7, fig.height = 5}
 plotresid(mod2.1)
 ```
+
 La relation semble linéaire, il n’y a aucune structuration dans les résidus
 autrement dit indépendance entre les valeurs prédites (𝜇) et les résidus (𝜀) ??
 
-Ne change pas grand chose entre mod2 et mod2.2, on conserve mod2
+Ne change pas grand chose entre mod2 et mod2.1, on conserve mod2
 
 
 * **Vérification de la relation entre mu et v**
@@ -261,6 +262,7 @@ heteroscedasticite(669.99, 412)
 Problème de surdispersion (hétéroscédasticité différente de l’attendu), 
 la relation entre mu et v n'est pas vérifié.
 
+* **Vérification de la relation entre mu et v**
 
 ```{r,fig.cap="",fig.width = 9, fig.height = 6}
 summary(mod2.1)
@@ -277,7 +279,7 @@ heteroscedasticite(671.67, 412)
 #### **Remplacer la loi de Poisson par une loi binomiale négative**
 
 ```{r}
-mod2.2 <- MASS::glm.nb(nb_ep_tot~annee, family= binomial(link = "log"), data = base_j25)
+mod2.2 <- MASS::glm.nb(nb_ep_tot~annee, link = log, data = base_j25)
 
 ```
  
@@ -289,6 +291,19 @@ plotresid(mod2.2)
 ```
 
 
+* **Vérification de la relation entre mu et v**
+
+```{r}
+summary(mod2.2)
+```
+```{r}
+heteroscedasticite <- function(deviance_residuelle, dl_residuelle){
+  deviance_residuelle /dl_residuelle
+}
+heteroscedasticite(233.70, 412)
+```
+=> Supérieur au seuil de 0,5 (on est en dessous du seuil de 1), sousdispersion des résidus
+
 
 
 ### Exploitation du modèle
@@ -296,4 +311,7 @@ plotresid(mod2.2)
 Anova (mod2)
 
 ```
+```{r}
+Anova (mod2.2)
 
+```
