@@ -29,6 +29,8 @@ library(RVAideMemoire)
 library(emmeans)
 library(car)
 library(MASS)
+library(lme4)
+library(MuMIn)
 ```
 
 # Importation des données - Secteur J25 : Petit Tregor 
@@ -67,7 +69,23 @@ base_tregor <-
          code_secteur != "J401")
 ```
 
+# Représentation cartographique des secteurs d'étude et des sites correspondants
 
+```{r, eval = TRUE, fig.width = 9, fig.height = 6}
+sites_geo <- base_tregor %>% 
+  dplyr::select(nom_site:y_l93,
+         statut_observation,
+         code_secteur,
+         annee) %>% 
+  sf::st_as_sf(coords = c("x_l93", "y_l93"),
+               crs = sf::st_crs(2154))
+ 
+mapview::mapview(sites_geo, 
+                 zcol = "code_secteur",
+                 col.regions = c("FR5300006" = "indianred1", 
+                                 "J25" = "darkseagreen3") 
+)
+```
 ```{r}
 base_j25 <- base_tregor %>%
   filter(code_secteur == "J25") %>%
@@ -315,3 +333,111 @@ Anova (mod2)
 Anova (mod2.2)
 
 ```
+##  Modèle 3 : Le statut d'observation depend de l'année
+
+
+### Construction du modèle 
+
+
+#### **Definition des types de variables**
+
++ **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
++ **Variable explicative** : 
++ Annee, variable qualitative ordinale 
++ Site, variable qualitative ordinale 
+
+#### **Choix de la distribution de référence**
+
+ => **Distribution Binomiale**
+
+
+#### **Choix de la fonction de lien**
+
+=> **logit** 
+
+#### **Modèle mixte**
+
+
+```{r}
+mod3 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25)
+```
+
+###  Vérification de l’ajustement du modèle aux données
+
+
+* **Vérification de la linéarité du modèle**
+
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod3)
+
+```
+
+La relation ne semble pas linéaire, il y a une structuration dans les résidus
+autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (𝜀).
+
+#### **Remplacer la fonction de lien "logit" par "probit"**
+
+```{r}
+mod3.1 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_j25)
+```
+
+
+**Vérification de l'indépendance des résidus**
+
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod3.1)
+
+```
+
+La relation ne semble pas linéaire, il y a une structuration dans les résidus
+autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (𝜀).
+
+#### **Remplacer la fonction de lien "logit" par "cauchit"**
+
+```{r}
+mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = base_j25)
+```
+
+
+**Vérification de l'indépendance des résidus**
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+
+plotresid(mod3.2)
+
+```
+
+La relation semble linéaire, il n’y a pas une structuration dans les résidus
+autrement dit indépendance entre les valeurs prédites (𝜇) et les résidus (𝜀).
+
+
+### Capacité explicative globale
+
+
+r.squaredGLMM(mod3.2)
+
+**Valeur des coefficients (estimate)**
+
+```{r}
+summary(mod3.2)
+```
+Année est une co-variable, on regarde  les valeurs des coefficients "Estimate" (valeur du parametre donc de la pente). La relation est donc à la diminution du taux de présence par site et significative, **5.306e-02 < 0,05**.
+
+
+### Exploitation du modèle
+
+#### **Test de Wald**
+
+```{r}
+Anova(mod3.2)
+```
+
+#### **Comparaisons multiples**
+
+**Méthode des moyennes marginales estimées, ou Estimated Marginal Means (EMMeans)**
+
+
+
+pentes<-emtrends(mod3.2,~facteur,var="covariable")1
+```
+
+Remarque : PAS OUBLIER DE REVENIR à la REPONSE

@@ -32,7 +32,7 @@ library(knitr)
 ```{r}
 base_tregor <-
   readxl::read_xlsx(path = '../raw_data/export_suiviloutrelocal_telecharger_csv_2025_04_03_10h58m17.xlsx') %>%
-  select(
+  dplyr::select(
     id_dataset,
     code_secteur,
     code_site,
@@ -68,7 +68,7 @@ base_tregor <-
 
 ```{r, eval = TRUE, fig.width = 9, fig.height = 6}
 sites_geo <- base_tregor %>% 
-  select(nom_site:y_l93,
+  dplyr::select(nom_site:y_l93,
          statut_observation,
          code_secteur,
          annee) %>% 
@@ -89,7 +89,7 @@ base_j25 <- base_tregor %>%
   filter(code_secteur == "J25")
 
 sites_coord <- base_j25 %>%
-  select(code_site, x_l93, y_l93) %>%
+  dplyr::select(code_site, x_l93, y_l93) %>%
   distinct()
 
 sites_all_years <- expand_grid(
@@ -144,8 +144,8 @@ summary(base_tregor$date_visite)
 ```
 
 
-```{r, fig.cap="Nombre d'observations de présence de la loutre en fonction des années",fig.width = 9, fig.height = 6}
-base_tregor %>%
+```{r, fig.cap="Nombre d'observations de présence de la loutre en fonction des années",fig.width = 7, fig.height = 5}
+base_j25 %>%
   filter(statut_observation == 'Présent') %>%
   ggplot(aes(x = annee)) +
   geom_bar(fill = "black") +
@@ -159,8 +159,8 @@ base_tregor %>%
   
 ```
 
-```{r,fig.cap="Nombre d'observations de présence et absence de la loutre en fonction des années",fig.width = 9, fig.height = 6}
-base_tregor %>%
+```{r,fig.cap="Nombre d'observations de présence et absence de la loutre en fonction des années",fig.width = 7, fig.height = 5}
+base_j25 %>%
   ggplot(aes(x = annee, fill = statut_observation)) +
   geom_bar() +
   scale_fill_manual(values = c(
@@ -222,8 +222,8 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
 ```
 
 
-```{r,fig.cap="Pourcentages de présence de la loutre en fonction des années",fig.width = 9, fig.height = 6}
-base_tregor %>%
+```{r,fig.cap="Pourcentages de présence de la loutre en fonction des années",fig.width = 7, fig.height = 5}
+base_j25 %>%
   group_by(annee) %>%
   summarise(
     n_obs = n(),
