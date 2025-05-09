@@ -13,6 +13,17 @@ output:
 knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
+# Problématique du stage 
+
+Je travaille sur un jeu de données d’un protocole de suivi de la loutre d’Europe sur 10 ans (environ 400 donnée), sur le bassin-versant côtier entre la baie de Lannion et Morlaix (**Secteur j25**).
+
+Le protocole a pour but de s’appliquer à une échelle locale, d’un bassin-versant en considérant un secteur de 60 sites sélectionnés favorable au marquage (épreinte) de la loutre. 
+
+Un passage est effectué chaque année au printemps.
+
+L’objectif de mon stage est de **déterminer si ce protocole permet de détecter des variations temporelles de l’intensité de marquage, à l’échelle des agrégats de 60 sites**. En cela, il serait un indicateur de l’évolution de l’état de la population, c’est le postulat de départ.
+
+
 # Importation des packages
 
 ```{r}
@@ -76,10 +87,16 @@ base_j25 <- base_tregor %>%
   mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
 ```
 
-# Représentation cartographique des secteurs d'étude et des sites correspondants
+
+```{r}
+summary(base_j25)
+```
+
+# Représentation cartographique du secteur d'étude et des sites correspondants
 
 ```{r, fig.cap="",fig.width = 7, fig.height = 5}
 sites_geo <- base_tregor %>% 
+  filter(code_secteur == "J25") %>%
   dplyr::select(nom_site:y_l93,
          statut_observation,
          code_secteur,
@@ -95,49 +112,50 @@ mapview::mapview(sites_geo,
 ```
 
 
-##  Modèle 1 : Le statut d'observation depend de l'année
+
+#  Modèle 1 : Le statut d'observation depend de l'année
 
 
-### Construction du modèle 
+## Construction du modèle 
 
 
-#### **Definition des types de variables**
+### **Definition des types de variables**
 
 + **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
 + **Variable explicative** : 
-+ Annee, variable qualitative ordinale 
++ Annee, variable quantitative 
 + Site, variable qualitative ordinale 
 
-#### **Choix de la distribution de référence**
+### **Choix de la distribution de référence**
 
  => **Distribution Binomiale**
 
 
-#### **Choix de la fonction de lien**
+### **Choix de la fonction de lien**
 
 => **logit** 
 
-#### **Modèle mixte**
+### **Modèle mixte**
 
 
 ```{r}
-mod3 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25)
+mod3.0 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+##  Vérification de l’ajustement du modèle aux données
 
 
 * **Vérification de la linéarité du modèle**
 
 ```{r, fig.cap="",fig.width = 7, fig.height = 5}
-plotresid(mod3)
+plotresid(mod3.0)
 
 ```
 
 La relation ne semble pas linéaire, il y a une structuration dans les résidus
 autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (𝜀).
 
-#### **Remplacer la fonction de lien "logit" par "probit"**
+### **Remplacer la fonction de lien "logit" par "probit"**
 
 ```{r}
 mod3.1 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_j25)
@@ -154,7 +172,7 @@ plotresid(mod3.1)
 La relation ne semble pas linéaire, il y a une structuration dans les résidus
 autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (𝜀).
 
-#### **Remplacer la fonction de lien "logit" par "cauchit"**
+### **Remplacer la fonction de lien "logit" par "cauchit"**
 
 ```{r}
 mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = base_j25)
@@ -172,36 +190,32 @@ La relation semble linéaire, il n’y a pas une structuration dans les résidus
 autrement dit indépendance entre les valeurs prédites (𝜇) et les résidus (𝜀).
 
 
-### Capacité explicative globale
+## Capacité explicative globale
 
+** La fonction ne semble pas vouloir fonctionner lorsque la fonction de lien "cauchit" est utilisé 
 
-r.squaredGLMM(mod3.2)
+```{r}
+r.squaredGLMM(mod3.0)
+
+```
+```{r}
+r.squaredGLMM(mod3.1)
+
+```
+
 
 **Valeur des coefficients (estimate)**
 
 ```{r}
 summary(mod3.2)
 ```
-Année est une co-variable, on regarde  les valeurs des coefficients "Estimate" (valeur du parametre donc de la pente). La relation est donc à la diminution du taux de présence par site et significative, 5.306e-02 < 0,05.
+Année est une co-variable, on regarde  les valeurs des coefficients "Estimate" (valeur du parametre donc de la pente). La relation est donc à la **diminution du taux de présence par site** et **significative**, 5.306e-02 < 0,05.
 
 
-### Exploitation du modèle
+## Exploitation du modèle
 
-#### **Test de Wald**
+### **Test de Wald**
 
 ```{r}
 Anova(mod3.2)
 ```
-
-#### **Comparaisons multiples**
-
-**Méthode des moyennes marginales estimées, ou Estimated Marginal Means (EMMeans)**
-
-
-
-pentes<-emtrends(mod3.2,~facteur,var="covariable")1
-```
-
-Remarque : PAS OUBLIER DE REVENIR à la REPONSE
-
-
