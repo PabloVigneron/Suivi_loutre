@@ -60,11 +60,6 @@ stringi::stri_enc_toascii(texte)
 
 
 ################################################################################
-
-head (base_tregor)%>%
-  kable(format = "latex")
-
-################################################################################
 # Create a map with all sites 
 sites_geo <- base_tregor %>% 
   select(nom_site:y_l93,
@@ -82,22 +77,18 @@ mapview::mapview(sites_geo,
 ################################################################################
 # Create a map with all presence and absence of the otters between years
 
-# Étape 1 : filtrer dès le début le secteur J25
 base_j25 <- base_tregor %>%
   filter(code_secteur == "J25")
 
-# Étape 2 : récupérer les coordonnées uniques des sites de J25
 sites_coord <- base_j25 %>%
   select(code_site, x_l93, y_l93) %>%
   distinct()
 
-# Étape 3 : créer toutes les combinaisons site × année pour J25
 sites_all_years <- expand_grid(
   code_site = unique(base_j25$code_site),
   annee = unique(base_j25$annee)
 )
 
-# Étape 4 : joindre les données d'observation + coordonnées
 sites_status_full <- sites_all_years %>%
   left_join(base_j25 %>% 
               select(code_site, annee, statut_observation),
@@ -111,14 +102,11 @@ sites_status_full <- sites_all_years %>%
     )
   )
 
-# Étape 5 : convertir en sf
 sites_j25_sf <- sites_status_full %>%
   st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
 
-# Étape 6 : générer le fond de carte centré sur les sites
 basemap <- get_tiles(sites_j25_sf, provider = "OpenStreetMap", crop = TRUE, zoom = 12)
 
-# Étape 7 : générer la carte
 ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_sf(data = sites_j25_sf, aes(color = statut_final), size = 1.5, alpha = 0.9) +
@@ -217,24 +205,6 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
     panel.border = element_rect(color = "black", fill = NA),
     legend.background = element_rect(fill = "grey95", color = "black")
   )
-##################################################################################
-
-
-
-
-
-
-
-
-
-
-################################################################################
-### Est ce que les conditions de prospection influe sur la présence de l'espèce ?
-
-
-
-################################################################################
-### Nombre d'épreintes total sites en fonction des années ?
 
 
 

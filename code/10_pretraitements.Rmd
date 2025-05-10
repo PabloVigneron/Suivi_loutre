@@ -120,7 +120,7 @@ ggplot() +
   geom_sf(data = sites_j25_sf, aes(color = statut_final), size = 1.5, alpha = 0.9) +
   facet_wrap(~ annee) +
   scale_color_manual(
-    values = c("Présent" = "darkseagreen3", "Absent" = "indianred1", "Non prospecté" = "grey20")
+    values = c("Présent" = "darkseagreen3", "Absent" = "indianred1", "Non prospecté" = "grey40")
   ) +
   labs(
     title = "Sites de prospection, Petit Trégor - Secteur Petit Tregor (J25)",

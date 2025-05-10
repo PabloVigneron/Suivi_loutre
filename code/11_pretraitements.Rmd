@@ -1,0 +1,155 @@
+---
+title: "Loutre"
+author: "Pablo"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+#  bookdown::word_docume
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Importation des packages
+
+```{r}
+library(tidyverse)
+library(gridExtra)
+library(lubridate)
+library(sf)
+library(mapview)
+library(maptiles)
+library(tidyterra)
+library(kableExtra)
+library(knitr)
+library(janitor)
+```
+
+# Importation des données - Secteur FR : Lieu Greve
+
+```{r}
+base_greve_raw <-
+  readxl::read_xls(path = '../raw_data/Suivi loutre Lieue de Greve octobre 24.xls',
+                   skip = 1,
+                   col_names = T) 
+```
+
+
+```{r}
+base_greve <- base_greve_raw %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    point_n,
+    itineraire,
+    x,
+    y,
+    commune,
+    cours_deau,
+    bilan_choix_du_site,
+    epreinte_oct20,
+    date_suivi_fev_mars21,
+    marquage_suivi_fev_mars21,
+    date_suivi_oct21,
+    marquage_suivi_oct21,
+    observateurs_suivi_oct21,
+    date_suivi_mars22,
+    marquage_suivi_mars22,
+    observateurs_suivi_mars22,
+    date_suivi_decembre22,
+    marquage_suivi_decembre22,
+    observateurs_suivi_decembre22,
+    date_suivi_mars23,
+    marquage_suivi_mars23,
+    observateurs_suivi_mars23,
+    date_suivi_octobre_24,
+    marquage_suivi_octobre_24,
+    observateurs_suivi_octobre_24
+  ) %>%
+  dplyr::rename(
+    code_site = point_n,
+    y = x,
+    x = y,
+    marquage_suivi_oct_20 = epreinte_oct20
+  ) %>%
+  dplyr::mutate(date_suivi_octobre_24 = as.Date(as.numeric(date_suivi_octobre_24), origin = "1899-12-30")) %>%
+  dplyr::mutate(date_suivi_oct_20 = as.Date("2020-10-01")) %>%
+  dplyr::mutate(across(
+    c(
+      date_suivi_fev_mars21,
+      date_suivi_oct21,
+      date_suivi_mars22,
+      date_suivi_decembre22,
+      date_suivi_mars23,
+      date_suivi_oct_20
+    ),
+    ~ as.POSIXct(.x)
+  )) %>%
+  mutate(across(starts_with("marquage_suivi_"), as.character)) %>%
+  tidyr::pivot_longer(
+    cols = c(
+      date_suivi_oct_20,
+      marquage_suivi_oct_20,
+      date_suivi_fev_mars21,
+      marquage_suivi_fev_mars21,
+      date_suivi_oct21,
+      marquage_suivi_oct21,
+      observateurs_suivi_oct21,
+      date_suivi_mars22,
+      marquage_suivi_mars22,
+      observateurs_suivi_mars22,
+      date_suivi_decembre22,
+      marquage_suivi_decembre22,
+      observateurs_suivi_decembre22,
+      date_suivi_mars23,
+      marquage_suivi_mars23,
+      observateurs_suivi_mars23,
+      date_suivi_octobre_24,
+      marquage_suivi_octobre_24,
+      observateurs_suivi_octobre_24
+    ),
+    names_to = c(".value", "session"),
+    names_pattern = "(date_suivi|marquage_suivi|observateurs_suivi)_(.*)"
+  ) %>%
+  rename(
+    date_visite = date_suivi,
+    statut_presence = marquage_suivi,
+    observateurs = observateurs_suivi
+  ) %>%
+  mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    code_site = as.factor(code_site),
+    statut_presence = ifelse(
+      as.character(statut_presence) >= 1  |
+        tolower(as.character(statut_presence)) ==  'oui',
+      1,
+      0
+    ),
+    statut_presence = as.factor (statut_presence),
+    date_visite = as.Date (ifelse(
+      date_visite == as.Date("2020-10-01"), NA, date_visite
+    )),
+    jour = ifelse(jour == 1, NA, jour)
+  ) %>%
+  dplyr::filter(!is.na(code_site))
+
+```
+
+
+Correction : 
+- X et Y sont inversé
+- Supprimer la dernière ligne + ligne 72
+- si statut_présence = 'oui' ou >= 1 , =1 sinon = 0 
+- pb date octobre 2024
+ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
+
+
+
+```{r}
+summary(base_greve)
+```
+
