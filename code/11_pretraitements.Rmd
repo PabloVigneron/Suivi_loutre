@@ -1,5 +1,5 @@
 ---
-title: "Loutre"
+title: "Loutre_analyse_Lieu_de_Greve"
 author: "Pablo"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
@@ -34,6 +34,11 @@ library(lme4)
 library(MuMIn)
 library(stringr)
 library(stringi)
+library(terra)
+library(ggspatial)
+library(slippymath)     
+library(rosm)           
+library(tidyterra) 
 ```
 
 
@@ -46,6 +51,7 @@ base_greve_raw <-
                    col_names = T) 
 ```
 
+## Correction des données - Mise en forme - Secteur : Lieu Greve
 
 ```{r}
 base_greve <- base_greve_raw %>%
@@ -138,12 +144,13 @@ base_greve <- base_greve_raw %>%
       tolower(statut_presence) %in% c("non", "peut_etre") ~ 0,
       TRUE ~ 0
     ),
+    statut_observation = ifelse(statut_presence == 1, "Présent", "Absent"),
     statut_presence = as.factor (statut_presence),
     jour = ifelse(jour == 1, NA, jour),
     annee = ifelse(annee == 2002, 2021, annee),
     y = str_replace_all(y, ",", ""),
     x = str_replace_all(x, " ", ""),
-    passage = ifelse(mois == "3" | mois == "2", 1, 2),
+    passage = ifelse(mois <= 6, 1, 2),
     date_visite = ifelse(
       date_visite == as.Date("2002-02-24"),
       "2021-02-24",
@@ -168,14 +175,27 @@ base_greve <- base_greve_raw %>%
 
 ```
 
+# Importation des données 2025 - Secteur : Lieu Greve
 
+```{r}
+base_greve_raw_25 <-
+  readr::read_csv('../raw_data/AnyConv.com__sites_prospection_LieuGreve.csv',
+                   col_names = T) 
+```
+
+A corriger : 
+
+- Le code_site 9 et 121 semble mal positionné : liée au manque de précision des coordonnées GPS
 
 Correction : 
+
 - X et Y sont inversé
 - Supprimer la dernière ligne + ligne 72
-- si statut_présence = 'oui' ou >= 1 , =1 sinon = 0 
+- si statut_présence = 'oui' ou >= 1 , = 1 sinon = 0 
 - pb encodage date octobre 2024
-- session fev_mars 2021 --> noté 2002 corriger 
+- session fev_mars 2021 -> noté 2002 -> corriger 
+- La modalité "peut-être" tranformé en "0" donc absent
+
 ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
 
 
@@ -190,202 +210,326 @@ sites_geo <- base_greve %>%
     x = as.numeric(x)
   ) %>%
   dplyr::filter(!is.na(x) | !is.na(y)) %>%
-  dplyr::select(commune, statut_presence, annee, x, y) %>%
+  dplyr::select(commune, code_site, statut_presence, annee, passage, x, y) %>%
   sf::st_as_sf(coords = c("x", "y"), crs = sf::st_crs(4326)) %>%
   st_transform(crs = 2154)
 
 mapview::mapview(sites_geo, col.regions =  "darkseagreen3")
 ```
-# Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps)
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7}
+# Statistiques descriptives - Secteur Lieu de Greve
+
+## Sites de prospection - Secteur Lieu de Greve - 1 er passage (Printemps)
+
+```{r, fig.cap=" Statut de présence de la loutre sur les sites de prospection en fonction des années - Secteur Lieu de Greve - 1 er passage (Printemps)", fig.width = 9, fig.height = 8}
+
+base_greve_spring <- base_greve %>%
+  filter(passage == 1)
+
+sites_coord <- base_greve_spring %>%
+  dplyr::select(code_site, x, y) %>%
+  distinct()
+
+sites_all_years <- expand_grid(
+  code_site = unique(base_greve_spring$code_site),
+  annee = unique(base_greve_spring$annee)
+)
+
+sites_status_full <- sites_all_years %>%
+  left_join(
+    base_greve_spring %>%
+      dplyr::select(code_site, annee, statut_presence),
+    by = c("code_site", "annee")
+  ) %>%
+  left_join(sites_coord, by = "code_site") %>%
+  mutate(
+    statut_observation = case_when(
+      statut_presence == "1" ~ "Présent",
+      statut_presence == "0" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    ),
+    statut_final = factor(
+      statut_observation,
+      levels = c("Présent", "Absent", "Non prospecté")
+    )
+  )
+
+
+sites_valid <- sites_status_full %>%
+  filter(!is.na(x) & !is.na(y)) %>%
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+bbox <- st_bbox(sites_valid)
+bbox_expanded <- bbox
+expand_factor <- 0.05
+bbox_expanded["xmin"] <- bbox["xmin"] - expand_factor
+bbox_expanded["xmax"] <- bbox["xmax"] + expand_factor
+bbox_expanded["ymin"] <- bbox["ymin"] - expand_factor
+bbox_expanded["ymax"] <- bbox["ymax"] + expand_factor
+
+bbox_polygon <- st_as_sfc(st_bbox(bbox_expanded), crs = 4326)
+
+basemap <- get_tiles(
+  x = bbox_polygon,
+  provider = "CartoDB.Positron",
+  crop = TRUE,
+  zoom = 12
+)
+
+sites_sf_all <- sites_status_full %>%
+  filter(!is.na(x) & !is.na(y)) %>%
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+ggplot() +
+  geom_spatraster_rgb(data = basemap) +
+  geom_sf(
+    data = sites_sf_all,
+    aes(color = statut_final),
+    size = 2.5,
+    alpha = 0.95
+  ) +
+  facet_wrap(~ annee, ncol = 3) +
+  scale_color_manual(
+    values = c(
+      "Présent" = "darkseagreen3",
+      "Absent" = "indianred1",
+      "Non prospecté" = "grey40"
+    )
+  ) +
+  labs(title = "Sites de prospection - Lieu de Greve - Passage de printemps", color = "Statut d'observation") +
+  coord_sf(expand = FALSE) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    strip.background = element_rect(fill = "grey90"),
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    legend.title = element_text(size = 8),
+    legend.text = element_text(size = 7)
+  )
+```
+
+## Sites de prospection - Secteur Lieu de Greve - 2 e passage (hivernal)
+
+```{r, fig.cap=" Statut de présence de la loutre sur les sites de prospection en fonction des années - Secteur Lieu de Greve - 2 e passage (Hivernal)", fig.width = 9, fig.height = 8}
+base_greve_winter <- base_greve %>%
+  filter(passage == 2)
+
+sites_coord <- base_greve_winter %>%
+  dplyr::select(code_site, x, y) %>%
+  distinct()
+
+sites_all_years <- expand_grid(
+  code_site = unique(base_greve_winter$code_site),
+  annee = unique(base_greve_winter$annee)
+)
+
+sites_status_full <- sites_all_years %>%
+  left_join(
+    base_greve_winter %>%
+      dplyr::select(code_site, annee, statut_presence),
+    by = c("code_site", "annee")
+  ) %>%
+  left_join(sites_coord, by = "code_site") %>%
+  mutate(
+    statut_observation = case_when(
+      statut_presence == "1" ~ "Présent",
+      statut_presence == "0" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    ),
+    statut_final = factor(
+      statut_observation,
+      levels = c("Présent", "Absent", "Non prospecté")
+    )
+  )
+
+sites_valid <- sites_status_full %>%
+  filter(!is.na(x) & !is.na(y)) %>%
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+bbox <- st_bbox(sites_valid)
+bbox_expanded <- bbox
+expand_factor <- 0.05
+bbox_expanded["xmin"] <- bbox["xmin"] - expand_factor
+bbox_expanded["xmax"] <- bbox["xmax"] + expand_factor
+bbox_expanded["ymin"] <- bbox["ymin"] - expand_factor
+bbox_expanded["ymax"] <- bbox["ymax"] + expand_factor
+
+bbox_polygon <- st_as_sfc(st_bbox(bbox_expanded), crs = 4326)
+
+basemap <- get_tiles(
+  x = bbox_polygon,
+  provider = "CartoDB.Positron",
+  crop = TRUE,
+  zoom = 12
+)
+
+sites_sf_all <- sites_status_full %>%
+  filter(!is.na(x) & !is.na(y)) %>%
+  st_as_sf(coords = c("x", "y"), crs = 4326)
+
+ggplot() +
+  geom_spatraster_rgb(data = basemap) +
+  geom_sf(
+    data = sites_sf_all,
+    aes(color = statut_final),
+    size = 2.5,
+    alpha = 0.95
+  ) +
+  facet_wrap(~ annee, ncol = 4) +
+  scale_color_manual(
+    values = c(
+      "Présent" = "darkseagreen3",
+      "Absent" = "indianred1",
+      "Non prospecté" = "grey40"
+    )
+  ) +
+  labs(title = "Sites de prospection - Lieu de Greve - Passage hivernal", color = "Statut d'observation") +
+  coord_sf(expand = FALSE) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    strip.background = element_rect(fill = "grey90"),
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    legend.title = element_text(size = 8),
+    legend.text = element_text(size = 7)
+  )
+```
+
+## Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps)
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) ",fig.width = 9, fig.height = 7}
 
 
 base_greve_spring <- base_greve %>%
-  mutate(annee = year(date_visite)) %>%
   dplyr::filter(passage == 1)
-  
 
-all_combos <- expand_grid(code_site = unique(base_greve$code_site),
-                          annee = unique(base_greve$annee))
+annees_completes <- 2020:2024
 
-obs_complete <- all_combos %>%
-  left_join(base_greve %>% 
-              dplyr::select(code_site, annee, statut_presence),
-            by = c("code_site", "annee")) %>%
-  dplyr::mutate(
-    statut_final = case_when(
-      statut_presence == "1" ~ "1",
-      statut_presence == "0" ~ "0",
-      TRUE ~ "Non prospecté"
-    )
-  )
-
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
-  geom_tile(color = "white", linewidth = 0.3) +
-  scale_fill_manual(
-    values = c(
-      "1" = "darkseagreen3",
-      "0" = "indianred1",
-      "Non prospecté" = "grey80"
-    )
-  ) +
-  labs(x = "Année",
-       y = "Site",
-       title = "Suivi des sites de prospection - Secteur Lieu greve",
-       fill = "Statut d'observation") +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    panel.border = element_rect(color = "black", fill = NA),
-    legend.background = element_rect(fill = "grey95", color = "black")
-  )
-```
-
-# Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver)
-
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7}
-
-
-base_greve_winter <- base_greve %>%
-  dplyr::filter(passage == 2)%>%
-  mutate(annee = year(date_visite)) 
-  
-
-all_combos <- expand_grid(code_site = unique(base_greve$code_site),
-                          annee = unique(base_greve$annee))
-
-obs_complete <- all_combos %>%
-  left_join(base_greve %>% 
-              dplyr::select(code_site, annee, statut_presence),
-            by = c("code_site", "annee")) %>%
-  dplyr::mutate(
-    statut_final = case_when(
-      statut_presence == "1" ~ "1",
-      statut_presence == "0" ~ "0",
-      TRUE ~ "Non prospecté"
-    )
-  )
-
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
-  geom_tile(color = "white", linewidth = 0.3) +
-  scale_fill_manual(
-    values = c(
-      "1" = "darkseagreen3",
-      "0" = "indianred1",
-      "Non prospecté" = "grey80"
-    )
-  ) +
-  labs(x = "Année",
-       y = "Site",
-       title = "Suivi des sites de prospection - Secteur Lieu greve",
-       fill = "Statut d'observation") +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    panel.border = element_rect(color = "black", fill = NA),
-    legend.background = element_rect(fill = "grey95", color = "black")
-  )
-```
-
-###
-
-
-```{r}
-unique(base_greve$statut_presence)
-
-base_greve_clean <- base_greve %>%
-  mutate(
-    statut_presence = trimws(statut_presence)  # supprime les espaces
-  )
 all_combos <- expand_grid(
-  code_site = unique(base_greve_clean$code_site),
-  annee = unique(base_greve_clean$annee),
-  passage = unique(base_greve_clean$passage)
+  code_site = unique(base_greve_spring$code_site),
+  annee = annees_completes
 )
 
 obs_complete <- all_combos %>%
   left_join(
-    base_greve_clean %>% dplyr::select(code_site, annee, passage, statut_presence),
-    by = c("code_site", "annee", "passage")
+    base_greve_spring %>%
+      dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
   ) %>%
-  mutate(
+  dplyr::mutate(
     statut_final = case_when(
-      statut_presence == "1" ~ "Présent",
-      statut_presence == "0" ~ "Absent",
-      is.na(statut_presence) ~ "Non prospecté"
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
     )
   )
-ggplot(obs_complete, aes(x = passage, y = code_site, fill = statut_final)) +
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
-  scale_fill_manual(
-    values = c(
-      "Présent" = "darkseagreen3",
-      "Absent" = "indianred1",
-      "Non prospecté" = "grey80"
-    ),
-    drop = FALSE  # force à afficher toutes les catégories même si manquantes
-  ) +
-  facet_wrap(~ annee, ncol = 1) +
-  labs(
-    x = "Passage",
-    y = "Site",
-    title = "Suivi des passages par site et année - Secteur Lieu Grève",
-    fill = "Statut d'observation"
-  ) +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1",
+    "Non prospecté" = "grey80"
+  )) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Suivi des sites de prospection - Secteur Lieu greve, 1er passage (printemps)",
+       fill = "Statut d'observation") +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA),
     legend.background = element_rect(fill = "grey95", color = "black")
   )
+```
+
+## Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver)
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver) ",fig.width = 9, fig.height = 7}
 
 
+base_greve_winter <- base_greve %>%
+  dplyr::filter(passage == 2)
+
+annees_completes <- 2020:2024
+
+all_combos <- expand_grid(
+  code_site = unique(base_greve_winter$code_site),
+  annee = annees_completes 
+)
+
+obs_complete <- all_combos %>%
+  left_join(
+    base_greve_winter %>%
+      dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
+  dplyr::mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1",
+    "Non prospecté" = "grey80"
+  )) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Suivi des sites de prospection - Secteur Lieu greve, 2e passage (hiver)", 
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
 ```
 
 
-##  Modèle 1 : Le statut d'observation depend de l'année pour le passage printemps
+#  Modèle 1 : Le statut d'observation depend de l'année pour le passage printemps
 
 ```{r}
-base_greve_year_factor <- base_greve %>%
+greve_year_factor_spring <- base_greve %>%
   mutate(annee = as.factor(annee))%>%
   filter(passage == 1)
 
 ```
 
-```{r}
-summary(base_greve_year_factor)
-
-```
+## Construction du modèle 
 
 
-### Construction du modèle 
-
-
-#### **Definition des types de variables**
+### **Definition des types de variables**
 
 + **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
 + **Variable explicative** : 
 + Annee, variable qualitative ordinale 
 + Site, variable qualitative ordinale 
 
-#### **Choix de la distribution de référence**
+### **Choix de la distribution de référence**
 
  => **Distribution Binomiale**
 
 
-#### **Choix de la fonction de lien**
+### **Choix de la fonction de lien**
 
 => **logit** 
 
-#### **Modèle mixte**
+### **Modèle mixte**
 
 
 ```{r}
-mod1.0<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_greve_year_factor)
+mod1.0<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = greve_year_factor_spring)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+##  Vérification de l’ajustement du modèle aux données
 
 
 **Vérification de l'indépendance des résidus**
@@ -396,12 +540,12 @@ plotresid(mod1.0)
 ```
 
 
-#### **Remplacer la fonction de lien "logit" par "probit"**
+### **Remplacer la fonction de lien "logit" par "probit"**
 ```{r}
-mod1.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_greve_year_factor)
+mod1.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = greve_year_factor_spring)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+##  Vérification de l’ajustement du modèle aux données
 
 
 **Vérification de l'indépendance des résidus**
@@ -428,58 +572,57 @@ r.squaredGLMM(mod1.1)
 ```
 
 
-### Exploitation du modèle
+## Exploitation du modèle
 
-#### **Test de Wald**
+### **Test de Wald**
 
 ```{r}
 Anova(mod1.1)
 
 ```
 
+```{r}
+IC_mod1.1 <- confint(mod1.1, oldNames = FALSE, method = "boot")
+```
 
-##  Modèle 2 : Le statut d'observation depend de l'année pour le passage hiver
+
+#  Modèle 2 : Le statut d'observation depend de l'année pour le passage hiver
 
 ```{r}
-base_greve_year_factor <- base_greve %>%
+greve_year_factor_winter <- base_greve %>%
   mutate(annee = as.factor(annee))%>%
   filter(passage == 2)
 
 ```
 
-```{r}
-summary(base_greve_year_factor)
 
-```
+## Construction du modèle 
 
 
-### Construction du modèle 
-
-
-#### **Definition des types de variables**
+### **Definition des types de variables**
 
 + **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
 + **Variable explicative** : 
 + Annee, variable qualitative ordinale 
 + Site, variable qualitative ordinale 
 
-#### **Choix de la distribution de référence**
+### **Choix de la distribution de référence**
 
  => **Distribution Binomiale**
 
 
-#### **Choix de la fonction de lien**
+### **Choix de la fonction de lien**
 
 => **logit** 
 
-#### **Modèle mixte**
+### **Modèle mixte**
 
 
 ```{r}
-mod2.0<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_greve_year_factor)
+mod2.0<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = greve_year_factor_winter)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+## Vérification de l’ajustement du modèle aux données
 
 
 **Vérification de l'indépendance des résidus**
@@ -490,12 +633,12 @@ plotresid(mod2.0)
 ```
 
 
-#### **Remplacer la fonction de lien "logit" par "probit"**
+### **Remplacer la fonction de lien "logit" par "probit"**
 ```{r}
-mod2.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_greve_year_factor)
+mod2.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = greve_year_factor_winter)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+## Vérification de l’ajustement du modèle aux données
 
 
 **Vérification de l'indépendance des résidus**
@@ -522,9 +665,9 @@ r.squaredGLMM(mod2.1)
 ```
 
 
-### Exploitation du modèle
+## Exploitation du modèle
 
-#### **Test de Wald**
+### **Test de Wald**
 
 ```{r}
 Anova(mod2.1)
@@ -534,10 +677,10 @@ Anova(mod2.1)
 
 
 
-##  Modèle 3 : Le statut d'observation depend de l'année et de l'observateurs
+#  Modèle 3 : Le statut d'observation depend de l'année et de l'observateurs
 
 ```{r}
-base_greve_year_factor <- base_greve%>%
+greve_year_factor_obs <- base_greve%>%
   mutate(annee = as.factor(annee), 
          passage = as.factor(passage))%>%
   dplyr::select(
@@ -551,37 +694,34 @@ base_greve_year_factor <- base_greve%>%
 
 ```
 
-```{r}
-summary(base_greve_year_factor)
-
-```
-### Construction du modèle 
+## Construction du modèle 
 
 
-#### **Definition des types de variables**
+### **Definition des types de variables**
 
 + **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
 + **Variable explicative** : 
 + Annee, variable qualitative ordinale 
 + Site, variable qualitative ordinale 
 + Observateurs, variable qualitative nominale
-#### **Choix de la distribution de référence**
+
+### **Choix de la distribution de référence**
 
  => **Distribution Binomiale**
 
 
-#### **Choix de la fonction de lien**
+### **Choix de la fonction de lien**
 
 => **logit** 
 
-#### **Modèle mixte**
+### **Modèle mixte**
 
 
 ```{r}
-mod3.0<- glmer(statut_presence~annee + observateurs_clean + (1|code_site), family=binomial(link = "logit"), data = base_greve_year_factor)
+mod3.0<- glmer(statut_presence~annee + observateurs_clean + (1|code_site), family=binomial(link = "logit"), data = greve_year_factor_obs)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+##  Vérification de l’ajustement du modèle aux données
 
 
 **Vérification de l'indépendance des résidus**
@@ -592,12 +732,12 @@ plotresid(mod3.0)
 ```
 
 
-#### **Remplacer la fonction de lien "logit" par "cauchit"**
+### **Remplacer la fonction de lien "logit" par "cauchit"**
 ```{r}
-mod3.1<- glmer(statut_presence~annee + observateurs_clean + (1|code_site), family=binomial(link = "probit"), data = base_greve_year_factor)
+mod3.1<- glmer(statut_presence~annee + observateurs_clean + (1|code_site), family=binomial(link = "probit"), data = greve_year_factor_obs)
 ```
 
-###  Vérification de l’ajustement du modèle aux données
+##  Vérification de l’ajustement du modèle aux données
 
 
 **Vérification de l'indépendance des résidus**
@@ -610,8 +750,3 @@ plotresid(mod3.1)
 ```{r}
 summary(mod3.1)
 ```
-
-
-
-
-

@@ -42,6 +42,9 @@ library(car)
 library(MASS)
 library(lme4)
 library(MuMIn)
+library(janitor)
+library(purrr)
+
 ```
 
 # Importation des données - Secteur J25 : Petit Tregor 
@@ -80,6 +83,50 @@ base_tregor <-
          code_secteur != "J401")
 ```
 
+# Verifier les valeurs de la base de donnée 
+
+## Jeu de données issus du Excel du prof de BTS avec correction 
+```{r}
+tregor_bts_correct <-
+  readxl::read_xlsx(path = '../raw_data/data_brute_BTS.xlsx',
+                    col_names = TRUE,
+                    sheet = "analyse2 avec correct° coquille") %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    site,
+    nbre_empreintes_2011,
+    nbre_empreintes_2012,
+    nbre_empreintes_2014,
+    nbre_empreintes_2016,
+    nbre_empreintes_2017,
+    nbre_empreintes_2018,
+    nbre_empreintes_2019,
+    nbre_empreintes_2023
+  ) %>%
+  dplyr::rename(code_site = site) %>%
+  dplyr::filter(!is.na(code_site)) %>%
+  dplyr::rename(
+    "2011" = nbre_empreintes_2011,
+    "2012" = nbre_empreintes_2012,
+    "2014" = nbre_empreintes_2014,
+    "2016" = nbre_empreintes_2016,
+    "2017" = nbre_empreintes_2017,
+    "2018" = nbre_empreintes_2018,
+    "2019" = nbre_empreintes_2019,
+    "2023" = nbre_empreintes_2023
+  ) %>%
+  dplyr::mutate(across(
+    .cols = c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    .fns = ~ ifelse(!is.na(.) & as.numeric(.) >= 1, 1, .)
+  ))%>%
+  mutate(across(
+    c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    ~ as.character(.)
+  ))
+
+
+```
+
 
 ```{r}
 base_j25 <- base_tregor %>%
@@ -87,10 +134,124 @@ base_j25 <- base_tregor %>%
   mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
 ```
 
+## Jeu de données issus du Geonature 
 
 ```{r}
-summary(base_j25)
+tregor_geonat_correct <- base_j25 %>%
+  dplyr::mutate(statut_presence = as.factor(statut_presence),
+                annee = as.factor(annee)) %>%
+  dplyr::select(code_site, annee, statut_presence)
+  #dplyr::distinct(code_site, annee, .keep_all = TRUE) %>%
+
+
 ```
+
+
+
+
+
+V2
+```{r}
+# 1. Convertir tregor_bts_correct en format long
+bts_long <- tregor_bts_correct %>%
+  pivot_longer(
+    cols = -code_site,
+    names_to = "annee",
+    values_to = "valeur_bts"
+  ) %>%
+  mutate(annee = as.character(annee),
+         valeur_bts = as.character(valeur_bts))  # pour comparaison facile
+
+# 2. Préparer tregor_geonat_correct
+geonat_clean <- tregor_geonat_correct %>%
+  mutate(
+    annee = as.character(annee),
+    valeur_geonat = as.character(statut_presence)
+  ) %>%
+  dplyr::select(code_site, annee, valeur_geonat)
+
+# 3. Joindre les deux sur code_site + annee
+comparison_long <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  filter(valeur_bts != valeur_geonat)
+
+# 4. Afficher les écarts
+comparison_long
+
+```
+
+# V3 
+
+```{r}
+library(dplyr)
+library(tidyr)
+
+# Étape 1 : récupérer les sites et les années attendues
+all_sites <- unique(tregor_bts_correct$code_site)
+all_years <- c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023")
+
+# Créer une grille complète : 60 x 8 = 480 lignes attendues
+grille_complete <- expand.grid(
+  code_site = all_sites,
+  annee = all_years,
+  stringsAsFactors = FALSE
+)
+
+# Étape 2 : transformer tregor_bts_correct en format long (après conversion des colonnes)
+tregor_bts_long <- tregor_bts_correct %>%
+  mutate(across(all_of(all_years), ~ as.character(.))) %>%
+  pivot_longer(
+    cols = all_of(all_years),
+    names_to = "annee",
+    values_to = "valeur_bts"
+  )
+
+# Étape 3 : joindre à la grille complète et ajouter les NA
+bts_long_complet <- grille_complete %>%
+  left_join(tregor_bts_long, by = c("code_site", "annee"))
+
+# Tu peux maintenant utiliser `bts_long_complet` pour la comparaison
+
+```
+
+```{r}
+# Nettoyer tregor_geonat_correct (déjà en long)
+geonat_clean <- tregor_geonat_correct %>%
+  mutate(
+    annee = as.character(annee),
+    valeur_geonat = as.character(statut_presence)
+  ) %>%
+  dplyr::select(code_site, annee, valeur_geonat)
+
+# Comparaison
+comparison_long <- bts_long_complet %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  filter(valeur_bts != valeur_geonat)
+
+# Affichage
+comparison_long
+
+
+# 
+comparison_summary <- bts_long_complet %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  mutate(
+    comparaison = case_when(
+      is.na(valeur_bts) & is.na(valeur_geonat) ~ "Tous NA",
+      is.na(valeur_bts) ~ "NA dans bts uniquement",
+      is.na(valeur_geonat) ~ "NA dans geonat uniquement",
+      valeur_bts != valeur_geonat ~ "Différentes",
+      TRUE ~ "Identiques"
+    )
+  ) %>%
+  count(comparaison)
+
+comparison_summary
+
+```
+
+
+####
 
 # Représentation cartographique du secteur d'étude et des sites correspondants
 
