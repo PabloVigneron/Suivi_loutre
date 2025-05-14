@@ -94,7 +94,7 @@ tregor_geonat_correct <- base_j25 %>%
 ## Tableau de comparaison 
 
 
-################################
+################################################################################
 # Assurer que tout est en format character pour comparaison tolérante
 bts_chr <- tregor_bts_correct %>%
   mutate(across(everything(), as.character))
@@ -116,4 +116,66 @@ comparison_long <- bts_long %>%
 
 # Affichage des différences
 comparison_long
+
+
 #################################################
+## V3 - comparaison 2 jeu de donnée : base de donnée et base exel
+
+# Étape 1 : récupérer les sites et les années attendues
+all_sites <- unique(tregor_bts_correct$code_site)
+all_years <- c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023")
+
+# Créer une grille complète : 60 x 8 = 480 lignes attendues
+grille_complete <- expand.grid(
+  code_site = all_sites,
+  annee = all_years,
+  stringsAsFactors = FALSE
+)
+
+# Étape 2 : transformer tregor_bts_correct en format long (après conversion des colonnes)
+tregor_bts_long <- tregor_bts_correct %>%
+  mutate(across(all_of(all_years), ~ as.character(.))) %>%
+  pivot_longer(
+    cols = all_of(all_years),
+    names_to = "annee",
+    values_to = "valeur_bts"
+  )
+
+# Étape 3 : joindre à la grille complète et ajouter les NA
+bts_long_complet <- grille_complete %>%
+  left_join(tregor_bts_long, by = c("code_site", "annee"))
+
+# Tu peux maintenant utiliser `bts_long_complet`pour la comparaison
+
+# Nettoyer tregor_geonat_correct (déjà en long)
+geonat_clean <- tregor_geonat_correct %>%
+  mutate(
+    annee = as.character(annee),
+    valeur_geonat = as.character(statut_presence)
+  ) %>%
+  dplyr::select(code_site, annee, valeur_geonat)
+
+# Comparaison
+comparison_long <- bts_long_complet %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  filter(valeur_bts != valeur_geonat)
+
+# Affichage
+comparison_long
+
+
+# 
+comparison_summary <- bts_long_complet %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  mutate(
+    comparaison = case_when(
+      is.na(valeur_bts) & is.na(valeur_geonat) ~ "Tous NA",
+      is.na(valeur_bts) ~ "NA dans bts uniquement",
+      is.na(valeur_geonat) ~ "NA dans geonat uniquement",
+      valeur_bts != valeur_geonat ~ "Différentes",
+      TRUE ~ "Identiques"
+    )
+  ) %>%
+  count(comparaison)
+
+comparison_summary

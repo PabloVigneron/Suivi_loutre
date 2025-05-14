@@ -175,12 +175,144 @@ base_greve <- base_greve_raw %>%
 
 ```
 
-# Importation des données 2025 - Secteur : Lieu Greve
+
+# Importation avec data 2025 
 
 ```{r}
-base_greve_raw_25 <-
-  readr::read_csv('../raw_data/AnyConv.com__sites_prospection_LieuGreve.csv',
+base_greve_raw <-
+  readxl::read_xls(path = '../raw_data/Suivi loutre mars_25.xls',
+                   skip = 1,
                    col_names = T) 
+```
+## Correction des données - Mise en forme - Secteur : Lieu Greve avec data 2025
+
+```{r}
+base_greve <- base_greve_raw %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    point_n,
+    itineraire,
+    x,
+    y,
+    commune,
+    cours_deau,
+    bilan_choix_du_site,
+    epreinte_oct20,
+    date_suivi_fev_mars21,
+    marquage_suivi_fev_mars21,
+    date_suivi_oct21,
+    marquage_suivi_oct21,
+    observateurs_suivi_oct21,
+    date_suivi_mars22,
+    marquage_suivi_mars22,
+    observateurs_suivi_mars22,
+    date_suivi_decembre22,
+    marquage_suivi_decembre22,
+    observateurs_suivi_decembre22,
+    date_suivi_mars23,
+    marquage_suivi_mars23,
+    observateurs_suivi_mars23,
+    date_suivi_octobre_24,
+    marquage_suivi_octobre_24,
+    observateurs_suivi_octobre_24, 
+    date_suivi_mars_25, 
+    marquage_suivi_mars_25, 
+    observateurs_suivi_mars_25
+  ) %>%
+  dplyr::rename(
+    code_site = point_n,
+    y = x,
+    x = y,
+    marquage_suivi_oct_20 = epreinte_oct20
+  ) %>%
+  dplyr::mutate(date_suivi_octobre_24 = as.Date(as.numeric(date_suivi_octobre_24), origin = "1899-12-30")) %>%
+  dplyr::mutate(date_suivi_oct_20 = as.Date("2020-10-01")) %>%
+  dplyr::mutate(across(
+    c(
+      date_suivi_fev_mars21,
+      date_suivi_oct21,
+      date_suivi_mars22,
+      date_suivi_decembre22,
+      date_suivi_mars23,
+      date_suivi_oct_20, 
+      date_suivi_mars_25
+    ),
+    ~ as.POSIXct(.x)
+  )) %>%
+  mutate(across(starts_with("marquage_suivi_"), as.character)) %>%
+  tidyr::pivot_longer(
+    cols = c(
+      date_suivi_oct_20,
+      marquage_suivi_oct_20,
+      date_suivi_fev_mars21,
+      marquage_suivi_fev_mars21,
+      date_suivi_oct21,
+      marquage_suivi_oct21,
+      observateurs_suivi_oct21,
+      date_suivi_mars22,
+      marquage_suivi_mars22,
+      observateurs_suivi_mars22,
+      date_suivi_decembre22,
+      marquage_suivi_decembre22,
+      observateurs_suivi_decembre22,
+      date_suivi_mars23,
+      marquage_suivi_mars23,
+      observateurs_suivi_mars23,
+      date_suivi_octobre_24,
+      marquage_suivi_octobre_24,
+      observateurs_suivi_octobre_24, 
+      date_suivi_mars_25, 
+      marquage_suivi_mars_25,
+      observateurs_suivi_mars_25
+    ),
+    names_to = c(".value", "session"),
+    names_pattern = "(date_suivi|marquage_suivi|observateurs_suivi)_(.*)"
+  ) %>%
+  rename(
+    date_visite = date_suivi,
+    statut_presence = marquage_suivi,
+    observateurs = observateurs_suivi
+  ) %>%
+  dplyr::mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    code_site = as.factor(code_site),
+    statut_presence = case_when(
+      tolower(statut_presence) == "oui" ~ 1,
+      suppressWarnings(as.numeric(statut_presence)) >= 1 ~ 1,
+      tolower(statut_presence) %in% c("non", "peut_etre") ~ 0,
+      TRUE ~ 0
+    ),
+    statut_observation = ifelse(statut_presence == 1, "Présent", "Absent"),
+    statut_presence = as.factor (statut_presence),
+    jour = ifelse(jour == 1, NA, jour),
+    annee = ifelse(annee == 2002, 2021, annee),
+    y = str_replace_all(y, ",", ""),
+    x = str_replace_all(x, " ", ""),
+    passage = ifelse(mois <= 6, 1, 2),
+    date_visite = ifelse(
+      date_visite == as.Date("2002-02-24"),
+      "2021-02-24",
+      as.character(date_visite)
+    ),
+    observateurs_clean = observateurs %>%
+      str_to_lower() %>%
+      str_replace_all(" et ", "_") %>%
+      str_replace_all("[[:space:]]+", "_") %>%
+      str_replace_all("[^a-z0-9_]", "") %>%
+      stri_trans_general("latin-ascii")
+  ) %>%
+  dplyr::mutate(observateurs_clean = as.factor(
+    ifelse(
+      observateurs_clean == "maxime_chapelle_romain_salaun",
+      "maxime_chapelle_romain_salun",
+      observateurs_clean
+    )
+  )) %>%
+  dplyr::filter(!is.na(code_site), !is.na(itineraire))
+
+
 ```
 
 A corriger : 
@@ -285,10 +417,10 @@ ggplot() +
   geom_sf(
     data = sites_sf_all,
     aes(color = statut_final),
-    size = 2.5,
-    alpha = 0.95
+    size = 1,
+    alpha = 0.8
   ) +
-  facet_wrap(~ annee, ncol = 3) +
+  facet_wrap(~ annee, ncol = 4) +
   scale_color_manual(
     values = c(
       "Présent" = "darkseagreen3",
@@ -298,7 +430,7 @@ ggplot() +
   ) +
   labs(title = "Sites de prospection - Lieu de Greve - Passage de printemps", color = "Statut d'observation") +
   coord_sf(expand = FALSE) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 16) +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA),
@@ -405,7 +537,7 @@ ggplot() +
 base_greve_spring <- base_greve %>%
   dplyr::filter(passage == 1)
 
-annees_completes <- 2020:2024
+annees_completes <- 2020:2025
 
 all_combos <- expand_grid(
   code_site = unique(base_greve_spring$code_site),
@@ -499,9 +631,12 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
 ```{r}
 greve_year_factor_spring <- base_greve %>%
   mutate(annee = as.factor(annee))%>%
-  filter(passage == 1)
+  filter(passage == 1, 
+         annee == 2021:2025)
 
 ```
+On decide ici de prendre en compte le suivi uniquement de 2021 à 2025 sans considérere le suivi de 2020 non réalisé.
+Remarque : le suivi de l'année 2024, n'a pas été réalisé. 
 
 ## Construction du modèle 
 
@@ -553,6 +688,33 @@ mod1.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "prob
 plotresid(mod1.1)
 
 ```
+### **Remplacer la fonction de lien "logit" par "cauchit"**
+```{r}
+mod1.2<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = greve_year_factor_spring)
+```
+
+##  Vérification de l’ajustement du modèle aux données
+
+
+**Vérification de l'indépendance des résidus**
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod1.2)
+
+```
+### **Remplacer la fonction de lien "logit" par "cloglog"**
+```{r}
+mod1.3<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cloglog"), data = greve_year_factor_spring)
+```
+
+##  Vérification de l’ajustement du modèle aux données
+
+
+**Vérification de l'indépendance des résidus**
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod1.3)
+
+```
+
 **Valeur des coefficients (estimate)**
 
 ```{r}
@@ -591,9 +753,11 @@ IC_mod1.1 <- confint(mod1.1, oldNames = FALSE, method = "boot")
 ```{r}
 greve_year_factor_winter <- base_greve %>%
   mutate(annee = as.factor(annee))%>%
-  filter(passage == 2)
+  filter(passage == 2, 
+         annee = 2020:2024)
 
 ```
+On prends en compte le suivi uniquement de 2020 à 2024 sans considérere le suivi de 2025 pas encore réalisé.
 
 
 ## Construction du modèle 

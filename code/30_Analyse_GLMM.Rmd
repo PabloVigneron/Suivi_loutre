@@ -83,6 +83,12 @@ base_tregor <-
          code_secteur != "J401")
 ```
 
+```{r}
+base_j25 <- base_tregor %>%
+  filter(code_secteur == "J25") %>%
+  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
+```
+
 # Verifier les valeurs de la base de donnée 
 
 ## Jeu de données issus du Excel du prof de BTS avec correction 
@@ -128,13 +134,7 @@ tregor_bts_correct <-
 ```
 
 
-```{r}
-base_j25 <- base_tregor %>%
-  filter(code_secteur == "J25") %>%
-  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
-```
-
-## Jeu de données issus du Geonature 
+## Jeu de données issus du Geonature du GMB
 
 ```{r}
 tregor_geonat_correct <- base_j25 %>%
@@ -147,12 +147,8 @@ tregor_geonat_correct <- base_j25 %>%
 ```
 
 
-
-
-
-V2
+## Comparaison des 2 jeu de données pour voir les différences entre les deux 
 ```{r}
-# 1. Convertir tregor_bts_correct en format long
 bts_long <- tregor_bts_correct %>%
   pivot_longer(
     cols = -code_site,
@@ -160,9 +156,8 @@ bts_long <- tregor_bts_correct %>%
     values_to = "valeur_bts"
   ) %>%
   mutate(annee = as.character(annee),
-         valeur_bts = as.character(valeur_bts))  # pour comparaison facile
+         valeur_bts = as.character(valeur_bts)) 
 
-# 2. Préparer tregor_geonat_correct
 geonat_clean <- tregor_geonat_correct %>%
   mutate(
     annee = as.character(annee),
@@ -170,70 +165,15 @@ geonat_clean <- tregor_geonat_correct %>%
   ) %>%
   dplyr::select(code_site, annee, valeur_geonat)
 
-# 3. Joindre les deux sur code_site + annee
 comparison_long <- bts_long %>%
   full_join(geonat_clean, by = c("code_site", "annee")) %>%
   filter(valeur_bts != valeur_geonat)
 
-# 4. Afficher les écarts
 comparison_long
 
 ```
-
-# V3 
-
 ```{r}
-library(dplyr)
-library(tidyr)
-
-# Étape 1 : récupérer les sites et les années attendues
-all_sites <- unique(tregor_bts_correct$code_site)
-all_years <- c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023")
-
-# Créer une grille complète : 60 x 8 = 480 lignes attendues
-grille_complete <- expand.grid(
-  code_site = all_sites,
-  annee = all_years,
-  stringsAsFactors = FALSE
-)
-
-# Étape 2 : transformer tregor_bts_correct en format long (après conversion des colonnes)
-tregor_bts_long <- tregor_bts_correct %>%
-  mutate(across(all_of(all_years), ~ as.character(.))) %>%
-  pivot_longer(
-    cols = all_of(all_years),
-    names_to = "annee",
-    values_to = "valeur_bts"
-  )
-
-# Étape 3 : joindre à la grille complète et ajouter les NA
-bts_long_complet <- grille_complete %>%
-  left_join(tregor_bts_long, by = c("code_site", "annee"))
-
-# Tu peux maintenant utiliser `bts_long_complet` pour la comparaison
-
-```
-
-```{r}
-# Nettoyer tregor_geonat_correct (déjà en long)
-geonat_clean <- tregor_geonat_correct %>%
-  mutate(
-    annee = as.character(annee),
-    valeur_geonat = as.character(statut_presence)
-  ) %>%
-  dplyr::select(code_site, annee, valeur_geonat)
-
-# Comparaison
-comparison_long <- bts_long_complet %>%
-  full_join(geonat_clean, by = c("code_site", "annee")) %>%
-  filter(valeur_bts != valeur_geonat)
-
-# Affichage
-comparison_long
-
-
-# 
-comparison_summary <- bts_long_complet %>%
+comparison_summary <- bts_long %>%
   full_join(geonat_clean, by = c("code_site", "annee")) %>%
   mutate(
     comparaison = case_when(
@@ -247,11 +187,9 @@ comparison_summary <- bts_long_complet %>%
   count(comparaison)
 
 comparison_summary
-
 ```
 
 
-####
 
 # Représentation cartographique du secteur d'étude et des sites correspondants
 
@@ -462,10 +400,8 @@ summary(mod4.1)
 
 #### **Test de Wald**
 
-```{r}
-Anova(mod4.1)
 
-```
+Anova(mod4.1)
 
 ## Modele 6 : Retirer les Années avec des troues de prospections temporelles
 ```{r}
