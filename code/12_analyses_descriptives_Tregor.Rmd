@@ -1,6 +1,6 @@
 ---
-title: "Loutre"
-author: "Pablo"
+title: "analyses_descriptives_Tregor"
+author: "PabloVigneron"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   bookdown::html_document2:
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE
 
 # Importation des packages
 
-```{r}
+```{r, echo = FALSE}
 library(tidyverse)
 library(gridExtra)
 library(lubridate)
@@ -59,14 +59,137 @@ base_tregor <-
   ) %>% 
   filter(nom_complet_taxon =='Lutra lutra',
          !(id_dataset == 85 & code_secteur == "FR5300006"),
-         code_secteur != "J401") 
+         code_secteur != "J401") %>%
+  dplyr::distinct(code_site, annee, .keep_all = T)
 ```
 
+```{r}
+base_j25 <- base_tregor %>%
+  filter(code_secteur == "J25") %>%
+  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
+```
+
+# Verifier les valeurs de la base de donnée 
+
+## Jeu de données issus du Excel du prof de BTS avec correction 
+```{r, echo = FALSE}
+tregor_bts_correct <-
+  readxl::read_xlsx(path = '../raw_data/data_brute_BTS.xlsx',
+                    col_names = TRUE,
+                    sheet = "analyse2 avec correct° coquille") %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    site,
+    nbre_empreintes_2011,
+    nbre_empreintes_2012,
+    nbre_empreintes_2014,
+    nbre_empreintes_2016,
+    nbre_empreintes_2017,
+    nbre_empreintes_2018,
+    nbre_empreintes_2019,
+    nbre_empreintes_2023
+  ) %>%
+  dplyr::rename(code_site = site) %>%
+  dplyr::filter(!is.na(code_site)) %>%
+  dplyr::rename(
+    "2011" = nbre_empreintes_2011,
+    "2012" = nbre_empreintes_2012,
+    "2014" = nbre_empreintes_2014,
+    "2016" = nbre_empreintes_2016,
+    "2017" = nbre_empreintes_2017,
+    "2018" = nbre_empreintes_2018,
+    "2019" = nbre_empreintes_2019,
+    "2023" = nbre_empreintes_2023
+  ) %>%
+  dplyr::mutate(across(
+    .cols = c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    .fns = ~ ifelse(!is.na(.) & as.numeric(.) >= 1, 1, .)
+  ))%>%
+  mutate(across(
+    c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    ~ as.character(.)
+  ))
+
+
+```
+
+
+## Jeu de données issus du Geonature du GMB
+
+```{r, echo = FALSE}
+tregor_geonat_correct <- base_j25 %>%
+  dplyr::mutate(statut_presence = as.factor(statut_presence),
+                annee = as.factor(annee)) %>%
+  dplyr::select(code_site, annee, statut_presence) 
+   
+
+
+```
+
+
+## Comparaison des 2 jeu de données pour voir les différences entre les deux 
+```{r}
+bts_long <- tregor_bts_correct %>%
+  pivot_longer(cols = -code_site,
+               names_to = "annee",
+               values_to = "valeur_bts") %>%
+  mutate(annee = as.character(annee), valeur_bts = as.character(valeur_bts))
+
+geonat_clean <- tregor_geonat_correct %>%
+  mutate(annee = as.character(annee),
+         valeur_geonat = as.character(statut_presence)) %>%
+  dplyr::select(code_site, annee, valeur_geonat)
+
+comparison_long <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  filter(valeur_bts != valeur_geonat)
+
+comparison_long
+
+```
+
+```{r}
+comparison_summary <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  mutate(
+    comparaison = case_when(
+      is.na(valeur_bts) & is.na(valeur_geonat) ~ "Tous NA",
+      is.na(valeur_bts) ~ "NA dans bts uniquement",
+      is.na(valeur_geonat) ~ "NA dans geonat uniquement",
+      valeur_bts != valeur_geonat ~ "Différentes",
+      TRUE ~ "Identiques"
+    )
+  ) %>%
+  count(comparaison)
+
+comparison_summary
+```
+On observe **32 erreurs** dans la base de données Geonature du GMB, sachant que les doublons ont été supprimé préalablement. On corrige donc le jeu de données base_j25 par les bonnes valeurs issus des valeurs du jeu de données bts.
+
+
+## Appliquer les correction du jeu de donnée BTS sur Base_J25
+```{r}
+
+corrections <- comparison_long %>%
+  filter(!is.na(valeur_bts)) %>%
+  dplyr::select(code_site, annee, new_valeur = valeur_bts)
+
+base_j25 <- base_j25 %>%
+  mutate(annee = as.character(annee)) %>%
+  left_join(corrections, by = c("code_site", "annee")) %>%
+  mutate(statut_presence = if_else(
+    !is.na(new_valeur),
+    new_valeur,
+    as.character(statut_presence)
+  )) %>%
+  dplyr::select(-new_valeur)
+
+```
 
 # Représentation cartographique des secteurs d'étude et des sites correspondants
 
 ```{r, eval = TRUE, fig.width = 9, fig.height = 6}
-sites_geo <- base_tregor %>% 
+sites_geo <- base_j25 %>% 
   dplyr::select(nom_site:y_l93,
          statut_observation,
          code_secteur,
@@ -76,16 +199,12 @@ sites_geo <- base_tregor %>%
  
 mapview::mapview(sites_geo, 
                  zcol = "code_secteur",
-                 col.regions = c("FR5300006" = "indianred1", 
-                                 "J25" = "darkseagreen3") 
+                 col.regions = c("J25" = "indianred1") 
 )
 ```
 
 
 ```{r, fig.width = 9, fig.height = 8}
-
-base_j25 <- base_tregor %>%
-  filter(code_secteur == "J25")
 
 sites_coord <- base_j25 %>%
   dplyr::select(code_site, x_l93, y_l93) %>%

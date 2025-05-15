@@ -26,7 +26,7 @@ L’objectif de mon stage est de **déterminer si ce protocole permet de détect
 
 # Importation des packages
 
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 library(gridExtra)
 library(lubridate)
@@ -80,10 +80,14 @@ base_tregor <-
   ) %>% 
   filter(nom_complet_taxon =='Lutra lutra',
          !(id_dataset == 85 & code_secteur == "FR5300006"),
-         code_secteur != "J401")
+         code_secteur != "J401", 
+         !(annee == 2022)) %>%
+  dplyr::distinct(code_site, annee, .keep_all = T)
+  
 ```
 
-```{r}
+=> Suppression de la valeur de 2022 qui est une erreur de saisie
+```{r, echo=FALSE}
 base_j25 <- base_tregor %>%
   filter(code_secteur == "J25") %>%
   mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
@@ -92,7 +96,7 @@ base_j25 <- base_tregor %>%
 # Verifier les valeurs de la base de donnée 
 
 ## Jeu de données issus du Excel du prof de BTS avec correction 
-```{r}
+```{r, echo = FALSE}
 tregor_bts_correct <-
   readxl::read_xlsx(path = '../raw_data/data_brute_BTS.xlsx',
                     col_names = TRUE,
@@ -136,33 +140,28 @@ tregor_bts_correct <-
 
 ## Jeu de données issus du Geonature du GMB
 
-```{r}
+```{r, echo = FALSE}
 tregor_geonat_correct <- base_j25 %>%
   dplyr::mutate(statut_presence = as.factor(statut_presence),
                 annee = as.factor(annee)) %>%
-  dplyr::select(code_site, annee, statut_presence)
-  #dplyr::distinct(code_site, annee, .keep_all = TRUE) %>%
+  dplyr::select(code_site, annee, statut_presence) 
+   
 
 
 ```
 
 
 ## Comparaison des 2 jeu de données pour voir les différences entre les deux 
-```{r}
+```{r, echo=FALSE, results= 'hide'}
 bts_long <- tregor_bts_correct %>%
-  pivot_longer(
-    cols = -code_site,
-    names_to = "annee",
-    values_to = "valeur_bts"
-  ) %>%
-  mutate(annee = as.character(annee),
-         valeur_bts = as.character(valeur_bts)) 
+  pivot_longer(cols = -code_site,
+               names_to = "annee",
+               values_to = "valeur_bts") %>%
+  mutate(annee = as.character(annee), valeur_bts = as.character(valeur_bts))
 
 geonat_clean <- tregor_geonat_correct %>%
-  mutate(
-    annee = as.character(annee),
-    valeur_geonat = as.character(statut_presence)
-  ) %>%
+  mutate(annee = as.character(annee),
+         valeur_geonat = as.character(statut_presence)) %>%
   dplyr::select(code_site, annee, valeur_geonat)
 
 comparison_long <- bts_long %>%
@@ -172,7 +171,7 @@ comparison_long <- bts_long %>%
 comparison_long
 
 ```
-```{r}
+```{r, echo=FALSE, results= 'hide'}
 comparison_summary <- bts_long %>%
   full_join(geonat_clean, by = c("code_site", "annee")) %>%
   mutate(
@@ -188,12 +187,32 @@ comparison_summary <- bts_long %>%
 
 comparison_summary
 ```
+On observe **32 erreurs** dans la base de données Geonature du GMB, sachant que les doublons ont été supprimé préalablement. On corrige donc le jeu de données base_j25 par les bonnes valeurs issus des valeurs du jeu de données bts.
 
+
+## Appliquer les correction du jeu de donnée BTS sur Base_J25
+```{r, echo=FALSE}
+
+corrections <- comparison_long %>%
+  filter(!is.na(valeur_bts)) %>%
+  dplyr::select(code_site, annee, new_valeur = valeur_bts)
+
+base_j25 <- base_j25 %>%
+  mutate(annee = as.character(annee)) %>%
+  left_join(corrections, by = c("code_site", "annee")) %>%
+  mutate(statut_presence = if_else(
+    !is.na(new_valeur),
+    new_valeur,
+    as.character(statut_presence)
+  )) %>%
+  dplyr::select(-new_valeur)
+
+```
 
 
 # Représentation cartographique du secteur d'étude et des sites correspondants
 
-```{r, fig.cap="",fig.width = 7, fig.height = 5}
+```{r, fig.cap="",fig.width = 7, fig.height = 5, echo = FALSE}
 sites_geo <- base_tregor %>% 
   filter(code_secteur == "J25") %>%
   dplyr::select(nom_site:y_l93,
@@ -209,10 +228,96 @@ mapview::mapview(sites_geo,
                                  "J25" = "darkseagreen3") 
 )
 ```
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7, echo=FALSE}
 
+base_j25 <- base_j25 %>%
+  mutate(annee = year(date_visite))
 
+all_combos <- expand_grid(code_site = unique(base_j25$code_site),
+                          annee = unique(base_j25$annee))
 
-#  Modèle 1 : Le statut d'observation depend de l'année
+obs_complete <- all_combos %>%
+  left_join(base_j25 %>% dplyr::select(code_site, annee, statut_observation),
+            by = c("code_site", "annee")) %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(
+    values = c(
+      "Présent" = "darkseagreen3",
+      "Absent" = "indianred1",
+      "Non prospecté" = "grey80"
+    )
+  ) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Suivi des sites de prospection - Secteur Petit Tregor (J25)",
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+```
+
+```{r, fig.width = 9, fig.height = 8, echo = FALSE}
+
+sites_coord <- base_j25 %>%
+  dplyr::select(code_site, x_l93, y_l93) %>%
+  distinct()
+
+sites_all_years <- expand_grid(
+  code_site = unique(base_j25$code_site),
+  annee = unique(base_j25$annee)
+)
+
+sites_status_full <- sites_all_years %>%
+  left_join(base_j25 %>% 
+              dplyr::select(code_site, annee, statut_observation),
+            by = c("code_site", "annee")) %>%
+  left_join(sites_coord, by = "code_site") %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+sites_j25_sf <- sites_status_full %>%
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+
+basemap <- get_tiles(sites_j25_sf, provider = "CartoDB.Positron", crop = TRUE, zoom = 12)
+
+ggplot() +
+  geom_spatraster_rgb(data = basemap) +
+  geom_sf(data = sites_j25_sf, aes(color = statut_final), size = 1.5, alpha = 0.9) +
+  facet_wrap(~ annee) +
+  scale_color_manual(
+    values = c("Présent" = "darkseagreen3", "Absent" = "indianred1", "Non prospecté" = "grey40")
+  ) +
+  labs(
+    title = "Sites de prospection, Petit Trégor - Secteur Petit Tregor (J25)",
+    color = "Statut d'observation"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    strip.background = element_rect(fill = "grey90"),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+
+```
+#  Modèle 1 : Le statut d'observation depend de l'année (numeric)
 
 
 ## Construction du modèle 
@@ -236,9 +341,16 @@ mapview::mapview(sites_geo,
 
 ### **Modèle mixte**
 
+```{r}
+base_j25_year_numeric <-  base_j25 %>%
+  mutate(annee = as.numeric(annee), 
+         statut_presence = as.factor(statut_presence))
+  
+```
+
 
 ```{r}
-mod3.0 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25)
+mod3.0 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25_year_numeric)
 ```
 
 ##  Vérification de l’ajustement du modèle aux données
@@ -257,7 +369,7 @@ autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (�
 ### **Remplacer la fonction de lien "logit" par "probit"**
 
 ```{r}
-mod3.1 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_j25)
+mod3.1 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_j25_year_numeric)
 ```
 
 
@@ -274,7 +386,7 @@ autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (�
 ### **Remplacer la fonction de lien "logit" par "cauchit"**
 
 ```{r}
-mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = base_j25)
+mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = base_j25_year_numeric)
 ```
 
 
@@ -318,26 +430,15 @@ Année est une co-variable, on regarde  les valeurs des coefficients "Estimate" 
 ```{r}
 Anova(mod3.2)
 ```
-##  Modèle 4 : Le statut d'observation depend de l'année
+##  Modèle 4 : Le statut d'observation depend de l'année (factor)
 
 
 ```{r}
-summary(base_j25)
-```
-
-```{r}
-base_j25_year_factor <- base_tregor %>%
-  filter(code_secteur == "J25")%>%
-  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0), 
-         annee = as.factor(annee), 
-         code_site = as.factor(code_site))
+base_j25_year_factor <- base_j25 %>%
+  mutate(annee = as.factor(annee), code_site = as.factor(code_site), statut_presence = as.factor(statut_presence))
 
 ```
 
-```{r}
-summary(base_j25_year_factor)
-
-```
 
 ### Construction du modèle 
 
@@ -405,13 +506,14 @@ Anova(mod4.1)
 
 ## Modele 6 : Retirer les Années avec des troues de prospections temporelles
 ```{r}
-base_j25_year_factor <- base_tregor %>%
-  filter(code_secteur == "J25", 
-         annee == c(2017, 2018, 2019, 2023)) %>%
-  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0), 
-         annee = as.factor(annee), 
-         code_site = as.factor(code_site))
-
+base_j25_year_factor_filter <- base_j25 %>%
+  filter(code_secteur == "J25",
+         annee == c(2017, 2018, 2019, 2020, 2021, 2023)) %>%
+  mutate(
+    annee = as.factor(annee),
+    code_site = as.factor(code_site),
+    statut_presence = as.factor(statut_presence)
+  )
 ```
 
 ### Construction du modèle 
@@ -437,7 +539,7 @@ base_j25_year_factor <- base_tregor %>%
 
 
 ```{r}
-mod6.0<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25_year_factor)
+mod6.0<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25_year_factor_filter)
 ```
 
 ###  Vérification de l’ajustement du modèle aux données
@@ -451,9 +553,9 @@ plotresid(mod6.0)
 ```
 
 
-#### **Remplacer la fonction de lien "logit" par "cauchit"**
+#### **Remplacer la fonction de lien "logit" par "probit"**
 ```{r}
-mod6.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = base_j25_year_factor)
+mod6.1<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "probit"), data = base_j25_year_factor_filter)
 ```
 
 ###  Vérification de l’ajustement du modèle aux données
@@ -471,3 +573,92 @@ summary(mod6.1)
 ```
 
 
+#### **Remplacer la fonction de lien "logit" par "cloglog"**
+```{r}
+mod6.2<- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cloglog"), data = base_j25_year_factor_filter)
+```
+
+###  Vérification de l’ajustement du modèle aux données
+
+
+**Vérification de l'indépendance des résidus**
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod6.2)
+
+```
+
+
+## Modele 7 : Le station d'observation dépend de l'année, des conditions de prospection 
+```{r}
+base_j25_year_factor <- base_j25 %>%
+  filter(code_secteur == "J25",
+         annee == c(2017, 2018, 2019, 2020, 2021, 2023)) %>%
+  mutate(
+    annee = as.factor(annee),
+    code_site = as.factor(code_site),
+    statut_presence = as.factor(statut_presence),
+    condition_prospection = as.factor(condition_prospection)
+  )
+
+```
+
+### Construction du modèle 
+
+
+#### **Definition des types de variables**
+
++ **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
++ **Variable explicative** : 
++ Annee, variable qualitative ordinale 
++ Site, variable qualitative ordinale 
++ condition de prospection, variable qualitative 
+#### **Choix de la distribution de référence**
+
+ => **Distribution Binomiale**
+
+
+#### **Choix de la fonction de lien**
+
+=> **logit** 
+
+#### **Modèle mixte**
+
+
+```{r}
+mod7.0<- glmer(statut_presence~annee+condition_prospection+(1|code_site), family=binomial(link = "logit"), data = base_j25_year_factor)
+```
+
+###  Vérification de l’ajustement du modèle aux données
+
+
+**Vérification de l'indépendance des résidus**
+
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod7.0)
+
+```
+
+
+#### **Remplacer la fonction de lien "logit" par "probit"**
+```{r}
+mod7.1<- glmer(statut_presence~annee+condition_prospection+(1|code_site), family=binomial(link = "probit"), data = base_j25_year_factor)
+```
+
+**Vérification de l'indépendance des résidus**
+
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod7.1)
+
+```
+
+#### **Remplacer la fonction de lien "logit" par "cloglog"**
+```{r}
+mod7.2 <- glmer(statut_presence~annee+condition_prospection+(1|code_site), family=binomial(link = "cloglog"), data = base_j25_year_factor)
+```
+
+**Vérification de l'indépendance des résidus**
+
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod7.2)
+
+```

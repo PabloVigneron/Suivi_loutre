@@ -15,7 +15,7 @@ knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE
 
 # Importation des packages
 
-```{r}
+```{r, echo = FALSE}
 library(tidyverse)
 library(gridExtra)
 library(lubridate)
@@ -44,8 +44,8 @@ library(tidyterra)
 
 # Importation des données - Secteur : Lieu Greve
 
-```{r}
-base_greve_raw <-
+```{r, echo = FALSE}
+base_greve_raw_24<-
   readxl::read_xls(path = '../raw_data/Suivi loutre Lieue de Greve octobre 24.xls',
                    skip = 1,
                    col_names = T) 
@@ -53,8 +53,8 @@ base_greve_raw <-
 
 ## Correction des données - Mise en forme - Secteur : Lieu Greve
 
-```{r}
-base_greve <- base_greve_raw %>%
+```{r, echo = FALSE}
+base_greve_24 <- base_greve_raw_24 %>%
   janitor::clean_names() %>%
   dplyr::select(
     point_n,
@@ -333,7 +333,7 @@ ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne an
 
 # Représentation cartographique du secteur d'étude et des sites correspondants
 
-```{r, fig.cap="",fig.width = 7, fig.height = 5}
+```{r, fig.cap="",fig.width = 7, fig.height = 5, echo = FALSE}
 sites_geo <- base_greve %>%
   dplyr::mutate(
     y = str_replace_all(y, ",", "."),
@@ -353,7 +353,7 @@ mapview::mapview(sites_geo, col.regions =  "darkseagreen3")
 
 ## Sites de prospection - Secteur Lieu de Greve - 1 er passage (Printemps)
 
-```{r, fig.cap=" Statut de présence de la loutre sur les sites de prospection en fonction des années - Secteur Lieu de Greve - 1 er passage (Printemps)", fig.width = 9, fig.height = 8}
+```{r, fig.cap=" Statut de présence de la loutre sur les sites de prospection en fonction des années - Secteur Lieu de Greve - 1 er passage (Printemps)", fig.width = 9, fig.height = 8, echo = FALSE}
 
 base_greve_spring <- base_greve %>%
   filter(passage == 1)
@@ -386,7 +386,6 @@ sites_status_full <- sites_all_years %>%
     )
   )
 
-
 sites_valid <- sites_status_full %>%
   filter(!is.na(x) & !is.na(y)) %>%
   st_as_sf(coords = c("x", "y"), crs = 4326)
@@ -417,8 +416,8 @@ ggplot() +
   geom_sf(
     data = sites_sf_all,
     aes(color = statut_final),
-    size = 1,
-    alpha = 0.8
+    size = 2.5,
+    alpha = 0.95
   ) +
   facet_wrap(~ annee, ncol = 4) +
   scale_color_manual(
@@ -443,7 +442,7 @@ ggplot() +
 
 ## Sites de prospection - Secteur Lieu de Greve - 2 e passage (hivernal)
 
-```{r, fig.cap=" Statut de présence de la loutre sur les sites de prospection en fonction des années - Secteur Lieu de Greve - 2 e passage (Hivernal)", fig.width = 9, fig.height = 8}
+```{r, fig.cap=" Statut de présence de la loutre sur les sites de prospection en fonction des années - Secteur Lieu de Greve - 2 e passage (Hivernal)", fig.width = 9, fig.height = 8, echo = FALSE}
 base_greve_winter <- base_greve %>%
   filter(passage == 2)
 
@@ -531,7 +530,7 @@ ggplot() +
 
 ## Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps)
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) ",fig.width = 9, fig.height = 7}
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) ",fig.width = 8, fig.height = 7, echo = FALSE}
 
 
 base_greve_spring <- base_greve %>%
@@ -579,7 +578,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
 
 ## Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver)
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver) ",fig.width = 9, fig.height = 7}
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver) ",fig.width = 8, fig.height = 7, echo = FALSE}
 
 
 base_greve_winter <- base_greve %>%
@@ -623,6 +622,89 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
     panel.border = element_rect(color = "black", fill = NA),
     legend.background = element_rect(fill = "grey95", color = "black")
   )
+```
+
+## Pourcentages de présence de la loutre en fonction des années, 1e passage (printemps)
+
+```{r,fig.cap="Pourcentages de présence de la loutre en fonction des années",fig.width = 7, fig.height = 5, echo = FALSE}
+base_greve_spring %>%
+  group_by(annee) %>%
+  summarise(
+    n_obs = n(),
+    n_presences = sum(statut_presence == '1'),
+    pc_presences = n_presences / n_obs
+  ) %>%
+  ggplot(aes(x = annee, y = pc_presences)) +
+  geom_bar(stat = 'identity') +
+  labs(x = "Année", y = "Pourcentage de présence de la loutre", title = "Suivi des sites de prospection - Secteur Lieue de Grève") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA)
+  )
+
+```
+## Pourcentages de présence de la loutre en fonction des années, 2e passage (hiver)
+
+```{r,fig.cap="Pourcentages de présence de la loutre en fonction des années",fig.width = 7, fig.height = 5, echo = FALSE}
+base_greve_winter %>%
+  group_by(annee) %>%
+  summarise(
+    n_obs = n(),
+    n_presences = sum(statut_presence == '1'),
+    pc_presences = n_presences / n_obs
+  ) %>%
+  ggplot(aes(x = annee, y = pc_presences)) +
+  geom_bar(stat = 'identity') +
+  labs(x = "Année", y = "Pourcentage de présence de la loutre", title = "Suivi des sites de prospection - Secteur Lieue de Grève") +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA)
+  )
+
+```
+
+## Nombre d'observations de présence et absence de la loutre en fonction des années, 1 er passage (primtemps)
+```{r,fig.cap="Nombre d'observations de présence et absence de la loutre en fonction des années",fig.width = 7, fig.height = 5, echo = FALSE}
+base_greve_spring %>%
+  ggplot(aes(x = annee, fill = statut_presence)) +
+  geom_bar() +
+  scale_fill_manual(values = c(
+    "1" = "darkseagreen3",
+    "0" = "indianred1"
+  )) +
+  labs(x = "Année",
+       y = "Nombre d'observations de présence  et absence de loutre",
+       title = "Suivi des sites de prospection 1er passage (printemps) - Secteur Lieue de Grève",
+       fill = "Observation") +
+  theme (
+    plot.title = element_text(hjust = 0.25, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+
+
+```
+  
+## Nombre d'observations de présence et absence de la loutre en fonction des années, 2e passage (hivernale)
+```{r,fig.cap="Nombre d'observations de présence et absence de la loutre en fonction des années",fig.width = 7, fig.height = 5, echo = FALSE}
+base_greve_winter %>%
+  ggplot(aes(x = annee, fill = statut_presence)) +
+  geom_bar() +
+  scale_fill_manual(values = c(
+    "1" = "darkseagreen3",
+    "0" = "indianred1"
+  )) +
+  labs(x = "Année",
+       y = "Nombre d'observations de présence  et absence de loutre",
+       title = "Suivi des sites de prospection 2e passage (hivernale) - Secteur Lieue de Grève",
+       fill = "Observation") +
+  theme (
+    plot.title = element_text(hjust = 0.25, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+
+
 ```
 
 
@@ -744,7 +826,7 @@ Anova(mod1.1)
 ```
 
 ```{r}
-IC_mod1.1 <- confint(mod1.1, oldNames = FALSE, method = "boot")
+#IC_mod1.1 <- confint(mod1.1, oldNames = FALSE, method = "boot")
 ```
 
 
@@ -754,7 +836,7 @@ IC_mod1.1 <- confint(mod1.1, oldNames = FALSE, method = "boot")
 greve_year_factor_winter <- base_greve %>%
   mutate(annee = as.factor(annee))%>%
   filter(passage == 2, 
-         annee = 2020:2024)
+         annee == 2020:2024)
 
 ```
 On prends en compte le suivi uniquement de 2020 à 2024 sans considérere le suivi de 2025 pas encore réalisé.
@@ -841,19 +923,13 @@ Anova(mod2.1)
 
 
 
-#  Modèle 3 : Le statut d'observation depend de l'année et de l'observateurs
+#  Modèle 3 : Le statut d'observation depend de l'année (passage printemps) et de l'observateurs
 
 ```{r}
 greve_year_factor_obs <- base_greve%>%
   mutate(annee = as.factor(annee), 
          passage = as.factor(passage))%>%
-  dplyr::select(
-    code_site, 
-    annee,
-    observateurs_clean, 
-    passage, 
-    statut_presence
-  )
+  dplyr::filter(passage == 1)
 
 
 ```
@@ -914,3 +990,66 @@ plotresid(mod3.1)
 ```{r}
 summary(mod3.1)
 ```
+
+#  Modèle 4 : Le statut d'observation depend de l'année (passage hivernal) et de l'observateurs
+
+```{r}
+greve_year_factor_obs <- base_greve%>%
+  mutate(annee = as.factor(annee), 
+         passage = as.factor(passage))%>%
+  dplyr::filter(passage == 2)
+
+
+```
+
+## Construction du modèle 
+
+
+### **Definition des types de variables**
+
++ **Variable réponse** : Statut_présence, variable qualitative binaire, nominale 
++ **Variable explicative** : 
++ Annee, variable qualitative ordinale 
++ Site, variable qualitative ordinale 
++ Observateurs, variable qualitative nominale
+
+### **Choix de la distribution de référence**
+
+ => **Distribution Binomiale**
+
+
+### **Choix de la fonction de lien**
+
+=> **logit** 
+
+### **Modèle mixte**
+
+
+```{r}
+mod4.0<- glmer(statut_presence~annee + observateurs_clean + (1|code_site), family=binomial(link = "logit"), data = greve_year_factor_obs)
+```
+
+##  Vérification de l’ajustement du modèle aux données
+
+
+**Vérification de l'indépendance des résidus**
+
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod4.0)
+
+```
+
+### **Remplacer la fonction de lien "logit" par "cauchit"**
+```{r}
+mod4.1<- glmer(statut_presence~annee + observateurs_clean + (1|code_site), family=binomial(link = "probit"), data = greve_year_factor_obs)
+```
+
+##  Vérification de l’ajustement du modèle aux données
+
+
+**Vérification de l'indépendance des résidus**
+```{r, fig.cap="",fig.width = 7, fig.height = 5}
+plotresid(mod4.1)
+
+```
+
