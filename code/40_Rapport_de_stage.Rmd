@@ -5,6 +5,9 @@ date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output: 
   bookdown::html_document2:
     toc: true
+bibliography: library_biblio_otter.bib
+link-citations: true
+cls: apa.cls
 ---
 
 ```{r setup, include=FALSE}
@@ -38,7 +41,6 @@ library(slippymath)
 library(rosm)           
 library(tidyterra) 
 ```
-
 
 ```{r}
 # Importation des données - Secteur J25 : Petit Tregor 
@@ -85,7 +87,6 @@ base_j25 <- base_tregor %>%
   mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
 ```
 
-
 ```{r, echo = FALSE}
 # Verifier les valeurs de la base de donnée 
 
@@ -130,7 +131,6 @@ tregor_bts_correct <-
 
 ```
 
-
 ```{r, echo=FALSE, results= 'hide'}
 ## Jeu de données issus du Geonature du GMB
 
@@ -159,6 +159,7 @@ comparison_long <- bts_long %>%
 comparison_long
 
 ```
+
 ```{r, echo=FALSE, results= 'hide'}
 comparison_summary <- bts_long %>%
   full_join(geonat_clean, by = c("code_site", "annee")) %>%
@@ -193,8 +194,6 @@ base_j25 <- base_j25 %>%
   )) %>%
   dplyr::select(-new_valeur)
 ```
-
-
 
 ```{r}
 # Importation avec data 2025 - Lieue de Greve 
@@ -336,59 +335,27 @@ base_greve <- base_greve_raw %>%
 
 ```
 
-A corriger : 
+# INTRODUCTION
 
-- Le code_site 9 et 121 semble mal positionné : liée au manque de précision des coordonnées GPS
+Faire des paragraphes qui ont une ligne directrice
 
-Correction : 
+Cité de la biblio Ne pas mettre le modèle biologique en 1er
 
-- X et Y sont inversé
-- Supprimer la dernière ligne + ligne 72
-- si statut_présence = 'oui' ou >= 1 , = 1 sinon = 0 
-- pb encodage date octobre 2024
-- session fev_mars 2021 -> noté 2002 -> corriger 
-- La modalité "peut-être" tranformé en "0" donc absent
+Bref historique de la disparition de la loutre Statut de protection de la loutre France : 2 PNA Espèce en déclin : différentes échelles Recolonisation en bretagne : Bien établie
 
-ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
+→ Observatoire des mammifères : conserver la loutre Ecologie de la Loutre : Causes de mortalité : hiérarchie avec importance
 
+Bref résumé de l'écologie de la loutre
 
-# INTRODUCTION 
+Pour estimer la présence de la loutre : bcp de méthode : Rapport SFERM Le marquage comme indice de présence de l’espèce Protocole IUCN : protocole conçu pour une échelle nationale / Chanin → Proposition d’un protocole applicable dans des zones spéciale de conservation, à une échelle plus fine problématique : Est ce que ce protocole à l'échelle d’un bassin versant permet-il de détecter des tendances temporelles chez la loutre d’europe. Autrement dit est ce que ce protocole a un intérêt à être mis en place particulièrement dans les réserves naturelles comme méthode complémentaire de suivi locale de la loutre.
 
-Faire des paragraphes qui ont une ligne directrice 
+# MATERIELS ET METHODES
 
+## Sites d’études
 
-Cité de la biblio 
-Ne pas mettre le modèle biologique en 1er 
+La présente étude se base sur des données récoltées en région Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22). Le premier site d’étude Petit Trégor est situé sur les bassins versants de “Tregor” et du “Cotiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). Le second site d’étude Lieue de Grève est situé sur le bassin versant de “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les Côtes d'Armor (22) [@umr1069sasinra-agrocampusouestBassinsVersantsBretagne].
 
-Bref historique de la disparition de la loutre 
-Statut de protection de la loutre 
-France : 2 PNA 
-Espèce en déclin : différentes échelles 
-Recolonisation en bretagne : Bien établie 
-
-→ Observatoire des mammifères : conserver la loutre 
-Ecologie de la Loutre : 
-Causes de mortalité : hiérarchie avec importance 
-
-
-Bref résumé de l'écologie de la loutre 
-
-Pour estimer la présence de la loutre : bcp de méthode : Rapport SFERM 
-Le marquage comme indice de présence de l’espèce 
-Protocole IUCN : protocole conçu pour une échelle nationale / 
-Chanin → Proposition d’un protocole applicable dans des zones spéciale de conservation, à une échelle plus fine 
-problématique : Est ce que ce protocole à l'échelle d’un bassin versant permet-il de détecter des tendances temporelles chez la loutre d’europe. Autrement dit est ce que ce protocole a un intérêt à être mis en place particulièrement dans les réserves naturelles comme méthode complémentaire de suivi locale de la loutre. 
-
-
-# MATERIELS ET METHODES 
-
-## Sites d’études 
-
-La présente étude se base sur des données récoltées en région Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22). Le premier site d’étude Petit Trégor est situé sur les bassins versants de “Tregor” et du “Cotiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). Le second site d’étude Lieue de Grève est situé sur le bassin versant de “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les  Côtes d'Armor (22) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). 
-
-
-=> Insérer cartographie des sites et secteur d’études
-
+=\> Insérer cartographie des sites et secteur d’études
 
 ```{r, fig.cap="Représentation cartographique du secteur d'étude et des sites correspondants",fig.width = 7, fig.height = 5, echo = FALSE}
 # Représentation cartographique du secteur d'étude et des sites correspondants
@@ -412,7 +379,7 @@ sites_geo_2 <- base_tregor %>%
   dplyr::select(nom_site:y_l93, code_site, code_secteur, statut_observation, annee) %>% 
   st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
 
-common_cols <- intersect(names(sites_geo_1), names(sites_geo_2))
+common_cols <- dplyr::intersect(names(sites_geo_1), names(sites_geo_2))
 
 sites_geo <- bind_rows(
   sites_geo_1[, common_cols],
@@ -423,19 +390,35 @@ mapview(sites_geo, zcol = "code_secteur", col.regions = c("darkseagreen3", "indi
 
 ```
 
-
 ## Données de l’espèce
 
-Les données analysées dans cette étude ont été transmises par le Groupe Mammalogique Breton (GMB). Les données du site Petit Trégor ont été acquises par les étudiant.e.s en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29). Les données du site Lieue de Grève ont été acquises par les salarié.e.s (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée principalement par Lannion-Trégor Communauté (Réserves naturelles de France, n.d.).
+Les données analysées dans cette étude ont été transmises par le Groupe Mammalogique Breton (GMB). Les données du site Petit Trégor ont été acquises par les étudiant.e.s en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29). Les données du site Lieue de Grève ont été acquises par les salarié.e.s (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée principalement par Lannion-Trégor Communauté [@reservesnaturellesdefranceLandesPrairiesEtangs].
 
-## Echantillonnage 
+## Echantillonnage
 
-Le protocole d’échantillonnage se base sur les travaux de Paul Chanin qui dans le cadre du Life in UK Rivers Projects à mis au point  un protocole dans l’objectif de suivre la Loutre d'Europe (Lutra lutra) dans le réseau Natura 2000 aux Royaume-Uni (Chanin, 2003). Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin versant et d’autres part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires). 
+Le protocole d’échantillonnage se base sur les travaux de Paul Chanin qui dans le cadre du Life in UK Rivers Projects à mis au point un protocole dans l’objectif de suivre la Loutre d'Europe (Lutra lutra) dans le réseau Natura 2000 aux Royaume-Uni[@chaninMonitoringOtterLutra2003]. Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin versant et d’autres part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires).
 
-## Analyses statistiques 
+## Correction des données
 
-# RESULTATS 
+A corriger :
 
-# DISCUSSION 
+-   Le code_site 9 et 121 semble mal positionné : liée au manque de précision des coordonnées GPS
+
+Correction :
+
+-   X et Y sont inversé
+-   Supprimer la dernière ligne + ligne 72
+-   si statut_présence = 'oui' ou \>= 1 , = 1 sinon = 0
+-   pb encodage date octobre 2024
+-   session fev_mars 2021 -\> noté 2002 -\> corriger
+-   La modalité "peut-être" tranformé en "0" donc absent
+
+ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
+
+## Analyses statistiques
+
+# RESULTATS
+
+# DISCUSSION
 
 # REFERENCES BIBLIOGRAPHIQUES
