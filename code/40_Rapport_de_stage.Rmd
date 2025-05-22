@@ -1,0 +1,50 @@
+---
+title: "Rapport de stage"
+author: "PabloVigneron"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: pdf_document
+  bookdown::html_document2:
+    toc: true
+csl: apa.csl
+bibliography: "library_biblio_otter.bib"
+
+#  bookdown::word_docume
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, echo = FALSE}
+# Importation des packages
+
+library(tidyverse)
+library(gridExtra)
+library(lubridate)
+library(sf)
+library(mapview)
+library(maptiles)
+library(tidyterra)
+library(kableExtra)
+library(knitr)
+library(janitor)
+library(RVAideMemoire)
+library(emmeans)
+library(car)
+library(MASS)
+library(lme4)
+library(MuMIn)
+library(stringr)
+library(stringi)
+library(terra)
+library(ggspatial)
+library(slippymath)     
+library(rosm)           
+library(tidyterra) 
+```
+
+Super article [@chaninMonitoringOtterLutra2003].
+
+chandlerUnmarkedModelsData2010
+
+# References bibliographiques
