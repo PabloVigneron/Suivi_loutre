@@ -224,8 +224,7 @@ sites_geo <- base_tregor %>%
  
 mapview::mapview(sites_geo, 
                  zcol = "code_secteur",
-                 col.regions = c("FR5300006" = "indianred1", 
-                                 "J25" = "darkseagreen3") 
+                 col.regions = c("J25" = "indianred1") 
 )
 ```
 ```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7, echo=FALSE}

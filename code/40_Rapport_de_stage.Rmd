@@ -2,20 +2,16 @@
 title: "Rapport de stage"
 author: "PabloVigneron"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
-output: pdf_document
+output: 
   bookdown::html_document2:
     toc: true
-csl: apa.csl
-bibliography: "library_biblio_otter.bib"
-
-#  bookdown::word_docume
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
-```{r, echo = FALSE}
+```{r}
 # Importation des packages
 
 library(tidyverse)
@@ -43,8 +39,403 @@ library(rosm)
 library(tidyterra) 
 ```
 
-Super article [@chaninMonitoringOtterLutra2003].
 
-chandlerUnmarkedModelsData2010
+```{r}
+# Importation des données - Secteur J25 : Petit Tregor 
+base_tregor <-
+  readxl::read_xlsx(path = '../raw_data/export_suiviloutrelocal_telecharger_csv_2025_04_03_10h58m17.xlsx') %>%
+  dplyr::select(
+    id_dataset,
+    code_secteur,
+    code_site,
+    nom_site,
+    x_l93,
+    y_l93,
+    date_visite,
+    observateurs,
+    condition_prospection,
+    nom_taxon,
+    nom_complet_taxon,
+    techn_observation,
+    statut_observation,
+    nb_ep_tot,
+    nb_ep_w,
+    nb_ep_dnf,
+    nb_ep_df
+  ) %>%
+  mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    nb_ep_w = abs(nb_ep_w),
+    statut_observation = ifelse(str_detect(statut_observation, '^Pr'), yes = 'Présent', no = 'Absent')
+  ) %>% 
+  filter(nom_complet_taxon =='Lutra lutra',
+         !(id_dataset == 85 & code_secteur == "FR5300006"),
+         code_secteur != "J401", 
+         !(annee == 2022)) %>%
+  dplyr::distinct(code_site, annee, .keep_all = T)
+#=> Suppression de la valeur de 2022 qui est une erreur de saisie
+  
+```
 
-# References bibliographiques
+```{r, echo=FALSE}
+base_j25 <- base_tregor %>%
+  filter(code_secteur == "J25") %>%
+  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
+```
+
+
+```{r, echo = FALSE}
+# Verifier les valeurs de la base de donnée 
+
+## Jeu de données issus du Excel du prof de BTS avec correction 
+tregor_bts_correct <-
+  readxl::read_xlsx(path = '../raw_data/data_brute_BTS.xlsx',
+                    col_names = TRUE,
+                    sheet = "analyse2 avec correct° coquille") %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    site,
+    nbre_empreintes_2011,
+    nbre_empreintes_2012,
+    nbre_empreintes_2014,
+    nbre_empreintes_2016,
+    nbre_empreintes_2017,
+    nbre_empreintes_2018,
+    nbre_empreintes_2019,
+    nbre_empreintes_2023
+  ) %>%
+  dplyr::rename(code_site = site) %>%
+  dplyr::filter(!is.na(code_site)) %>%
+  dplyr::rename(
+    "2011" = nbre_empreintes_2011,
+    "2012" = nbre_empreintes_2012,
+    "2014" = nbre_empreintes_2014,
+    "2016" = nbre_empreintes_2016,
+    "2017" = nbre_empreintes_2017,
+    "2018" = nbre_empreintes_2018,
+    "2019" = nbre_empreintes_2019,
+    "2023" = nbre_empreintes_2023
+  ) %>%
+  dplyr::mutate(across(
+    .cols = c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    .fns = ~ ifelse(!is.na(.) & as.numeric(.) >= 1, 1, .)
+  ))%>%
+  mutate(across(
+    c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    ~ as.character(.)
+  ))
+
+
+```
+
+
+```{r, echo=FALSE, results= 'hide'}
+## Jeu de données issus du Geonature du GMB
+
+tregor_geonat_correct <- base_j25 %>%
+  dplyr::mutate(statut_presence = as.factor(statut_presence),
+                annee = as.factor(annee)) %>%
+  dplyr::select(code_site, annee, statut_presence) 
+
+## Comparaison des 2 jeu de données pour voir les différences entre les deux 
+
+bts_long <- tregor_bts_correct %>%
+  pivot_longer(cols = -code_site,
+               names_to = "annee",
+               values_to = "valeur_bts") %>%
+  mutate(annee = as.character(annee), valeur_bts = as.character(valeur_bts))
+
+geonat_clean <- tregor_geonat_correct %>%
+  mutate(annee = as.character(annee),
+         valeur_geonat = as.character(statut_presence)) %>%
+  dplyr::select(code_site, annee, valeur_geonat)
+
+comparison_long <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  filter(valeur_bts != valeur_geonat)
+
+comparison_long
+
+```
+```{r, echo=FALSE, results= 'hide'}
+comparison_summary <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  mutate(
+    comparaison = case_when(
+      is.na(valeur_bts) & is.na(valeur_geonat) ~ "Tous NA",
+      is.na(valeur_bts) ~ "NA dans bts uniquement",
+      is.na(valeur_geonat) ~ "NA dans geonat uniquement",
+      valeur_bts != valeur_geonat ~ "Différentes",
+      TRUE ~ "Identiques"
+    )
+  ) %>%
+  count(comparaison)
+
+comparison_summary 
+
+#On observe **32 erreurs** dans la base de données Geonature du GMB, sachant que les doublons ont été supprimé préalablement. On corrige donc le jeu de données base_j25 par les bonnes valeurs issus des valeurs du jeu de données bts.
+
+## Appliquer les correction du jeu de donnée BTS sur Base_J25
+
+corrections <- comparison_long %>%
+  filter(!is.na(valeur_bts)) %>%
+  dplyr::select(code_site, annee, new_valeur = valeur_bts)
+
+base_j25 <- base_j25 %>%
+  mutate(annee = as.character(annee)) %>%
+  left_join(corrections, by = c("code_site", "annee")) %>%
+  mutate(statut_presence = if_else(
+    !is.na(new_valeur),
+    new_valeur,
+    as.character(statut_presence)
+  )) %>%
+  dplyr::select(-new_valeur)
+```
+
+
+
+```{r}
+# Importation avec data 2025 - Lieue de Greve 
+
+base_greve_raw <-
+  readxl::read_xls(path = '../raw_data/Suivi loutre mars_25.xls',
+                   skip = 1,
+                   col_names = T) 
+```
+
+```{r}
+## Correction des données - Mise en forme - Secteur : Lieu Greve avec data 2025
+
+base_greve <- base_greve_raw %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    point_n,
+    itineraire,
+    x,
+    y,
+    commune,
+    cours_deau,
+    bilan_choix_du_site,
+    epreinte_oct20,
+    date_suivi_fev_mars21,
+    marquage_suivi_fev_mars21,
+    date_suivi_oct21,
+    marquage_suivi_oct21,
+    observateurs_suivi_oct21,
+    date_suivi_mars22,
+    marquage_suivi_mars22,
+    observateurs_suivi_mars22,
+    date_suivi_decembre22,
+    marquage_suivi_decembre22,
+    observateurs_suivi_decembre22,
+    date_suivi_mars23,
+    marquage_suivi_mars23,
+    observateurs_suivi_mars23,
+    date_suivi_octobre_24,
+    marquage_suivi_octobre_24,
+    observateurs_suivi_octobre_24, 
+    date_suivi_mars_25, 
+    marquage_suivi_mars_25, 
+    observateurs_suivi_mars_25
+  ) %>%
+  dplyr::rename(
+    code_site = point_n,
+    y = x,
+    x = y,
+    marquage_suivi_oct_20 = epreinte_oct20
+  ) %>%
+  dplyr::mutate(date_suivi_octobre_24 = as.Date(as.numeric(date_suivi_octobre_24), origin = "1899-12-30")) %>%
+  dplyr::mutate(date_suivi_oct_20 = as.Date("2020-10-01")) %>%
+  dplyr::mutate(across(
+    c(
+      date_suivi_fev_mars21,
+      date_suivi_oct21,
+      date_suivi_mars22,
+      date_suivi_decembre22,
+      date_suivi_mars23,
+      date_suivi_oct_20, 
+      date_suivi_mars_25
+    ),
+    ~ as.POSIXct(.x)
+  )) %>%
+  mutate(across(starts_with("marquage_suivi_"), as.character)) %>%
+  tidyr::pivot_longer(
+    cols = c(
+      date_suivi_oct_20,
+      marquage_suivi_oct_20,
+      date_suivi_fev_mars21,
+      marquage_suivi_fev_mars21,
+      date_suivi_oct21,
+      marquage_suivi_oct21,
+      observateurs_suivi_oct21,
+      date_suivi_mars22,
+      marquage_suivi_mars22,
+      observateurs_suivi_mars22,
+      date_suivi_decembre22,
+      marquage_suivi_decembre22,
+      observateurs_suivi_decembre22,
+      date_suivi_mars23,
+      marquage_suivi_mars23,
+      observateurs_suivi_mars23,
+      date_suivi_octobre_24,
+      marquage_suivi_octobre_24,
+      observateurs_suivi_octobre_24, 
+      date_suivi_mars_25, 
+      marquage_suivi_mars_25,
+      observateurs_suivi_mars_25
+    ),
+    names_to = c(".value", "session"),
+    names_pattern = "(date_suivi|marquage_suivi|observateurs_suivi)_(.*)"
+  ) %>%
+  rename(
+    date_visite = date_suivi,
+    statut_presence = marquage_suivi,
+    observateurs = observateurs_suivi
+  ) %>%
+  dplyr::mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    code_site = as.factor(code_site),
+    statut_presence = case_when(
+      tolower(statut_presence) == "oui" ~ 1,
+      suppressWarnings(as.numeric(statut_presence)) >= 1 ~ 1,
+      tolower(statut_presence) %in% c("non", "peut_etre") ~ 0,
+      TRUE ~ 0
+    ),
+    statut_observation = ifelse(statut_presence == 1, "Présent", "Absent"),
+    statut_presence = as.factor (statut_presence),
+    jour = ifelse(jour == 1, NA, jour),
+    annee = ifelse(annee == 2002, 2021, annee),
+    y = str_replace_all(y, ",", ""),
+    x = str_replace_all(x, " ", ""),
+    passage = ifelse(mois <= 6, 1, 2),
+    date_visite = ifelse(
+      date_visite == as.Date("2002-02-24"),
+      "2021-02-24",
+      as.character(date_visite)
+    ),
+    observateurs_clean = observateurs %>%
+      str_to_lower() %>%
+      str_replace_all(" et ", "_") %>%
+      str_replace_all("[[:space:]]+", "_") %>%
+      str_replace_all("[^a-z0-9_]", "") %>%
+      stri_trans_general("latin-ascii")
+  ) %>%
+  dplyr::mutate(observateurs_clean = as.factor(
+    ifelse(
+      observateurs_clean == "maxime_chapelle_romain_salaun",
+      "maxime_chapelle_romain_salun",
+      observateurs_clean
+    )
+  )) %>%
+  dplyr::filter(!is.na(code_site), !is.na(itineraire))
+
+
+```
+
+A corriger : 
+
+- Le code_site 9 et 121 semble mal positionné : liée au manque de précision des coordonnées GPS
+
+Correction : 
+
+- X et Y sont inversé
+- Supprimer la dernière ligne + ligne 72
+- si statut_présence = 'oui' ou >= 1 , = 1 sinon = 0 
+- pb encodage date octobre 2024
+- session fev_mars 2021 -> noté 2002 -> corriger 
+- La modalité "peut-être" tranformé en "0" donc absent
+
+ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
+
+
+# INTRODUCTION 
+
+Faire des paragraphes qui ont une ligne directrice 
+
+
+Cité de la biblio 
+Ne pas mettre le modèle biologique en 1er 
+
+Bref historique de la disparition de la loutre 
+Statut de protection de la loutre 
+France : 2 PNA 
+Espèce en déclin : différentes échelles 
+Recolonisation en bretagne : Bien établie 
+
+→ Observatoire des mammifères : conserver la loutre 
+Ecologie de la Loutre : 
+Causes de mortalité : hiérarchie avec importance 
+
+
+Bref résumé de l'écologie de la loutre 
+
+Pour estimer la présence de la loutre : bcp de méthode : Rapport SFERM 
+Le marquage comme indice de présence de l’espèce 
+Protocole IUCN : protocole conçu pour une échelle nationale / 
+Chanin → Proposition d’un protocole applicable dans des zones spéciale de conservation, à une échelle plus fine 
+problématique : Est ce que ce protocole à l'échelle d’un bassin versant permet-il de détecter des tendances temporelles chez la loutre d’europe. Autrement dit est ce que ce protocole a un intérêt à être mis en place particulièrement dans les réserves naturelles comme méthode complémentaire de suivi locale de la loutre. 
+
+
+# MATERIELS ET METHODES 
+
+## Sites d’études 
+
+La présente étude se base sur des données récoltées en région Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22). Le premier site d’étude Petit Trégor est situé sur les bassins versants de “Tregor” et du “Cotiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). Le second site d’étude Lieue de Grève est situé sur le bassin versant de “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les  Côtes d'Armor (22) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). 
+
+
+=> Insérer cartographie des sites et secteur d’études
+
+
+```{r, fig.cap="Représentation cartographique du secteur d'étude et des sites correspondants",fig.width = 7, fig.height = 5, echo = FALSE}
+# Représentation cartographique du secteur d'étude et des sites correspondants
+
+sites_geo_1 <- base_greve %>%
+  mutate(
+    code_secteur = "J22", 
+    y = str_replace_all(y, ",", "."),
+    x = str_replace_all(x, ",", "."),
+    y = as.numeric(y),
+    x = as.numeric(x)
+  ) %>%
+  filter(!is.na(x) & !is.na(y)) %>%
+  rename(nom_site = commune) %>%
+  dplyr::select(nom_site, code_site, code_secteur, statut_observation, annee, x, y) %>%
+  st_as_sf(coords = c("x", "y"), crs = 4326) %>%
+  st_transform(2154)
+
+sites_geo_2 <- base_tregor %>% 
+  filter(code_secteur == "J25") %>%
+  dplyr::select(nom_site:y_l93, code_site, code_secteur, statut_observation, annee) %>% 
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+
+common_cols <- intersect(names(sites_geo_1), names(sites_geo_2))
+
+sites_geo <- bind_rows(
+  sites_geo_1[, common_cols],
+  sites_geo_2[, common_cols]
+)
+
+mapview(sites_geo, zcol = "code_secteur", col.regions = c("darkseagreen3", "indianred1"))
+
+```
+
+
+## Données de l’espèce
+
+Les données analysées dans cette étude ont été transmises par le Groupe Mammalogique Breton (GMB). Les données du site Petit Trégor ont été acquises par les étudiant.e.s en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29). Les données du site Lieue de Grève ont été acquises par les salarié.e.s (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée principalement par Lannion-Trégor Communauté (Réserves naturelles de France, n.d.).
+
+## Echantillonnage 
+
+Le protocole d’échantillonnage se base sur les travaux de Paul Chanin qui dans le cadre du Life in UK Rivers Projects à mis au point  un protocole dans l’objectif de suivre la Loutre d'Europe (Lutra lutra) dans le réseau Natura 2000 aux Royaume-Uni (Chanin, 2003). Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin versant et d’autres part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires). 
+
+## Analyses statistiques 
+
+# RESULTATS 
+
+# DISCUSSION 
+
+# REFERENCES BIBLIOGRAPHIQUES
