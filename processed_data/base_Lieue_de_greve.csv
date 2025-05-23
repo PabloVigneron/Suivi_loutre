@@ -1,0 +1,505 @@
+code_site,itineraire,y,x,commune,cours_deau,bilan_choix_du_site,session,date_visite,statut_presence,observateurs,annee,mois,jour,statut_observation,passage,observateurs_clean
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,fev_mars21,2021-03-02,1,NA,2021,3,2,Présent,1,NA
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,mars22,2022-03-25,1,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Présent,1,maxime_chapelle_amlie_desmas
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,octobre_24,2024-10-15,1,Maxime Henry / Nathan Le Dolley,2024,10,15,Présent,2,maxime_henry__nathan_le_dolley
+1,1,48.585217,-3.573359,Plounérin,Yar,Favorable,mars_25,2025-04-08,1,Elouan Berquer/ Pablo,2025,4,8,Présent,1,elouan_berquer_pablo
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,fev_mars21,2021-03-02,1,NA,2021,3,2,Présent,1,NA
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,decembre22,2022-10-20,1,"Camille LABONNE, Océane BLEUNVEN, Marine IHUEL",2022,10,20,Présent,2,camille_labonne_ocane_bleunven_marine_ihuel
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,mars23,2023-04-11,1,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Présent,1,maxime_chapelle_amandine_gyomlai
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,octobre_24,2024-10-15,1,Maxime Henry / Nathan Le Dolley,2024,10,15,Présent,2,maxime_henry__nathan_le_dolley
+2,1,48.62083,-3.590561,Plufur,Yar,Favorable,mars_25,2025-04-08,1,Elouan Berquer/ Pablo,2025,4,8,Présent,1,elouan_berquer_pablo
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,fev_mars21,2021-03-23,1,NA,2021,3,23,Présent,1,NA
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,octobre_24,2024-10-31,1,David M / Elias Michat / Le Scair,2024,10,31,Présent,2,david_m__elias_michat__le_scair
+3,4,48.61123,-3.51294,Plouaret,Roscoat,Favorable,mars_25,2025-03-19,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,fev_mars21,2021-03-23,1,NA,2021,3,23,Présent,1,NA
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,decembre22,2022-12-05,1,David MENANTEAU,2022,12,5,Présent,2,david_menanteau
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,octobre_24,2024-10-31,1,David M / Elias Michat / Le Scair,2024,10,31,Présent,2,david_m__elias_michat__le_scair
+5,4,48.62734,-3.51969,Plouaret,Roscoat,Très favorable,mars_25,2025-03-26,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,decembre22,2022-12-05,1,David MENANTEAU,2022,12,5,Présent,2,david_menanteau
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,octobre_24,2024-10-31,0,Maxime Henry / Nathan Le Dolley,2024,10,31,Absent,2,maxime_henry__nathan_le_dolley
+6,4,48.62862,-3.53029,Lanvellec,Roscoat,Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,fev_mars21,2021-03-09,1,NA,2021,3,9,Présent,1,NA
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,oct21,2021-10-14,1,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Présent,2,maxime_chapelle_david_menanteau
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,mars22,2022-03-28,1,Marine Ihuel et Amélie Desmas,2022,3,28,Présent,1,marine_ihuel_amlie_desmas
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,decembre22,2022-12-05,1,Océane BLEUNVEN,2022,12,5,Présent,2,ocane_bleunven
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,mars23,2023-04-18,1,Amandine GYOMLAI et Erminia ZAMBON,2023,4,18,Présent,1,amandine_gyomlai_erminia_zambon
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,octobre_24,2024-10-23,1,Maxime Henry / Nathan Le Dolley,2024,10,23,Présent,2,maxime_henry__nathan_le_dolley
+7,3,48.63302,-3.543,Lanvellec,Roscoat,Très favorable,mars_25,2025-04-03,1,David Menanteau/Elouan Berquer,2025,4,3,Présent,1,david_menanteauelouan_berquer
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,mars22,2022-03-28,1,Marine Ihuel et Amélie Desmas,2022,3,28,Présent,1,marine_ihuel_amlie_desmas
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,decembre22,2022-12-06,0,Océane BLEUNVEN,2022,12,6,Absent,2,ocane_bleunven
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,mars23,2023-04-18,0,Amandine GYOMLAI et Erminia ZAMBON,2023,4,18,Absent,1,amandine_gyomlai_erminia_zambon
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,octobre_24,2024-10-18,0,Maxime Henry / Romain W,2024,10,18,Absent,2,maxime_henry__romain_w
+8,3,48.64132,-3.55326,Plouzélambre,Roscoat,Favorable,mars_25,2025-04-09,0,Elouan Berquer,2025,4,9,Absent,1,elouan_berquer
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,1,NA,2021,3,23,Présent,1,NA
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,decembre22,2022-12-05,1,David MENANTEAU,2022,12,5,Présent,2,david_menanteau
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,octobre_24,2024-10-28,0,Romain Worme / Nathan Le Dolley,2024,10,28,Absent,2,romain_worme__nathan_le_dolley
+9,4,48.4682,-3.53988,Plouzélambre,Roscoat (affluent),Favorable,mars_25,2025-03-26,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,fev_mars21,2021-03-09,1,NA,2021,3,9,Présent,1,NA
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,mars22,2022-03-25,1,Marine Ihuel et Amélie Desmas,2022,3,25,Présent,1,marine_ihuel_amlie_desmas
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,decembre22,2022-12-06,0,Océane BLEUNVEN,2022,12,6,Absent,2,ocane_bleunven
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,mars23,2023-04-18,1,Amandine GYOMLAI et Erminia ZAMBON,2023,4,18,Présent,1,amandine_gyomlai_erminia_zambon
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,octobre_24,2024-10-18,0,Maxime Henry / Romain Worme,2024,10,18,Absent,2,maxime_henry__romain_worme
+12,3,48.674833,-3.572990,St Michel en Grève,Roscoat,Favorable,mars_25,2025-04-07,0,Maëlle Coussens/Elouan Berquer,2025,4,7,Absent,1,malle_coussenselouan_berquer
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,mars22,2022-03-25,1,Marine Ihuel et Amélie Desmas,2022,3,25,Présent,1,marine_ihuel_amlie_desmas
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,mars23,2023-04-18,1,Amandine GYOMLAI et Erminia ZAMBON,2023,4,18,Présent,1,amandine_gyomlai_erminia_zambon
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,octobre_24,2024-10-18,0,Maxime Henry / Romain Worme,2024,10,18,Absent,2,maxime_henry__romain_worme
+14,3,48.67091,-3.57926,Plestin les grèves,Yar,Très favorable,mars_25,2025-04-07,0,Maëlle Coussens/ Elouan Brequer,2025,4,7,Absent,1,malle_coussens_elouan_brequer
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,decembre22,2022-12-06,0,Océane BLEUNVEN,2022,12,6,Absent,2,ocane_bleunven
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,mars23,2023-04-19,1,David MENANTEAU,2023,4,19,Présent,1,david_menanteau
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,octobre_24,2024-10-23,0,Maxime Henry / Nathan Le Dolley,2024,10,23,Absent,2,maxime_henry__nathan_le_dolley
+16,2,48.65719,-3.57631,Tréduder,Yar,Favorable,mars_25,2025-03-31,1,Maëlle Coussens et Elouan Berquer,2025,3,31,Présent,1,malle_coussens_elouan_berquer
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,fev_mars21,2021-03-23,1,NA,2021,3,23,Présent,1,NA
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,mars23,2023-04-19,1,Amandine GYOMLAI et Marion RUVOEN,2023,4,19,Présent,1,amandine_gyomlai_marion_ruvoen
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,octobre_24,2024-10-22,1,Maxime Henry / Nathan Le Dolley,2024,10,22,Présent,2,maxime_henry__nathan_le_dolley
+19,2,48.64695,-3.57763,Plestin les grèves,Yar,Favorable,mars_25,2025-03-31,1,Maëlle Coussens/ Elouan Brequer,2025,3,31,Présent,1,malle_coussens_elouan_brequer
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,fev_mars21,2021-03-23,1,NA,2021,3,23,Présent,1,NA
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,oct21,2021-10-15,1,"Maxime CHAPELLE, Morgane GELEBART et Marine IHUEL",2021,10,15,Présent,2,maxime_chapelle_morgane_gelebart_marine_ihuel
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,mars23,2023-04-19,1,Amandine GYOMLAI et Marion RUVOEN,2023,4,19,Présent,1,amandine_gyomlai_marion_ruvoen
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,octobre_24,2024-10-22,0,Maxime Henry / Nathan Le Dolley,2024,10,22,Absent,2,maxime_henry__nathan_le_dolley
+20,2,48.64267,-3.58159,Plestin les grèves,Yar,Favorable,mars_25,2025-03-31,1,Maëlle Coussens/ Elouan Berquer,2025,3,31,Présent,1,malle_coussens_elouan_berquer
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,mars23,2023-04-19,1,Amandine GYOMLAI et Marion RUVOEN,2023,4,19,Présent,1,amandine_gyomlai_marion_ruvoen
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,octobre_24,2024-10-23,0,Maxime Henry / Nathan Le Dolley,2024,10,23,Absent,2,maxime_henry__nathan_le_dolley
+21,2,48.63795,-3.5832,Plestin les grèves,Yar,Favorable,mars_25,2025-03-31,1,Maëlle Coussens et Elouan Berquer,2025,3,31,Présent,1,malle_coussens_elouan_berquer
+24,1,48.622,-3.603,Trémel,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+24,1,48.622,-3.603,Trémel,Yar,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+24,1,48.622,-3.603,Trémel,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+24,1,48.622,-3.603,Trémel,Yar,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+24,1,48.622,-3.603,Trémel,Yar,Favorable,decembre22,2022-10-20,0,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Absent,2,ocane_bleunven_marine_ihuel_camille_labonne
+24,1,48.622,-3.603,Trémel,Yar,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+24,1,48.622,-3.603,Trémel,Yar,Favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+24,1,48.622,-3.603,Trémel,Yar,Favorable,mars_25,2025-04-08,0,Elouan Berquer/ Pablo,2025,4,8,Absent,1,elouan_berquer_pablo
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,mars23,2023-04-18,1,Maxime CHAPELLE et Romain SALAUN,2023,4,18,Présent,1,maxime_chapelle_romain_salun
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,octobre_24,2024-10-28,0,Romain Worme / Nathan Le Dolley,2024,10,28,Absent,2,romain_worme__nathan_le_dolley
+27,4,48.68482,-3.56188,St Michel en Grève,Kerdu,Favorable,mars_25,2025-04-07,1,Maëlle Coussens/ Elouan Brequer,2025,4,7,Présent,1,malle_coussens_elouan_brequer
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,fev_mars21,2021-03-09,1,NA,2021,3,9,Présent,1,NA
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,decembre22,2022-12-05,1,David MENANTEAU,2022,12,5,Présent,2,david_menanteau
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,octobre_24,2024-10-28,1,Romain Worme / Nathan Le Dolley,2024,10,28,Présent,2,romain_worme__nathan_le_dolley
+29,4,48.67589,-3.54265,St Michel en Grève,Kerdu,Favorable,mars_25,2025-03-26,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,octobre_24,2024-10-28,0,Romain Worme / Nathan Le Dolley,2024,10,28,Absent,2,romain_worme__nathan_le_dolley
+30,4,48.67459,-3.53511,Ploumilliau,Kerdu,Favorable,mars_25,2025-03-26,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,octobre_24,2024-10-28,0,Romain Worme / Nathan Le Dolley,2024,10,28,Absent,2,romain_worme__nathan_le_dolley
+31,4,48.67299,-3.53261,Ploumilliau,Kerdu,Favorable,mars_25,2025-03-26,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,fev_mars21,2021-03-09,1,NA,2021,3,9,Présent,1,NA
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,octobre_24,2024-10-28,0,Romain Worme / Nathan Le Dolley,2024,10,28,Absent,2,romain_worme__nathan_le_dolley
+36,4,48.663573,-3.517329,Ploumilliau,Kerdu,Très favorable,mars_25,2025-03-26,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+372,1,48.663,-3.601,Plestin les grèves,Quinquis,Favorable,mars_25,2025-04-08,0,Maëlle Coussens,2025,4,8,Absent,1,malle_coussens
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+41,1,48.653,-3.603,Plestin les grèves,Quinquis,Favorable,mars_25,2025-04-08,0,Maëlle Coussens/ Elouan Berquer/ Pablo,2025,4,8,Absent,1,malle_coussens_elouan_berquer_pablo
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+42,1,48.655505,-3.599438,Plestin les grèves,Quinquis,Favorable,mars_25,2025-04-08,0,Maëlle Coussens,2025,4,8,Absent,1,malle_coussens
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,fev_mars21,2021-02-24,0,NA,2021,2,24,Absent,1,NA
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,mars22,2022-03-25,0,David Menanteau,2022,3,25,Absent,1,david_menanteau
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,decembre22,2022-10-28,0,"Camille LABONNE, Alizée KIRCH",2022,10,28,Absent,2,camille_labonne_alize_kirch
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,mars23,2023-04-18,0,Maxime CHAPELLE et Romain SALUN,2023,4,18,Absent,1,maxime_chapelle_romain_salun
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,octobre_24,2024-10-18,0,Enzo Ruiz / Nathan Le Dolley,2024,10,18,Absent,2,enzo_ruiz__nathan_le_dolley
+45,2,48.59425,-3.57095,Plufur,Yar,Favorable,mars_25,2025-03-31,0,Maëlle Coussens/ Elouan Berquer,2025,3,31,Absent,1,malle_coussens_elouan_berquer
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,oct21,2021-10-14,1,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Présent,2,maxime_chapelle_david_menanteau
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,mars22,2022-03-25,1,Marine Ihuel et Loane Rouiller,2022,3,25,Présent,1,marine_ihuel_loane_rouiller
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,decembre22,2022-12-05,0,Océane BLEUNVEN,2022,12,5,Absent,2,ocane_bleunven
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,mars23,2023-04-11,0,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Absent,1,gunol_chauviere_romain_salaun_erminia_zambon
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,octobre_24,2024-10-24,1,Maxime Henry / Nathan Le Dolley,2024,10,24,Présent,2,maxime_henry__nathan_le_dolley
+46,3,48.632757,-3.562284,Plufur,Yar,Favorable,mars_25,2025-04-10,0,Elouan Berquer,2025,4,10,Absent,1,elouan_berquer
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,mars22,2022-03-25,0,Marine Ihuel et Amélie Desmas,2022,3,25,Absent,1,marine_ihuel_amlie_desmas
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,decembre22,2022-12-05,0,Océane BLEUNVEN,2022,12,5,Absent,2,ocane_bleunven
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,mars23,2023-04-18,0,Amandine GYOMLAI et Erminia ZAMBON,2023,4,18,Absent,1,amandine_gyomlai_erminia_zambon
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,octobre_24,2024-10-23,1,Maxime Henry / Nathan Le Dolley,2024,10,23,Présent,2,maxime_henry__nathan_le_dolley
+52,3,48.632757,-3.562284,Lanvellec,Yar (Dour Elego),Favorable,mars_25,2025-04-03,0,David Menanteau/ Elouan Berquer,2025,4,3,Absent,1,david_menanteau_elouan_berquer
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,mars22,2022-03-25,0,David Menanteau,2022,3,25,Absent,1,david_menanteau
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,decembre22,2022-10-28,0,"Camille LABONNE, Alizée KIRCH",2022,10,28,Absent,2,camille_labonne_alize_kirch
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,mars23,2023-04-18,0,Maxime CHAPELLE et Romain SALUN,2023,4,18,Absent,1,maxime_chapelle_romain_salun
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,octobre_24,2024-10-18,0,Enzo Ruiz / Nathan Le Dolley,2024,10,18,Absent,2,enzo_ruiz__nathan_le_dolley
+53,2,48.61999,-3.5675,Plufur,Yar,Favorable,mars_25,2025-03-31,0,Maëlle Coussens/ Elouan Brequer,2025,3,31,Absent,1,malle_coussens_elouan_brequer
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,fev_mars21,2021-02-24,0,NA,2021,2,24,Absent,1,NA
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,mars22,2022-03-25,0,David Menanteau,2022,3,25,Absent,1,david_menanteau
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,decembre22,2022-10-28,0,"Camille LABONNE, Alizée KIRCH",2022,10,28,Absent,2,camille_labonne_alize_kirch
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,mars23,2023-04-18,0,Maxime CHAPELLE et Romain SALUN,2023,4,18,Absent,1,maxime_chapelle_romain_salun
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,octobre_24,2024-10-18,0,Enzo Ruiz / Nathan Le Dolley,2024,10,18,Absent,2,enzo_ruiz__nathan_le_dolley
+54,2,48.60418,-3.5697,Plufur,Yar,Très favorable,mars_25,2025-03-31,0,Maëlle Coussens/ Elouan Brequer,2025,3,31,Absent,1,malle_coussens_elouan_brequer
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,fev_mars21,2021-03-02,1,NA,2021,3,2,Présent,1,NA
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,mars22,2022-03-25,1,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Présent,1,maxime_chapelle_amlie_desmas
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,mars23,2023-04-11,1,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Présent,1,maxime_chapelle_amandine_gyomlai
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+58,1,48.599651,-3.601555,Trémel,Yar,Très favorable,mars_25,2025-04-08,1,Elouan Berquer/Pablo,2025,4,8,Présent,1,elouan_berquerpablo
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,mars23,2023-04-19,1,"Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU",2023,4,19,Présent,1,gunol_chauviere_amandine_gyomlai_david_menanteau
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,octobre_24,2024-10-16,1,Maxime Henry / Nathan Le Dolley,2024,10,16,Présent,2,maxime_henry__nathan_le_dolley
+61,1,48.566940,-3.563340,Plounérin,Yar,Très favorable,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,fev_mars21,2021-02-19,1,NA,2021,2,19,Présent,1,NA
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,mars23,2023-04-19,0,Amandine GYOMLAI et David MENANTEAU,2023,4,19,Absent,1,amandine_gyomlai_david_menanteau
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,octobre_24,2024-10-14,1,David M / Maxime Henry / Nathan Le Dolley,2024,10,14,Présent,2,david_m__maxime_henry__nathan_le_dolley
+62,1,48.560412,-3.569003,Plounérin,Yar,NA,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,decembre22,2022-12-07,0,"David MENANTEAU, Océane BLEUNVEN",2022,12,7,Absent,2,david_menanteau_ocane_bleunven
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,mars23,2023-04-05,0,David MENANTEAU,2023,4,5,Absent,1,david_menanteau
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,octobre_24,2024-10-14,0,David M / Maxime Henry / Nathan Le Dolley,2024,10,14,Absent,2,david_m__maxime_henry__nathan_le_dolley
+64,1,48.554,-3.578,Plounérin,Yar,Favorable,mars_25,2025-03-06,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,decembre22,2022-12-07,0,"David MENANTEAU, Océane BLEUNVEN",2022,12,7,Absent,2,david_menanteau_ocane_bleunven
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,mars23,2023-04-05,1,David MENANTEAU,2023,4,5,Présent,1,david_menanteau
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,octobre_24,2024-10-14,0,David M / Maxime Henry / Nathan Le Dolley,2024,10,14,Absent,2,david_m__maxime_henry__nathan_le_dolley
+65,1,48.553,-3.580,Plounérin,Yar,Favorable,mars_25,2025-03-06,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,mars22,2022-03-25,0,Marine Ihuel et Loane Rouiller,2022,3,25,Absent,1,marine_ihuel_loane_rouiller
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,decembre22,2022-12-05,1,Océane BLEUNVEN,2022,12,5,Présent,2,ocane_bleunven
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,mars23,2023-04-11,1,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Présent,1,gunol_chauviere_romain_salaun_erminia_zambon
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+68,3,48.572835,-3.551346,Plounérin,Yar,Favorable,mars_25,2025-03-19,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,mars22,2022-03-25,0,Marine Ihuel et Loane Rouiller,2022,3,25,Absent,1,marine_ihuel_loane_rouiller
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,decembre22,2022-12-05,0,Océane BLEUNVEN,2022,12,5,Absent,2,ocane_bleunven
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,mars23,2023-04-11,0,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Absent,1,gunol_chauviere_romain_salaun_erminia_zambon
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+69,3,48.56967,-3.52704,Plounérin,Yar (Dour Elego),Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,mars22,2022-03-25,1,Marine Ihuel et Loane Rouiller,2022,3,25,Présent,1,marine_ihuel_loane_rouiller
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,decembre22,2022-12-05,1,Océane BLEUNVEN,2022,12,5,Présent,2,ocane_bleunven
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,mars23,2023-04-11,1,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Présent,1,gunol_chauviere_romain_salaun_erminia_zambon
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+70,3,48.57807,-3.54197,Plounérin,Yar,Favorable,mars_25,2025-03-19,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,mars22,2022-03-25,0,Marine Ihuel et Loane Rouiller,2022,3,25,Absent,1,marine_ihuel_loane_rouiller
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,decembre22,2022-12-05,0,Océane BLEUNVEN,2022,12,5,Absent,2,ocane_bleunven
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,mars23,2023-04-11,1,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Présent,1,gunol_chauviere_romain_salaun_erminia_zambon
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+73,3,48.58387,-3.52232,Plounérin,Yar (Dour Elego),Très favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,mars22,2022-03-25,0,Marine Ihuel et Loane Rouiller,2022,3,25,Absent,1,marine_ihuel_loane_rouiller
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,decembre22,2022-12-05,0,Océane BLEUNVEN,2022,12,5,Absent,2,ocane_bleunven
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,mars23,2023-04-11,0,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Absent,1,gunol_chauviere_romain_salaun_erminia_zambon
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+732,3,48.58358,-3.52669,Plounérin,Yar,Favorable,mars_25,2025-03-19,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,fev_mars21,2021-02-24,0,NA,2021,2,24,Absent,1,NA
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,decembre22,2022-10-28,1,"Camille LABONNE, Alizée KIRCH",2022,10,28,Présent,2,camille_labonne_alize_kirch
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,mars23,2023-04-18,1,Maxime CHAPELLE et Romain SALUN,2023,4,18,Présent,1,maxime_chapelle_romain_salun
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,octobre_24,2024-10-18,1,Enzo Ruiz / Nathan Le Dolley,2024,10,18,Présent,2,enzo_ruiz__nathan_le_dolley
+74,2,48.62057,-3.54953,Plufur,Yar (Dour Elego),Favorable,mars_25,2025-03-31,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,31,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,mars23,2023-04-18,0,Amandine GYOMLAI et Erminia ZAMBON,2023,4,18,Absent,1,amandine_gyomlai_erminia_zambon
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+79,3,48.614383,-3.535376,Lanvellec,Roscoat (affluent),Favorable,mars_25,2025-04-03,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,4,3,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,fev_mars21,2021-03-02,1,NA,2021,3,2,Présent,1,NA
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+80,1,48.572,-3.574,Plounérin,Yar,Favorable,mars_25,2025-03-06,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,fev_mars21,2021-03-02,1,NA,2021,3,2,Présent,1,NA
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,mars22,2022-03-25,1,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Présent,1,maxime_chapelle_amlie_desmas
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,mars23,2023-04-05,1,David MENANTEAU,2023,4,5,Présent,1,david_menanteau
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+84,1,48.567684,-3.568024,Plounérin,Yar,Très favorable,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,fev_mars21,2021-03-02,1,NA,2021,3,2,Présent,1,NA
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,mars22,2022-03-25,1,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Présent,1,maxime_chapelle_amlie_desmas
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,mars23,2023-04-05,1,David MENANTEAU,2023,4,5,Présent,1,david_menanteau
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,octobre_24,2024-10-15,1,Maxime Henry / Nathan Le Dolley,2024,10,15,Présent,2,maxime_henry__nathan_le_dolley
+85,1,48.567294,-3.563966,Plounérin,Yar,Très favorable,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,fev_mars21,2021-02-19,1,NA,2021,2,19,Présent,1,NA
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,mars23,2023-04-19,1,"Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU",2023,4,19,Présent,1,gunol_chauviere_amandine_gyomlai_david_menanteau
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,octobre_24,2024-10-15,1,Maxime Henry / Nathan Le Dolley,2024,10,15,Présent,2,maxime_henry__nathan_le_dolley
+86,1,48.566896,-3.561653,Plounérin,Yar,Favorable,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,fev_mars21,2021-03-02,0,NA,2021,3,2,Absent,1,NA
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,mars22,2022-03-25,0,Maxime CHAPELLE et Amélie Desmas,2022,3,25,Absent,1,maxime_chapelle_amlie_desmas
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,decembre22,2022-10-20,0,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Absent,2,ocane_bleunven_marine_ihuel_camille_labonne
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,mars23,2023-04-11,0,Maxime CHAPELLE et Amandine GYOMLAI,2023,4,11,Absent,1,maxime_chapelle_amandine_gyomlai
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,octobre_24,2024-10-15,0,Maxime Henry / Nathan Le Dolley,2024,10,15,Absent,2,maxime_henry__nathan_le_dolley
+91,1,48.669011,-3.595285,Saint Efflam,Quinquis,Favorable,mars_25,2025-04-08,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,4,8,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,fev_mars21,2021-03-23,1,NA,2021,3,23,Présent,1,NA
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,mars22,2022-03-25,0,David Menanteau,2022,3,25,Absent,1,david_menanteau
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,mars23,2023-04-19,0,Amandine GYOMLAI et Marion RUVOEN,2023,4,19,Absent,1,amandine_gyomlai_marion_ruvoen
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,octobre_24,2024-10-22,0,Maxime Henry / Nathan Le Dolley,2024,10,22,Absent,2,maxime_henry__nathan_le_dolley
+93,2,48.64606,-3.57688,Plestin les Grèves,Yar (Dour Elego),Favorable,mars_25,2025-03-31,0,Maëlle Coussens/ Elouan Berquer,2025,3,31,Absent,1,malle_coussens_elouan_berquer
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,octobre_24,2024-10-31,0,Maxime Henry / Nathan Le Dolley,2024,10,31,Absent,2,maxime_henry__nathan_le_dolley
+97,4,48.646675,-3.523823,Plouzélambre,Roscoat (affluent),Favorable,mars_25,2025-03-26,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,octobre_24,2024-10-31,0,Maxime Henry / Nathan Le Dolley,2024,10,31,Absent,2,maxime_henry__nathan_le_dolley
+98,4,48.63718,-3.52098,Plouzélambre,Roscoat,Favorable,mars_25,2025-03-26,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,26,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,octobre_24,2024-10-31,0,Maxime Henry / Nathan Le Dolley,2024,10,31,Absent,2,maxime_henry__nathan_le_dolley
+108,4,48.61957,-3.53,Lanvellec,Roscoat (affluent),Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,mars23,2023-04-18,1,David MENANTEAU et Marion RUVOEN,2023,4,18,Présent,1,david_menanteau_marion_ruvoen
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,octobre_24,2024-10-31,0,David M / Elias Michat / Le Scair,2024,10,31,Absent,2,david_m__elias_michat__le_scair
+109,4,48.61617,-3.53018,Lanvellec,Roscoat (affluent),Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,octobre_24,2024-10-31,0,David M / Elias Michat / Le Scair,2024,10,31,Absent,2,david_m__elias_michat__le_scair
+110,4,48.61152,-3.51675,Lanvellec,Roscoat (affluent),Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,fev_mars21,2021-03-01,1,NA,2021,3,NA,Présent,1,NA
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,mars23,2023-04-19,1,"Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU",2023,4,19,Présent,1,gunol_chauviere_amandine_gyomlai_david_menanteau
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,octobre_24,2024-10-16,1,Maxime Henry / Nathan Le Dolley,2024,10,16,Présent,2,maxime_henry__nathan_le_dolley
+113,1,48.56544,-3.563496,Plounérin,Yar,Favorable,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,oct_20,2020-10-01,1,NA,2020,10,NA,Présent,2,NA
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,fev_mars21,2021-03-01,1,NA,2021,3,NA,Présent,1,NA
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,decembre22,2022-10-20,1,"Océane BLEUNVEN, Marine IHUEL, Camille LABONNE",2022,10,20,Présent,2,ocane_bleunven_marine_ihuel_camille_labonne
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,mars23,2023-04-19,1,"Guénolé CHAUVIERE, Amandine GYOMLAI et David MENANTEAU",2023,4,19,Présent,1,gunol_chauviere_amandine_gyomlai_david_menanteau
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,octobre_24,2024-10-16,1,Maxime Henry / Nathan Le Dolley,2024,10,16,Présent,2,maxime_henry__nathan_le_dolley
+114,1,48.564550,-3.561585,Plounérin,Yar,Favorable,mars_25,2025-03-06,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,6,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,fev_mars21,2021-02-24,1,NA,2021,2,24,Présent,1,NA
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,oct21,2021-10-14,1,Morgane GELEBART et Marine IHUEL,2021,10,14,Présent,2,morgane_gelebart_marine_ihuel
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,mars22,2022-03-25,1,David Menanteau,2022,3,25,Présent,1,david_menanteau
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,decembre22,2022-10-21,1,Camille LABONNE,2022,10,21,Présent,2,camille_labonne
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,mars23,2023-04-19,1,David MENANTEAU,2023,4,19,Présent,1,david_menanteau
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,octobre_24,2024-10-18,0,Enzo Ruiz / Nathan Le Dolley,2024,10,18,Absent,2,enzo_ruiz__nathan_le_dolley
+115,2,48.5952,-3.59922,Plufur,Yar,Favorable,mars_25,2025-03-21,1,Maëlle Coussens,2025,3,21,Présent,1,malle_coussens
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,oct21,2021-10-14,1,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Présent,2,maxime_chapelle_david_menanteau
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,mars22,2022-03-25,1,Marine Ihuel et Loane Rouiller,2022,3,25,Présent,1,marine_ihuel_loane_rouiller
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,decembre22,2022-12-05,1,Océane BLEUNVEN,2022,12,5,Présent,2,ocane_bleunven
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,mars23,2023-04-11,1,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Présent,1,gunol_chauviere_romain_salaun_erminia_zambon
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,octobre_24,2024-10-24,1,Maxime Henry / Nathan Le Dolley,2024,10,24,Présent,2,maxime_henry__nathan_le_dolley
+116,3,48.59376,-3.54209,Lanvellec,Yar (Dour Elego),Favorable,mars_25,2025-03-19,1,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Présent,1,houz_alexandrejules_karpinskilouka_lahemar
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,oct21,2021-10-14,1,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Présent,2,maxime_chapelle_david_menanteau
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,mars22,2022-03-25,0,Marine Ihuel et Amélie Desmas,2022,3,25,Absent,1,marine_ihuel_amlie_desmas
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,decembre22,2022-12-06,0,Océane BLEUNVEN,2022,12,6,Absent,2,ocane_bleunven
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,mars23,2022-04-19,1,David MENANTEAU,2022,4,19,Présent,1,david_menanteau
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,octobre_24,2024-10-18,0,Maxime Henry / Romain Worme,2024,10,18,Absent,2,maxime_henry__romain_worme
+117,3,48.65818,-3.55925,Tréduder,Roscoat,Favorable,mars_25,2025-04-03,1,David Menanteau/ Elouan Brequer,2025,4,3,Présent,1,david_menanteau_elouan_brequer
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,octobre_24,2024-10-31,0,Maxime Henry / Nathan Le Dolley,2024,10,31,Absent,2,maxime_henry__nathan_le_dolley
+118,4,48.62591,-3.53416,Lanvellec,Roscoat (affluent),Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,mars22,2022-03-25,0,David Menanteau,2022,3,25,Absent,1,david_menanteau
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,decembre22,2022-10-28,0,"Camille LABONNE, Alizée KIRCH",2022,10,28,Absent,2,camille_labonne_alize_kirch
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,mars23,2023-04-18,1,Maxime CHAPELLE et Romain SALUN,2023,4,18,Présent,1,maxime_chapelle_romain_salun
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,octobre_24,2024-10-18,0,Enzo Ruiz / Nathan Le Dolley,2024,10,18,Absent,2,enzo_ruiz__nathan_le_dolley
+119,2,48.625,-3.567,Plufur,Yar (Dour Elego),Favorable,mars_25,2025-03-31,0,Maëlle Coussens/ Elouan Brequer,2025,3,31,Absent,1,malle_coussens_elouan_brequer
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,fev_mars21,2021-03-08,0,NA,2021,3,8,Absent,1,NA
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,oct21,2021-10-14,1,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Présent,2,maxime_chapelle_david_menanteau
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,mars22,2022-03-28,1,David Menanteau,2022,3,28,Présent,1,david_menanteau
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,decembre22,2022-12-05,1,Océane BLEUNVEN,2022,12,5,Présent,2,ocane_bleunven
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,mars23,2023-04-11,0,"Guénolé CHAUVIERE, Romain SALAUN et Erminia ZAMBON",2023,4,11,Absent,1,gunol_chauviere_romain_salaun_erminia_zambon
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,octobre_24,2024-10-24,0,Maxime Henry / Nathan Le Dolley,2024,10,24,Absent,2,maxime_henry__nathan_le_dolley
+120,3,48.60933,-3.5501,Lanvellec,Yar (Dour Elego),Favorable,mars_25,2025-04-03,0,David Menanteau/Elouan Berquer,2025,4,3,Absent,1,david_menanteauelouan_berquer
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,oct21,2021-10-15,0,Morgane GELEBART et Marine IHUEL,2021,10,15,Absent,2,morgane_gelebart_marine_ihuel
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,mars22,2022-03-28,0,David Menanteau,2022,3,28,Absent,1,david_menanteau
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,decembre22,2022-12-05,0,David MENANTEAU,2022,12,5,Absent,2,david_menanteau
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,mars23,2023-04-18,0,David MENANTEAU et Marion RUVOEN,2023,4,18,Absent,1,david_menanteau_marion_ruvoen
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,octobre_24,2024-10-31,0,David M / Elias Michat / Le Scair,2024,10,31,Absent,2,david_m__elias_michat__le_scair
+121,4,48.4606,-3.527,Lanvellec,Roscoat (affluent),Favorable,mars_25,2025-03-19,0,Houzé Alexandre/Jules Karpinski/Louka Lahemar,2025,3,19,Absent,1,houz_alexandrejules_karpinskilouka_lahemar
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,oct21,2021-10-14,0,Maxime CHAPELLE et David MENANTEAU,2021,10,14,Absent,2,maxime_chapelle_david_menanteau
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,mars22,2022-03-25,0,Marine Ihuel et Amélie Desmas,2022,3,25,Absent,1,marine_ihuel_amlie_desmas
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,mars23,2022-04-19,0,David MENANTEAU,2022,4,19,Absent,1,david_menanteau
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,octobre_24,2024-10-18,0,Maxime Henry / Romain Worme,2024,10,18,Absent,2,maxime_henry__romain_worme
+122,3,48.64888,-3.55396,Plouzelmabre,Roscoat,Favorable,mars_25,2025-04-03,1,David Menanteau/ Elouan Berquer,2025,4,3,Présent,1,david_menanteau_elouan_berquer
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,fev_mars21,2021-03-09,0,NA,2021,3,9,Absent,1,NA
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,oct21,2021-10-15,1,Morgane GELEBART et Marine IHUEL,2021,10,15,Présent,2,morgane_gelebart_marine_ihuel
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,mars22,2022-03-28,1,Marine Ihuel et Amélie Desmas,2022,3,28,Présent,1,marine_ihuel_amlie_desmas
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,decembre22,2022-12-06,1,Océane BLEUNVEN,2022,12,6,Présent,2,ocane_bleunven
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,mars23,2023-04-18,0,Maxime CHAPELLE et Romain SALAUN,2023,4,18,Absent,1,maxime_chapelle_romain_salun
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,octobre_24,2024-10-28,0,Romain Worme / Nathan Le Dolley,2024,10,28,Absent,2,romain_worme__nathan_le_dolley
+123,4,48.685150,-3.567602,St Michel en Grève,Kerdu,Favorable,mars_25,2025-04-07,0,Maëlle Coussens/ Elouan Brequer,2025,4,7,Absent,1,malle_coussens_elouan_brequer
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,oct_20,2020-10-01,0,NA,2020,10,NA,Absent,2,NA
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,fev_mars21,2021-03-23,0,NA,2021,3,23,Absent,1,NA
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,oct21,2021-10-14,0,Morgane GELEBART et Marine IHUEL,2021,10,14,Absent,2,morgane_gelebart_marine_ihuel
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,mars22,2022-03-25,0,David Menanteau,2022,3,25,Absent,1,david_menanteau
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,decembre22,2022-12-06,0,Océane BLEUNVEN,2022,12,6,Absent,2,ocane_bleunven
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,mars23,2023-04-19,0,Amandine GYOMLAI et Marion RUVOEN,2023,4,19,Absent,1,amandine_gyomlai_marion_ruvoen
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,octobre_24,2024-10-22,0,Maxime Henry / Nathan Le Dolley,2024,10,22,Absent,2,maxime_henry__nathan_le_dolley
+124,2,48.628623,-3.583876,Plufur,Yar,Favorable,mars_25,2025-03-31,0,Maëlle Coussens/ Elouan Brequer,2025,3,31,Absent,1,malle_coussens_elouan_brequer

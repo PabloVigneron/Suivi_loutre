@@ -16,7 +16,6 @@ knitr::opts_chunk$set(eval = TRUE, echo = FALSE, warning = FALSE, message = FALS
 
 ```{r}
 # Importation des packages
-
 library(tidyverse)
 library(gridExtra)
 library(lubridate)
@@ -39,7 +38,7 @@ library(terra)
 library(ggspatial)
 library(slippymath)     
 library(rosm)           
-library(tidyterra) 
+library(writexl)
 ```
 
 ```{r}
@@ -194,6 +193,15 @@ base_j25 <- base_j25 %>%
   )) %>%
   dplyr::select(-new_valeur)
 ```
+```{r, table1, tidy=FALSE}
+#tab_1 <- tribble(~"Comparaison", ~"n", 
+#                 "Identiques", "32")
+
+#knitr::kable((tab_1), booktabs = TRUE,
+##caption = 'A test table.')
+
+```
+
 
 ```{r}
 # Importation avec data 2025 - Lieue de Greve 
@@ -333,6 +341,20 @@ base_greve <- base_greve_raw %>%
   dplyr::filter(!is.na(code_site), !is.na(itineraire))
 
 
+```
+
+```{r}
+# Export jeu de donnée pour carte SIG
+readr::write_csv(base_greve,
+                    path = "../processed_data/base_Lieue_de_greve.csv"
+                    )
+```
+
+```{r}
+# Export jeu de donnée pour carte SIG
+readr::write_csv(base_j25,
+                    path = "../processed_data/base_Petit_tregor.csv"
+                    )
 ```
 
 # INTRODUCTION
