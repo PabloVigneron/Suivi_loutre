@@ -387,14 +387,14 @@ autrement dit dépendance entre les valeurs prédites (𝜇) et les résidus (�
 
 ```{r}
 mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cauchit"), data = base_j25_year_numeric)
+
 ```
 
 
 **Vérification de l'indépendance des résidus**
 ```{r, fig.cap="",fig.width = 7, fig.height = 5}
-
 plotresid(mod3.2)
-
+plot(mod3.2)
 ```
 
 La relation semble linéaire, il n’y a pas une structuration dans les résidus
@@ -662,3 +662,12 @@ mod7.2 <- glmer(statut_presence~annee+condition_prospection+(1|code_site), famil
 plotresid(mod7.2)
 
 ```
+
+
+# sauvegarde des données prétraitées
+
+```{r}
+save(base_j25_year_numeric,
+     file = "../processed_data/base_j25_year_numeric.rda")
+```
+
