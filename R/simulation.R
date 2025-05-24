@@ -40,7 +40,7 @@ ajouter_presences_annuelles <-
     df2 <- df %>%
       group_by(annee_perm) %>%
       mutate(statut_presence_sim = ajouter_presences(statut_presence,
-                                                     n = min(annee_index) * n_pres_suppl_par_an)) %>%
+                                                     n = min(annee_perm_index) * n_pres_suppl_par_an)) %>%
       ungroup()
     
     df2
@@ -68,7 +68,7 @@ tester_tendance <- function(df, n_pres_suppl_par_an = 0, n_permutations = 10) {
       group_by(code_site) %>% 
       mutate(annee_perm = gtools::permute(annee)) %>% 
       ungroup() %>% 
-      mutate(annee_index = annee_perm - min(annee_perm))
+      mutate(annee_perm_index = annee_perm - min(annee_perm))
     
     # AJOUT DU SIGNAL CONNU
     df_trend <- df_permute %>% 
