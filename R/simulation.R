@@ -31,7 +31,8 @@ ajouter_presences <- function(vecteur, n = 1) {
 #' @param df Dataframe contenant les données.
 #' @param n_pres_suppl_par_an Numérique. Nombre de présences à rajouter par année. Peut être décimal.
 #'
-#' @return Le dataframe d'origine auquel est ajouté une variable 'statut_presence_sim'
+#' @return Le dataframe d'origine auquel est ajouté une variable 'statut_presence_sim', ainsi qu'une 
+#'   variable 'presence_ajoutee'.
 #' @export
 #'
 #' @examples
@@ -42,6 +43,13 @@ ajouter_presences_annuelles <-
       mutate(statut_presence_sim = ajouter_presences(statut_presence,
                                                      n = min(annee_perm_index) * n_pres_suppl_par_an)) %>%
       ungroup()
+    
+    statut_presence_rand <- df %>% 
+      pull(statut_presence) 
+    
+    df2 <- df2 %>% 
+      cbind(statut_presence_rand) %>% 
+      mutate(presence_ajoutee = (statut_presence_rand != statut_presence_sim))
     
     df2
     
@@ -93,7 +101,62 @@ tester_tendance <- function(df, n_pres_suppl_par_an = 0, n_permutations = 10) {
   map_df(.x = 1:n_permutations,
          .f = test_1_modele,
          df = df,
-         n_pres_suppl_par_an = n_pres_suppl_par_an)
+         n_pres_suppl_par_an = n_pres_suppl_par_an) %>% 
+    mutate(tendance = case_when(
+      pvalue_annee > 0.05 ~ "NS",
+      pvalue_annee < 0.05 & sign(coef_annee) == 1 ~ "Augmentation",
+      pvalue_annee < 0.05 & sign(coef_annee) == -1 ~ "Diminution",
+      TRUE ~ NA
+      
+    ))
   
 }
+
+
+###############################
+get_pc_sig <- function(df, n_pres_suppl_par_an = 0, n_permutations = 10) {
+  
+  test <- tester_tendance(df = df,
+                          n_pres_suppl_par_an = n_pres_suppl_par_an,
+                          n_permutations = n_permutations)
+
+  pc_detec_aug <- nrow(test[test$tendance == "Augmentation",]) / nrow(test)
+  
+}
+
+
+#############################
+my_histo <- function(test_df) {
+  test_df %>%
+    ggplot(aes(x = coef_annee,
+               fill = tendance)) +
+    geom_histogram(alpha = 0.5, bins = 15) +
+    geom_vline(xintercept = 0,
+               col = "blue",
+               lty = "dotted") +
+    scale_fill_manual(values = c("green", "red", "grey50")) +
+    labs(x = "Pente année",
+         y = "Fréquence",
+         fill = "Tendance")
+  
+}
+
+##############################
+my_point_plot <- function(df) {
+  ggplot(df %>% 
+           filter(presence_ajoutee),
+         aes(x = annee_perm,
+             y = code_site,
+             col = as.factor(statut_presence_sim))) +
+    geom_point(size = 3) +
+    geom_point(data = df,
+               aes(col = as.factor(statut_presence_sim))) +
+    scale_color_manual(values =  c("purple", "darkgreen")) +
+    labs(x = "Année (après permutation)",
+         y = "Site",
+         col = "Présence",
+         size = "Présence ajoutée")
+  
+}
+
 
