@@ -1,12 +1,25 @@
 ---
-title: "Simulations"
-author: "Pascal"
-date: "2025-05-24"
-output: html_document
+title: "Etude loutre"
+subtitle: "Tests simulation"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  bookdown::html_document2:
+    fig_caption: yes
+    tab_caption: yes
+    number_sections: yes
+    global_numbering: yes
+    toc: yes
+    toc_float:
+      toc_collapsed: yes
+      toc_depth: 2
+    code_folding: hide
+    css: "style.css"
+  word_document: default
+  pdf_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 # Introduction
@@ -85,7 +98,9 @@ On utilise la fonction `ajouter_presences_annuelles()` qui ajoute au dataframe u
 
 ```{r}
 df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 1)
+  ajouter_presences_annuelles(n_pres_suppl_par_an = 1) #%>% 
+  # cbind(statut_presence_rand = df_rand$statut_presence) %>% 
+  # mutate(presence_ajoutee = (statut_presence_rand != statut_presence_sim))
 ```
 
 **Vérifications**
@@ -107,6 +122,11 @@ Nombre de présences dans le tableau où des présences ont été ajoutées pour
 ```{r}
 table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
 ```
+
+```{r, fig.cap="Présentation du jeu de données après permutation et ajout de la tendance. Parmi les points représentant les présences, de couleur violette, les plus gros sont ceux qui ont été rajoutés pour créer la tendance."}
+my_point_plot(df_trend1)
+```
+
 
 # Test : le modèle permet-il de détecter la tendance ?
 
@@ -145,6 +165,7 @@ Tendance non détectée. Il faut dire qu'elle est très faible :
 ```{r}
 table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
 table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
+my_point_plot(df_trend1)
 ```
 
 ## Avec un peu plus de tendance
@@ -167,22 +188,38 @@ On a ici détection de la tendance, sans avoir ajouté énormément de présence
 ```{r}
 table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
 table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
+my_point_plot(df_trend1)
 ```
 
 # Généralisation
 
+Pour chacun des tests ci-dessous, on enchaîne 100 fois les opérations suivantes :
+
+- Permutations des années pour gommer le signal
+- Ajout de présences
+- Calage du modèle
+- Récupération de la pente associée à l'année et de la p-value associée
+- Histogramme des pentes
+
 ## En l'absence de tendance
 
-```{r}
+On s'attend pour ce modèle "neutre" à ce que les pentes soient non significatives dans 95% des cas et que la distribution soit centrée sur zéro et symétrique.
+
+```{r, fig.cap = "Histogramme des pentes (n=100) obtenues par le modèle après permutation des années. Les couleurs permettent de distinguer les pentes selon leur signe et leur significativité au seuil de 5%."}
 set.seed(NULL)
 test2 <- tester_tendance(df = df,
                          n_pres_suppl_par_an = 0,
                          n_permutations = 100)
 
 my_histo(test2) +
-  geom_vline(xintercept = pente_obs, col = "black")
+  geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
+
+pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
-On voit que la pente estimée sur le jeu de données non permuté, de valeur très faible et non significative, est bien dans la gamme des valeurs NS après permutation.
+
+On voit que la pente estimée sur le jeu de données non permuté (ligne verticale noire), de valeur très faible et non significative, est bien dans la gamme des valeurs NS après permutation.
+
+On va ensuite recommencer avec des tendances de plus en plus nettes, c'est-à-dire en rajoutant de plus en plus de présences chaque année.
 
 ## Tendance faible
 
@@ -192,7 +229,10 @@ test2 <- tester_tendance(df = df,
                          n_permutations = 100)
 
 my_histo(test2)
+pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
+
+Pas vraiment de différence avec l'absence de tendance. Pas très surprenant car ça revient à ne rajouter qu'une présence en dernière année.
 
 ## Tendance modérée
 
@@ -202,7 +242,10 @@ test2 <- tester_tendance(df = df,
                          n_permutations = 100)
 
 my_histo(test2)
+pc_detec_aug_0.2 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
+
+Là ça change. La plupart des pentes sont significatices. Bizarrement on en a plus de négatives qu'avec les jeu de données "neutres".
 
 ## Tendance forte
 
@@ -212,6 +255,7 @@ test2 <- tester_tendance(df = df,
                          n_permutations = 100)
 
 my_histo(test2)
+pc_detec_aug_0.5 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
 
 ## Tendance très forte
@@ -222,4 +266,49 @@ test2 <- tester_tendance(df = df,
                          n_permutations = 100)
 
 my_histo(test2)
+pc_detec_aug_1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
+
+# Synthèse
+
+On calcule un taux de détection pour différentes valeurs de la tendance injectée. Pour limiter le temps de calcul on ne recommence pas pour les valeurs déjà calculées.
+
+```{r}
+tendances <- c(0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1.5, 2)
+
+resultat <- map(
+  .x = tendances,
+  .f = get_pc_sig,
+  df = df,
+  n_permutations = 100
+)
+
+pc_detec_aug <- c(
+  pc_detec_aug_0,
+  pc_detec_aug_0.1,
+  pc_detec_aug_0.2,
+  resultat[1:2],
+  pc_detec_aug_0.5,
+  resultat[3:6],
+  pc_detec_aug_1,
+  resultat[7:8]
+) %>%
+  unlist()
+
+tendance <- c(seq(0, 1, 0.1), 1.5, 2)
+
+df_resume <- data.frame(tendance,
+                        pc_detec_aug)
+
+ggplot(data = df_resume,
+       aes(x = tendance,
+           y = pc_detec_aug)) +
+  geom_bar(stat = "identity",
+           fill = "darkgreen") +
+  geom_smooth(col = "red", se = FALSE) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  labs(x = "Tendance (nb de présences annuelles ajoutées)",
+       y = "Pourcentage de détection de la tendance à l'augmentation")
+
+```
+
