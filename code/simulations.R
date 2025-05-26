@@ -75,19 +75,8 @@ table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
 table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
 
 ################################################
-# 
-
-
-# 
-# 
-# 
-# test2 <- test_1_modele(df = df,
-#                        n_pres_suppl_par_an = 0.2)
-# test2
-
-
 test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.,
+                         n_pres_suppl_par_an = 0.2,
                          n_permutations = 100)
 
 test2 %>% 

@@ -1,0 +1,314 @@
+---
+title: "Etude loutre"
+subtitle: "Tests simulation"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  bookdown::html_document2:
+    fig_caption: yes
+    tab_caption: yes
+    number_sections: yes
+    global_numbering: yes
+    toc: yes
+    toc_float:
+      toc_collapsed: yes
+      toc_depth: 2
+    code_folding: hide
+    css: "style.css"
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Introduction
+
+## Problématique
+
+La question posée est double : 
+
+- Le protocole mis en oeuvre permettrait-il de détecter une tendance populationnelle s'il y en avait une ?
+- Le jeu de données indique-t-il une tendance ?
+
+Les premières analyses n'ont montré aucune tendance. On va chercher ici à déterminer si cette absence de détection est due à la faiblesse de l'ensemble protocole - jeu de données - méthode statistique, ou bien si elle est plus probablement due à une absence de signal populationnel.
+
+## Démarche
+
+Pour répondre à la question, on va dans un premier temps utiliser une approche par permutation. Comme on ne sait pas si le jeu de données contient une tendance interannuelle, ou pas, on va permuter aléatoirement la variable "année" du tableau de données, toutes les autres colonnes restant inchangées. **La permutation est réalisée par site**, afin de conserver une des caractéristiques essentielles du jeu de données qui est la période sur laquelle chaque site a été observé. On obtient ainsi un tableau en tout point identique au tableau initial, sauf que le potentiel signal interannuel a été effacé 19 fois sur 20 au risque de 5 %.
+
+On peut ensuite introduire dans le jeu de données permuté une tendance populationnelle connue. Par exemple une tendance arithmétique en ajoutant une détection par année. L'analyse commençant en 2011, on va rajouter en 2012 une présence en transformant une absence en présence. Pour 2013 on va rajouter deux présences, en 2014 trois et ainsi de suite. On obtient ainsi un tableau de données dont on sait qu'il correspond à une population en croissance. Ce tableau va nous premettre d'estimer la capacité du modèle à détecter une tendance connue.
+
+Comme la démarche basée sur des permutations aléatoires, on la renouvelle un grand nombre de fois pour estimer la "robustesse" du résultat.
+
+
+# Chargement des packages, données et fonctions
+
+```{r}
+library(tidyverse)
+library(lme4)
+load(file = "../processed_data/base_j25_year_numeric.rda")
+source(file = "../R/simulation.R")
+```
+
+Fixation de la "graine" du générateur de nombre aléatoires.
+
+```{r}
+set.seed(123)
+```
+
+
+# Préparation du tableau de données
+
+## Mise en forme
+
+```{r}
+df <- base_j25_year_numeric %>% 
+  mutate(code_site = as.factor(code_site),
+         statut_presence = as.integer(statut_presence) - 1,
+         date_annee = lubridate::yday(date_visite))
+```
+
+## Effacement du signal interannuel
+
+On permute les années pour effacer tout signal de tendance interannuelle. La valeur de l'année permutée est stockée dans la variable `annee_perm`. On crée aussi une variable `annee_perm_index` qui compte les années depuis la première année de collecte. Elle vaut zéro en 2011, un en 2012, etc.
+
+```{r}
+df_rand <- df %>% 
+  group_by(code_site) %>% 
+  mutate(annee_perm = gtools::permute(annee)) %>% 
+  ungroup() %>% 
+  mutate(annee_perm_index = annee_perm - min(annee_perm))
+```
+
+Vérification. On ne doit pas avoir de pente année significative (sauf une fois sur 20)
+
+```{r}
+mod <- glmer(statut_presence~annee_perm+(1|code_site), family=binomial(link = "logit"), data = df_rand)
+summary(mod)
+
+pente_obs <- summary(mod)$coefficients[2,1]
+```
+
+Avec une p-value à 0,98 on est rassurés, il n'y a pas d'effet "année" significatif sur la probabilité de détection. 
+
+## Ajout du signal choisi
+
+On utilise la fonction `ajouter_presences_annuelles()` qui ajoute au dataframe une variable `statut_presence_sim` qui est le statut de présence simulé.
+
+```{r}
+df_trend1 <- df_rand %>% 
+  ajouter_presences_annuelles(n_pres_suppl_par_an = 1) #%>% 
+  # cbind(statut_presence_rand = df_rand$statut_presence) %>% 
+  # mutate(presence_ajoutee = (statut_presence_rand != statut_presence_sim))
+```
+
+**Vérifications**
+
+Nombre d'observations par année
+
+```{r}
+table(df_trend1$annee)
+```
+
+Nombre de présences dans le tableau d'origine permuté.
+
+```{r}
+table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
+```
+
+Nombre de présences dans le tableau où des présences ont été ajoutées pour une tendance choisie.
+
+```{r}
+table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
+```
+
+```{r, fig.cap="Présentation du jeu de données après permutation et ajout de la tendance. Parmi les points représentant les présences, de couleur violette, les plus gros sont ceux qui ont été rajoutés pour créer la tendance."}
+my_point_plot(df_trend1)
+```
+
+
+# Test : le modèle permet-il de détecter la tendance ?
+
+On fait tourner le modèle avec `statut_presence_sim` en variable dépendante et la variable `annee_perm` en prédicteur, avec l'effet aléatoire du `code_site`.
+
+## Test initial
+
+```{r}
+mod_tend1 <- glmer(statut_presence_sim ~
+                     annee_perm +
+                     (1|code_site),
+                   family=binomial(link = "logit"),
+                   data = df_trend1)
+summary(mod_tend1)
+```
+
+Avec p<1E-16 et une pente positive on a bien détecté la tendance à l'augmentation du signal au fil des années.
+
+## Test avec une tendance plus faible
+
+```{r}
+set.seed(124)
+df_trend1 <- df_rand %>% 
+  ajouter_presences_annuelles(n_pres_suppl_par_an = 0.1)
+
+mod_trend1 <- glmer(statut_presence_sim ~
+                     annee_perm +
+                     (1|code_site),
+                   family=binomial(link = "logit"),
+                   data = df_trend1)
+summary(mod_trend1)
+```
+
+Tendance non détectée. Il faut dire qu'elle est très faible :
+
+```{r}
+table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
+table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
+my_point_plot(df_trend1)
+```
+
+## Avec un peu plus de tendance
+
+```{r}
+set.seed(125)
+df_trend1 <- df_rand %>% 
+  ajouter_presences_annuelles(n_pres_suppl_par_an = 0.2)
+
+mod_trend1 <- glmer(statut_presence_sim ~
+                      annee_perm +
+                      (1|code_site),
+                    family=binomial(link = "logit"),
+                    data = df_trend1)
+summary(mod_trend1)
+```
+
+On a ici détection de la tendance, sans avoir ajouté énormément de présences :
+
+```{r}
+table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
+table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
+my_point_plot(df_trend1)
+```
+
+# Généralisation
+
+Pour chacun des tests ci-dessous, on enchaîne 100 fois les opérations suivantes :
+
+- Permutations des années pour gommer le signal
+- Ajout de présences
+- Calage du modèle
+- Récupération de la pente associée à l'année et de la p-value associée
+- Histogramme des pentes
+
+## En l'absence de tendance
+
+On s'attend pour ce modèle "neutre" à ce que les pentes soient non significatives dans 95% des cas et que la distribution soit centrée sur zéro et symétrique.
+
+```{r, fig.cap = "Histogramme des pentes (n=100) obtenues par le modèle après permutation des années. Les couleurs permettent de distinguer les pentes selon leur signe et leur significativité au seuil de 5%."}
+set.seed(NULL)
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0,
+                         n_permutations = 100)
+
+my_histo(test2) +
+  geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
+
+pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+```
+
+On voit que la pente estimée sur le jeu de données non permuté (ligne verticale noire), de valeur très faible et non significative, est bien dans la gamme des valeurs NS après permutation.
+
+On va ensuite recommencer avec des tendances de plus en plus nettes, c'est-à-dire en rajoutant de plus en plus de présences chaque année.
+
+## Tendance faible
+
+```{r}
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0.1,
+                         n_permutations = 100)
+
+my_histo(test2)
+pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+```
+
+Pas vraiment de différence avec l'absence de tendance. Pas très surprenant car ça revient à ne rajouter qu'une présence en dernière année.
+
+## Tendance modérée
+
+```{r}
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0.2,
+                         n_permutations = 100)
+
+my_histo(test2)
+pc_detec_aug_0.2 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+```
+
+Là ça change. La plupart des pentes sont significatices. Bizarrement on en a plus de négatives qu'avec les jeu de données "neutres".
+
+## Tendance forte
+
+```{r}
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0.5,
+                         n_permutations = 100)
+
+my_histo(test2)
+pc_detec_aug_0.5 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+```
+
+## Tendance très forte
+
+```{r}
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 1,
+                         n_permutations = 100)
+
+my_histo(test2)
+pc_detec_aug_1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+```
+
+# Synthèse
+
+On calcule un taux de détection pour différentes valeurs de la tendance injectée. Pour limiter le temps de calcul on ne recommence pas pour les valeurs déjà calculées.
+
+```{r}
+tendances <- c(0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1.5, 2)
+
+resultat <- map(
+  .x = tendances,
+  .f = get_pc_sig,
+  df = df,
+  n_permutations = 100
+)
+
+pc_detec_aug <- c(
+  pc_detec_aug_0,
+  pc_detec_aug_0.1,
+  pc_detec_aug_0.2,
+  resultat[1:2],
+  pc_detec_aug_0.5,
+  resultat[3:6],
+  pc_detec_aug_1,
+  resultat[7:8]
+) %>%
+  unlist()
+
+tendance <- c(seq(0, 1, 0.1), 1.5, 2)
+
+df_resume <- data.frame(tendance,
+                        pc_detec_aug)
+
+ggplot(data = df_resume,
+       aes(x = tendance,
+           y = pc_detec_aug)) +
+  geom_bar(stat = "identity",
+           fill = "darkgreen") +
+  geom_smooth(col = "red", se = FALSE) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  labs(x = "Tendance (nb de présences annuelles ajoutées)",
+       y = "Pourcentage de détection de la tendance à l'augmentation")
+
+```
+
