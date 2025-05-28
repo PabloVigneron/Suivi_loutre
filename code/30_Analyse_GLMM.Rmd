@@ -2,15 +2,21 @@
 title: "Loutre_analyse_GLMM"
 author: "Pablo"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
-output:
+output: 
   bookdown::html_document2:
-    toc: true
-    toc_float: true
-#  bookdown::word_docume
+   fig_caption: yes
+   tab_caption: yes
+   number_sections: yes
+   global_numbering: yes
+   toc: yes
+   toc_float:
+         toc_collapsed: yes
+         toc_depth: 2
+   code_folding: hide
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 # Problématique du stage 
@@ -393,7 +399,6 @@ mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cau
 **Vérification de l'indépendance des résidus**
 ```{r, fig.cap="",fig.width = 7, fig.height = 5}
 plotresid(mod3.2)
-plot(mod3.2)
 ```
 
 La relation semble linéaire, il n’y a pas une structuration dans les résidus

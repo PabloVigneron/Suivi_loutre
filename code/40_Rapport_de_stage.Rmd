@@ -4,15 +4,25 @@ author: "PabloVigneron"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output: 
   bookdown::html_document2:
-    toc: true
+   fig_caption: yes
+   tab_caption: yes
+   number_sections: yes
+   global_numbering: yes
+   toc: yes
+   toc_float:
+         toc_collapsed: yes
+         toc_depth: 2
+   code_folding: hide
+   css: "style.css"
 bibliography: library_biblio_otter.bib
 link-citations: true
 cls: apa.cls
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
+
 
 ```{r}
 # Importation des packages
@@ -438,6 +448,14 @@ Correction :
 ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
 
 ## Analyses statistiques
+
+
+
+
+
+
+
+
 
 # RESULTATS
 
