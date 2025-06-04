@@ -23,18 +23,17 @@ cls: apa.cls
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-
 ```{r}
 # Importation des packages
 library(tidyverse)
 library(gridExtra)
-library(lubridate)
+#library(lubridate)
 library(sf)
 library(mapview)
 library(maptiles)
 library(tidyterra)
 library(kableExtra)
-library(knitr)
+#library(knitr)
 library(janitor)
 library(RVAideMemoire)
 library(emmeans)
@@ -42,7 +41,7 @@ library(car)
 library(MASS)
 library(lme4)
 library(MuMIn)
-library(stringr)
+#library(stringr)
 library(stringi)
 library(terra)
 library(ggspatial)
@@ -203,6 +202,7 @@ base_j25 <- base_j25 %>%
   )) %>%
   dplyr::select(-new_valeur)
 ```
+
 ```{r, table1, tidy=FALSE}
 #tab_1 <- tribble(~"Comparaison", ~"n", 
 #                 "Identiques", "32")
@@ -211,7 +211,6 @@ base_j25 <- base_j25 %>%
 ##caption = 'A test table.')
 
 ```
-
 
 ```{r}
 # Importation avec data 2025 - Lieue de Greve 
@@ -369,27 +368,13 @@ readr::write_csv(base_j25,
 
 # INTRODUCTION
 
-Faire des paragraphes qui ont une ligne directrice
-
-Cité de la biblio Ne pas mettre le modèle biologique en 1er
-
-Bref historique de la disparition de la loutre Statut de protection de la loutre France : 2 PNA Espèce en déclin : différentes échelles Recolonisation en bretagne : Bien établie
-
-→ Observatoire des mammifères : conserver la loutre Ecologie de la Loutre : Causes de mortalité : hiérarchie avec importance
-
-Bref résumé de l'écologie de la loutre
-
-Pour estimer la présence de la loutre : bcp de méthode : Rapport SFERM Le marquage comme indice de présence de l’espèce Protocole IUCN : protocole conçu pour une échelle nationale / Chanin → Proposition d’un protocole applicable dans des zones spéciale de conservation, à une échelle plus fine problématique : Est ce que ce protocole à l'échelle d’un bassin versant permet-il de détecter des tendances temporelles chez la loutre d’europe. Autrement dit est ce que ce protocole a un intérêt à être mis en place particulièrement dans les réserves naturelles comme méthode complémentaire de suivi locale de la loutre.
-
 # MATERIELS ET METHODES
 
 ## Sites d’études
 
-La présente étude se base sur des données récoltées en région Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22). Le premier site d’étude Petit Trégor est situé sur les bassins versants de “Tregor” et du “Cotiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). Le second site d’étude Lieue de Grève est situé sur le bassin versant de “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les Côtes d'Armor (22) [@umr1069sasinra-agrocampusouestBassinsVersantsBretagne].
+La présente étude se base sur des données récoltées en région Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22). Le premier site d’étude Petit Trégor est situé sur les bassins-versants de “Tregor” et du “Côtiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). Le second site d’étude Lieue de Grève est situé sur le bassin-versant de “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les Côtes d'Armor (22) [@umr1069sasinra-agrocampusouestBassinsVersantsBretagne].
 
-=\> Insérer cartographie des sites et secteur d’études
-
-```{r, fig.cap="Représentation cartographique du secteur d'étude et des sites correspondants",fig.width = 7, fig.height = 5, echo = FALSE}
+```{r, fig.cap="Représentation cartographique du secteur d'étude et des sites correspondants",fig.width = 7, fig.height = 5}
 # Représentation cartographique du secteur d'étude et des sites correspondants
 
 sites_geo_1 <- base_greve %>%
@@ -424,40 +409,228 @@ mapview(sites_geo, zcol = "code_secteur", col.regions = c("darkseagreen3", "indi
 
 ## Données de l’espèce
 
-Les données analysées dans cette étude ont été transmises par le Groupe Mammalogique Breton (GMB). Les données du site Petit Trégor ont été acquises par les étudiant.e.s en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29). Les données du site Lieue de Grève ont été acquises par les salarié.e.s (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée principalement par Lannion-Trégor Communauté [@reservesnaturellesdefranceLandesPrairiesEtangs].
+Les données analysées dans cette étude ont été transmises par le Groupe Mammalogique Breton (GMB). Les données du site Petit Trégor ont été acquises par les étudiants et étudiantes en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29). Les données du site Lieue de Grève ont été acquises par les salariées et salariées (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée principalement par Lannion-Trégor Communauté [@reservesnaturellesdefranceLandesPrairiesEtangs].
 
 ## Echantillonnage
 
-Le protocole d’échantillonnage se base sur les travaux de Paul Chanin qui dans le cadre du Life in UK Rivers Projects à mis au point un protocole dans l’objectif de suivre la Loutre d'Europe (Lutra lutra) dans le réseau Natura 2000 aux Royaume-Uni[@chaninMonitoringOtterLutra2003]. Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin versant et d’autres part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires).
+Le protocole d’échantillonnage se base sur les travaux de Paul Chanin qui dans le cadre du Life in UK Rivers Projects à mis au point un protocole dans l’objectif de suivre la Loutre d'Europe (Lutra lutra) dans le réseau Natura 2000 aux Royaume-Uni [@chaninMonitoringOtterLutra2003]. Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin-versant et d’autres part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires). Le protocole aspire à être simple, robuste et efficace.
 
-## Correction des données
+### Etude préliminaire
 
-A corriger :
+Une étude préliminaire a été nécessaire pour définir chaque secteur d'étude correspondant à une section ou un sous-bassin-versant en repérant 80 à 100 sites d'études. Chaque site est situé au niveau d'un pont, d'un gué ou d'une passerelle appropriés au marquage de l'espèce (i.e. épreintes et empreintes). Selon ce protocole, parmi ces sites, en fonction des secteurs, 60 ont été sélectionnés. Les sites situés sur des terrains privés ont préférablement été évités. La facilité d'accès de ces sites a également été prise en compte pour la sélection de ceux-ci.
 
--   Le code_site 9 et 121 semble mal positionné : liée au manque de précision des coordonnées GPS
+La prospection s'est faite sous les ponts, gués ou passerelles ainsi que sur les berges adjacentes. Si aucun indice de présences n'avait été trouvé (i.e. épreintes ou empreintes), la recherche s'étendait à 50 m de chaque côté du pont, avec l'utilisation de jumelles à vue si inaccessible. La présence ou l'absence d'indice de présence de la loutre d'Europe ont été relevées. Pour l’ensemble des sites, une fiche descriptive a été réalisée, comportant les coordonnées GPS, la facilité d’accès, des photographies des lieux, l’endroit ou des indices de présence de l’espèce sont observés, l’endroit pour se garer à proximité. Ces fiches permettent aux futurs observateurs et aux observatrices de faciliter l'échantillonnage les années suivantes. Les 60 sites ont donc été sélectionnés parmi la liste et constituent ceux qui ont été prospectés les années suivantes.
 
-Correction :
+### Suivis temporels
 
--   X et Y sont inversé
--   Supprimer la dernière ligne + ligne 72
--   si statut_présence = 'oui' ou \>= 1 , = 1 sinon = 0
--   pb encodage date octobre 2024
--   session fev_mars 2021 -\> noté 2002 -\> corriger
--   La modalité "peut-être" tranformé en "0" donc absent
+À la suite de l'étude préliminaire, le suivi des 60 sites sélectionnés a pu démarrer dès l'année suivante. Contrairement au protocole initial qui indiquait un contrôle annuel puis tous les trois ans, le suivi ultérieur du secteur d'étude a été réalisé annuellement. Le suivi du secteur Petit Trégor s'organisait autour de 60 sites qui ont été prospectés dans une période de 2011 à 2023 allant de mars à mai selon les années. Pour le secteur de la Lieue de grève, 63 sites ont été prospectés avec pour spécificité deux passages annuels effectués de 2020 à 2025. Un passage plutôt printanier vers mars-avril et un passage plutôt automnal-hivernal vers octobre et décembre. Le protocole initial indiquait que la période de prospection devait s'effectuer durant la période s'étalant de mai à septembre pour éviter des variations des niveaux d'eau. De plus, il a été recommandé à l'opérateur ou à l'opératrice de ne pas effectuer de prospection lors de fortes pluies, au moins 1 semaine à 15 jours sans pluie avant la prospection.
 
-ATTENTION - LA DATE 1 octobre 2020 Est FICTIVE pour pouvoir créer la colonne année et mois
+La prospection des sites chaque année, s'est faite à la manière de l'étude préliminaire. En plus de la présence ou absence d'indice de présence de la loutre, le nombre d'épreintes a été relevé selon trois modalités correspondant à l’état de celle-ci : fraîche, sèche ou sèche non fragmentée. 
 
-## Analyses statistiques
+Il est important de noter que certaines années sont manquantes dans la série temporelle (figure). De plus, certains voir de nombreux sites n'ont pas été prospectés certaines années (figure).
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7}
 
 
+base_j25 <- base_j25 %>%
+  mutate(annee = year(date_visite))
+
+all_combos <- expand_grid(code_site = unique(base_j25$code_site),
+                          annee = unique(base_j25$annee))
+
+obs_complete <- all_combos %>%
+  left_join(base_j25 %>% dplyr::select(code_site, annee, statut_observation),
+            by = c("code_site", "annee")) %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(
+    values = c(
+      "Présent" = "darkseagreen3",
+      "Absent" = "indianred1",
+      "Non prospecté" = "grey80"
+    )
+  ) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Suivi des sites de prospection - Secteur Petit Tregor (J25)",
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+```
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) ",fig.width = 9, fig.height = 7, echo = FALSE}
 
 
+base_greve_spring <- base_greve %>%
+  dplyr::filter(passage == 1)
+
+annees_completes <- 2020:2025
+
+all_combos <- expand_grid(
+  code_site = unique(base_greve_spring$code_site),
+  annee = annees_completes
+)
+
+obs_complete <- all_combos %>%
+  left_join(
+    base_greve_spring %>%
+      dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
+  dplyr::mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1",
+    "Non prospecté" = "grey80"
+  )) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Suivi des sites de prospection - Secteur Lieu greve, 1er passage (printemps)",
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+```
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver) ",fig.width = 9, fig.height = 7}
 
 
+base_greve_winter <- base_greve %>%
+  dplyr::filter(passage == 2)
 
+annees_completes <- 2020:2024
 
+all_combos <- expand_grid(
+  code_site = unique(base_greve_winter$code_site),
+  annee = annees_completes 
+)
+
+obs_complete <- all_combos %>%
+  left_join(
+    base_greve_winter %>%
+      dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
+  dplyr::mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1",
+    "Non prospecté" = "grey80"
+  )) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Suivi des sites de prospection - Secteur Lieu greve, 2e passage (hiver)", 
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+```
+
+### Mise en forme des données
+
+Les données ont été mises en forme sous le logiciel de statistiques R (v.4.4.1) au moyen des packages : *tidyverse, tidyterra, janitor* et *stringi.*
+
+## Analyses statistique
+
+**Modelisation** L'objectif de l'analyse de cette étude était de mettre en évidence une tendance temporelle de la loutre d'Europe basée sur l'observation des épreintes à l'échelle d'un bassin versant. La nature du jeu de données est spatio-temporel. Cependant, l'intérêt de l'analyse est porté sur l'effet temporel de la présence de l'espèce.
+
+Pour mettre en évidence la relation entre le statut de présence de la loutre d'Europe et l'année, un modèle linéaire généralisé mixte (GLMM) a été utilisé. La variable réponse étant qualitative binaire, la distribution de celle-ci est binomiale et la fonction de lien choisie est "logit". Pour interpréter la significativité des effets, un test de Wald (χ²) a été réalisé en fixant le risque α à 5% (i.e. p-value \<0,05). L’année est considérée comme une co-variable, en considérant qu’une relation linéaire existe entre celle-ci et le temps. Cette prise de décision permet au modèle d’obtenir un coefficient associée à une p-value et donc de répondre à la question d’une tendance entre les années, significatives ou non.
+
+Il est important de préciser que les séries sont appariées. En effet, les données récoltées chaque année sur les mêmes sites, les observations ne sont donc pas indépendantes. Ceci suggèrent l'intégration d'un facteur aléatoire dans l'analyse. C'est la variabilité spatiale du marquage par l'espèce entre les 60 sites du bassin versant qui a été considéré comme un facteur aléatoire. Malgré ça, l'autocorrélation spatiale a été négligée dans l'analyse.
+
+Avant l'interprétation des résultats du modèle, pour vérifier l'ajustement du modèle aux données, l’indépendance des résidus du modèle avec les valeurs prédites à été vérifiée.
+
+L'ensemble des analyses ont été effectuées sur le logiciel de statistique R (v.4.4.1) avec les packages suivants : lme4, RVAideMemoire, MuMIn et car. Pour des questions de réplicabilité de l'analyse, l'ensemble des scripts est disponible en accès libre sur la plateforme github :<https://github.com/PabloVigneron/Suivi_loutre> .
+
+**Simulation**
 
 # RESULTATS
+
+```{r, fig.width = 9, fig.height = 8}
+
+sites_coord <- base_j25 %>%
+  dplyr::select(code_site, x_l93, y_l93) %>%
+  distinct()
+
+sites_all_years <- expand_grid(
+  code_site = unique(base_j25$code_site),
+  annee = unique(base_j25$annee)
+)
+
+sites_status_full <- sites_all_years %>%
+  left_join(base_j25 %>% 
+              dplyr::select(code_site, annee, statut_observation),
+            by = c("code_site", "annee")) %>%
+  left_join(sites_coord, by = "code_site") %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+sites_j25_sf <- sites_status_full %>%
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+
+basemap <- get_tiles(sites_j25_sf, provider = "CartoDB.Positron", crop = TRUE, zoom = 12)
+
+ggplot() +
+  geom_spatraster_rgb(data = basemap) +
+  geom_sf(data = sites_j25_sf, aes(color = statut_final), size = 1.5, alpha = 0.9) +
+  facet_wrap(~ annee) +
+  scale_color_manual(
+    values = c("Présent" = "darkseagreen3", "Absent" = "indianred1", "Non prospecté" = "grey40")
+  ) +
+  labs(
+    title = "Sites de prospection, Petit Trégor - Secteur Petit Tregor (J25)",
+    color = "Statut d'observation"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    strip.background = element_rect(fill = "grey90"),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+
+```
 
 # DISCUSSION
 

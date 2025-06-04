@@ -667,11 +667,11 @@ plotresid(mod7.2)
 
 ```
 
-
 # sauvegarde des données prétraitées
 
 ```{r}
 save(base_j25_year_numeric,
      file = "../processed_data/base_j25_year_numeric.rda")
 ```
+
 
