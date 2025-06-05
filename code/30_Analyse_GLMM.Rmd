@@ -272,7 +272,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
     legend.background = element_rect(fill = "grey95", color = "black")
   )
 ```
-
+Attention : le graph a été fair avec les présences et absences fausses par pas statut_présence qui a été corrigé
 ```{r, fig.width = 9, fig.height = 8, echo = FALSE}
 
 sites_coord <- base_j25 %>%
@@ -353,7 +353,6 @@ base_j25_year_numeric <-  base_j25 %>%
   
 ```
 
-
 ```{r}
 mod3.0 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "logit"), data = base_j25_year_numeric)
 ```
@@ -422,7 +421,7 @@ r.squaredGLMM(mod3.1)
 **Valeur des coefficients (estimate)**
 
 ```{r}
-summary(mod3.2)
+summary(mod3.0)
 ```
 Année est une co-variable, on regarde  les valeurs des coefficients "Estimate" (valeur du parametre donc de la pente). La relation est donc à la **diminution du taux de présence par site** et **significative**, 5.306e-02 < 0,05.
 
@@ -432,8 +431,15 @@ Année est une co-variable, on regarde  les valeurs des coefficients "Estimate" 
 ### **Test de Wald**
 
 ```{r}
-Anova(mod3.2)
+Anova(mod3.0)
 ```
+```{r}
+summary(mod3.1)
+```
+```{r}
+summary(mod3.2)
+```
+
 ##  Modèle 4 : Le statut d'observation depend de l'année (factor)
 
 

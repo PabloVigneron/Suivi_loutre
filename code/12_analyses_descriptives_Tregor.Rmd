@@ -203,7 +203,7 @@ mapview::mapview(sites_geo,
 )
 ```
 
-
+Attention : le graph a été fair avec les présences et absences fausses par pas statut_présence qui a été corrigé
 ```{r, fig.width = 9, fig.height = 8}
 
 sites_coord <- base_j25 %>%
@@ -217,7 +217,7 @@ sites_all_years <- expand_grid(
 
 sites_status_full <- sites_all_years %>%
   left_join(base_j25 %>% 
-              select(code_site, annee, statut_observation),
+              dplyr::select(code_site, annee, statut_observation),
             by = c("code_site", "annee")) %>%
   left_join(sites_coord, by = "code_site") %>%
   mutate(
@@ -308,7 +308,7 @@ all_combos <- expand_grid(code_site = unique(base_j25$code_site),
                           annee = unique(base_j25$annee))
 
 obs_complete <- all_combos %>%
-  left_join(base_j25 %>% select(code_site, annee, statut_observation),
+  left_join(base_j25 %>% dplyr::select(code_site, annee, statut_observation),
             by = c("code_site", "annee")) %>%
   mutate(
     statut_final = case_when(
