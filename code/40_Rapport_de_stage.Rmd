@@ -429,18 +429,25 @@ La prospection des sites chaque année, s'est faite à la manière de l'étude p
 
 Il est important de noter que certaines années sont manquantes dans la série temporelle (figure). De plus, certains voir de nombreux sites n'ont pas été prospectés certaines années (figure).
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7}
-
-
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 8, fig.height = 7}
 base_j25 <- base_j25 %>%
   mutate(annee = year(date_visite))
 
-all_combos <- expand_grid(code_site = unique(base_j25$code_site),
-                          annee = unique(base_j25$annee))
+# Définir la plage complète d'années à afficher
+annees_completes <- 2010:2023  # modifie cette plage si nécessaire
 
+# Toutes les combinaisons site x année
+all_combos <- expand_grid(
+  code_site = unique(base_j25$code_site),
+  annee = annees_completes
+)
+
+# Joindre et ajouter les statuts finaux
 obs_complete <- all_combos %>%
-  left_join(base_j25 %>% dplyr::select(code_site, annee, statut_observation),
-            by = c("code_site", "annee")) %>%
+  left_join(
+    base_j25 %>% dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
   mutate(
     statut_final = case_when(
       statut_observation == "Présent" ~ "Présent",
@@ -449,7 +456,8 @@ obs_complete <- all_combos %>%
     )
   )
 
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+# Créer le graphique
+suivi_tregor <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_manual(
     values = c(
@@ -460,17 +468,22 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   ) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Petit Tregor (J25)",
+       title = "Secteur Petit Trégor",
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA),
-    legend.background = element_rect(fill = "grey95", color = "black")
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    axis.text.y = element_text(size = 8)  # au besoin, adapte la taille de texte
   )
+
+
+
 ```
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) ",fig.width = 9, fig.height = 7, echo = FALSE}
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) " , fig.width = 7, fig.height = 8}
 
 
 base_greve_spring <- base_greve %>%
@@ -497,7 +510,7 @@ obs_complete <- all_combos %>%
     )
   )
 
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+suivi_printemps <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_manual(values = c(
     "Présent" = "darkseagreen3",
@@ -506,7 +519,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   )) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Lieu greve, 1er passage (printemps)",
+       title = "Lieue greve, 1er passage",
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
@@ -516,7 +529,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   )
 ```
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver) ",fig.width = 9, fig.height = 7}
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver)",fig.width = 7, fig.height = 8 }
 
 
 base_greve_winter <- base_greve %>%
@@ -543,7 +556,7 @@ obs_complete <- all_combos %>%
     )
   )
 
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+suivi_hiver <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_manual(values = c(
     "Présent" = "darkseagreen3",
@@ -552,16 +565,31 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   )) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Lieu greve, 2e passage (hiver)", 
+       title = "Lieue greve, 2e passage", 
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.title = element_text(hjust = 0.4, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA),
-    legend.background = element_rect(fill = "grey95", color = "black")
-  )
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    axis.text.y = element_text(size = 8))
+  
 ```
 
+
+```{r, fig.width = 14, fig.height = 9}
+library(ggpubr)
+library(gridExtra)
+
+fig_suivi_2 <- ggarrange(suivi_tregor, suivi_printemps,suivi_hiver,
+                       labels = c("A", "B", "C"),
+                    ncol = 3, nrow = 1, 
+                    common.legend = TRUE) 
+                   # layout_matrix = rbind(c(1,NA,3), c(NA,2,NA)))
+
+fig_suivi_2
+
+```
 ### Mise en forme des données
 
 Les données ont été mises en forme sous le logiciel de statistiques R (v.4.4.1) au moyen des packages : *tidyverse, tidyterra, janitor* et *stringi.*
@@ -585,6 +613,75 @@ L'ensemble des analyses ont été effectuées sur le logiciel de statistique R (
 ## Secteur Petit Trégor
 
 Aucune tendances n'est observe \@ref(fig:chunkname) 4 ne montre
+
+
+```{r}
+annees_completes <- 2011:2023
+
+combi <- expand_grid(annee = annees_completes)
+
+resume <- base_j25 %>%
+  group_by(annee) %>%
+  summarise(
+    n_obs = n(),
+    n_presences = sum(statut_presence == "1"),
+    pc_presences = n_presences / n_obs,
+    .groups = "drop"
+  )
+resume_complet <- combi %>%
+  left_join(resume, by = "annee") %>%
+  replace_na(list(
+    n_obs = 0,
+    n_presences = 0,
+    pc_presences = 0
+  )) %>%
+  dplyr::mutate(
+    annee = factor(annee, levels = annees_completes),
+    label_pc = ifelse(n_obs == 0, NA, scales::percent(pc_presences, accuracy = 1))
+  )
+ggplot(resume_complet, aes(x = factor(annee), y = pc_presences)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(
+    aes(label = label_pc),
+    position = position_dodge(width = 0.9),
+    vjust = -0.3,
+    size = 3
+  ) +
+  labs(x = "Année",
+       y = "Pourcentage de présence de la loutre",
+       fill = "Passage",
+       title = "Présence de la loutre par année - Secteur Petit Trégor") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1)) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(
+      color = "black",
+      fill = NA,
+      linewidth = 0.5
+    ),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.background = element_rect(fill = "grey94", color = "white"),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.background = element_rect(fill = "grey94", color = "black"),
+    panel.grid.major = element_line(color = "white"),
+    panel.grid.minor = element_line(color = "white")
+  )
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r,fig.cap="Pourcentages de présence de la loutre en fonction des passages et des années",fig.width = 8, fig.height = 5}
 

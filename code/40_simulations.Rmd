@@ -47,6 +47,8 @@ Comme la démarche basée sur des permutations aléatoires, on la renouvelle un 
 ```{r}
 library(tidyverse)
 library(lme4)
+library(ggpubr)
+library(gridExtra)
 load(file = "../processed_data/base_j25_year_numeric.rda")
 source(file = "../R/simulation.R")
 ```
@@ -211,7 +213,7 @@ test2 <- tester_tendance(df = df,
                          n_pres_suppl_par_an = 0,
                          n_permutations = 100)
 
-my_histo(test2) +
+trend_0 <- my_histo(test2) +
   geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
 
 pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
@@ -228,7 +230,7 @@ test2 <- tester_tendance(df = df,
                          n_pres_suppl_par_an = 0.1,
                          n_permutations = 100)
 
-my_histo(test2)
+trend_1 <-my_histo(test2)
 pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
 
@@ -241,7 +243,7 @@ test2 <- tester_tendance(df = df,
                          n_pres_suppl_par_an = 0.2,
                          n_permutations = 100)
 
-my_histo(test2)
+trend_2 <- my_histo(test2)
 pc_detec_aug_0.2 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
 
@@ -254,7 +256,7 @@ test2 <- tester_tendance(df = df,
                          n_pres_suppl_par_an = 0.5,
                          n_permutations = 100)
 
-my_histo(test2)
+trend_3 <- my_histo(test2)
 pc_detec_aug_0.5 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
 
@@ -265,9 +267,24 @@ test2 <- tester_tendance(df = df,
                          n_pres_suppl_par_an = 1,
                          n_permutations = 100)
 
-my_histo(test2)
+trend_4 <- my_histo(test2)
 pc_detec_aug_1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
+
+
+# Figure synthétique
+
+```{r}
+
+
+figure <- ggarrange(trend_0, trend_1, trend_2, trend_3, trend_4,
+                    labels = c("A", "B", "C", "D", "E"),
+                    ncol = 3, nrow = 2, 
+                    common.legend = TRUE, legend = "bottom")
+
+figure
+```
+
 
 # Synthèse
 
@@ -304,7 +321,7 @@ ggplot(data = df_resume,
        aes(x = tendance,
            y = pc_detec_aug)) +
   geom_bar(stat = "identity",
-           fill = "darkgreen") +
+           fill = "darkseagreen3") +
   geom_smooth(col = "red", se = FALSE) +
   scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
   labs(x = "Tendance (nb de présences annuelles ajoutées)",
