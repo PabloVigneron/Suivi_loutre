@@ -1,5 +1,5 @@
 ---
-title: "Final Results"
+title: "Rapport de stage"
 author: "PabloVigneron"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output: 
@@ -222,15 +222,28 @@ base_greve_raw <-
 ```
 
 ```{r}
+
+# Export des bonnes coordonnées - Secteur Lieue de grève
+
+site_lg <-
+  readxl::read_xlsx(path = '../raw_data/coord_lieue_de_greve.xlsx', col_names = T) %>%
+  dplyr::mutate(point_n = as.numeric(Ponts)) %>%
+  dplyr::select(point_n, X_L93, Y_L93)
+
+```
+
+
+```{r}
 ## Correction des données - Mise en forme - Secteur : Lieu Greve avec data 2025
 
 base_greve <- base_greve_raw %>%
   janitor::clean_names() %>%
+  left_join(site_lg, by = "point_n") %>%
   dplyr::select(
     point_n,
     itineraire,
-    x,
-    y,
+    X_L93,
+    Y_L93,
     commune,
     cours_deau,
     bilan_choix_du_site,
@@ -258,8 +271,8 @@ base_greve <- base_greve_raw %>%
   ) %>%
   dplyr::rename(
     code_site = point_n,
-    y = x,
-    x = y,
+    x_l93 = X_L93,
+    y_l93 = Y_L93,
     marquage_suivi_oct_20 = epreinte_oct20
   ) %>%
   dplyr::mutate(date_suivi_octobre_24 = as.Date(as.numeric(date_suivi_octobre_24), origin = "1899-12-30")) %>%
@@ -325,8 +338,8 @@ base_greve <- base_greve_raw %>%
     statut_presence = as.factor (statut_presence),
     jour = ifelse(jour == 1, NA, jour),
     annee = ifelse(annee == 2002, 2021, annee),
-    y = str_replace_all(y, ",", ""),
-    x = str_replace_all(x, " ", ""),
+    y = str_replace_all(y_l93, ",", ""),
+    x = str_replace_all(x_l93, " ", ""),
     passage = ifelse(mois <= 6, 1, 2),
     date_visite = ifelse(
       date_visite == as.Date("2002-02-24"),
@@ -354,19 +367,25 @@ base_greve <- base_greve_raw %>%
 
 ```{r}
 # Export jeu de donnée pour carte SIG
-readr::write_csv(base_greve,
-                    path = "../processed_data/base_Lieue_de_greve.csv"
-                    )
+#readr::write_csv(base_greve,
+ #                   path = "../processed_data/base_Lieue_de_greve.csv"
+ #                   )
 ```
 
 ```{r}
 # Export jeu de donnée pour carte SIG
-readr::write_csv(base_j25,
-                    path = "../processed_data/base_Petit_tregor.csv"
-                    )
+#readr::write_csv(base_j25,
+ #                   path = "../processed_data/base_Petit_tregor.csv"
+   #                 )
 ```
 
-**Sites d’études**
+# INTRODUCTION
+
+# MATERIELS ET METHODES
+
+## Sites d’études
+
+La présente étude se base sur des données récoltées en région Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22). Le premier site d’étude Petit Trégor est situé sur les bassins-versants de “Tregor” et du “Côtiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (UMR 1069 SAS INRA - Agrocampus Ouest, n.d.). Le second site d’étude Lieue de Grève est situé sur le bassin-versant de “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les Côtes d'Armor (22) [@umr1069sasinra-agrocampusouestBassinsVersantsBretagne].
 
 ```{r, fig.cap="Représentation cartographique du secteur d'étude et des sites correspondants",fig.width = 7, fig.height = 5}
 # Représentation cartographique du secteur d'étude et des sites correspondants
@@ -381,10 +400,10 @@ sites_geo_1 <- base_greve %>%
   ) %>%
   filter(!is.na(x) & !is.na(y)) %>%
   rename(nom_site = commune) %>%
-  dplyr::select(nom_site, code_site, code_secteur, statut_observation, annee, x, y) %>%
-  st_as_sf(coords = c("x", "y"), crs = 4326) %>%
-  st_transform(2154)
-
+  dplyr::select(nom_site, code_site, code_secteur, statut_observation, annee, x_l93, y_l93) %>%
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+  
+  
 sites_geo_2 <- base_tregor %>% 
   filter(code_secteur == "J25") %>%
   dplyr::select(nom_site:y_l93, code_site, code_secteur, statut_observation, annee) %>% 
@@ -401,18 +420,47 @@ mapview(sites_geo, zcol = "code_secteur", col.regions = c("darkseagreen3", "indi
 
 ```
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 9, fig.height = 7}
+## Données de l’espèce
 
+Les données analysées dans cette étude ont été transmises par le Groupe Mammalogique Breton (GMB). Les données du site Petit Trégor ont été acquises par les étudiants et étudiantes en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29). Les données du site Lieue de Grève ont été acquises par les salariées et salariées (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée principalement par Lannion-Trégor Communauté [@reservesnaturellesdefranceLandesPrairiesEtangs].
 
+## Echantillonnage
+
+Le protocole d’échantillonnage se base sur les travaux de Paul Chanin qui dans le cadre du Life in UK Rivers Projects à mis au point un protocole dans l’objectif de suivre la Loutre d'Europe (Lutra lutra) dans le réseau Natura 2000 aux Royaume-Uni [@chaninMonitoringOtterLutra2003]. Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin-versant et d’autres part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires). Le protocole aspire à être simple, robuste et efficace.
+
+### Etude préliminaire
+
+Une étude préliminaire a été nécessaire pour définir chaque secteur d'étude correspondant à une section ou un sous-bassin-versant en repérant 80 à 100 sites d'études. Chaque site est situé au niveau d'un pont, d'un gué ou d'une passerelle appropriés au marquage de l'espèce (i.e. épreintes et empreintes). Selon ce protocole, parmi ces sites, en fonction des secteurs, 60 ont été sélectionnés. Les sites situés sur des terrains privés ont préférablement été évités. La facilité d'accès de ces sites a également été prise en compte pour la sélection de ceux-ci.
+
+La prospection s'est faite sous les ponts, gués ou passerelles ainsi que sur les berges adjacentes. Si aucun indice de présences n'avait été trouvé (i.e. épreintes ou empreintes), la recherche s'étendait à 50 m de chaque côté du pont, avec l'utilisation de jumelles à vue si inaccessible. La présence ou l'absence d'indice de présence de la loutre d'Europe ont été relevées. Pour l’ensemble des sites, une fiche descriptive a été réalisée, comportant les coordonnées GPS, la facilité d’accès, des photographies des lieux, l’endroit ou des indices de présence de l’espèce sont observés, l’endroit pour se garer à proximité. Ces fiches permettent aux futurs observateurs et aux observatrices de faciliter l'échantillonnage les années suivantes. Les 60 sites ont donc été sélectionnés parmi la liste et constituent ceux qui ont été prospectés les années suivantes.
+
+### Suivis temporels
+
+À la suite de l'étude préliminaire, le suivi des 60 sites sélectionnés a pu démarrer dès l'année suivante. Contrairement au protocole initial qui indiquait un contrôle annuel puis tous les trois ans, le suivi ultérieur du secteur d'étude a été réalisé annuellement. Le suivi du secteur Petit Trégor s'organisait autour de 60 sites qui ont été prospectés dans une période de 2011 à 2023 allant de mars à mai selon les années. Pour le secteur de la Lieue de grève, 63 sites ont été prospectés avec pour spécificité deux passages annuels effectués de 2020 à 2025. Un passage plutôt printanier vers mars-avril et un passage plutôt automnal-hivernal vers octobre et décembre. Le protocole initial indiquait que la période de prospection devait s'effectuer durant la période s'étalant de mai à septembre pour éviter des variations des niveaux d'eau. De plus, il a été recommandé à l'opérateur ou à l'opératrice de ne pas effectuer de prospection lors de fortes pluies, au moins 1 semaine à 15 jours sans pluie avant la prospection.
+
+La prospection des sites chaque année, s'est faite à la manière de l'étude préliminaire. En plus de la présence ou absence d'indice de présence de la loutre, le nombre d'épreintes a été relevé selon trois modalités correspondant à l’état de celle-ci : fraîche, sèche ou sèche non fragmentée. 
+
+Il est important de noter que certaines années sont manquantes dans la série temporelle (figure). De plus, certains voir de nombreux sites n'ont pas été prospectés certaines années (figure).
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 8, fig.height = 7}
 base_j25 <- base_j25 %>%
   mutate(annee = year(date_visite))
 
-all_combos <- expand_grid(code_site = unique(base_j25$code_site),
-                          annee = unique(base_j25$annee))
+# Définir la plage complète d'années à afficher
+annees_completes <- 2010:2023  # modifie cette plage si nécessaire
 
+# Toutes les combinaisons site x année
+all_combos <- expand_grid(
+  code_site = unique(base_j25$code_site),
+  annee = annees_completes
+)
+
+# Joindre et ajouter les statuts finaux
 obs_complete <- all_combos %>%
-  left_join(base_j25 %>% dplyr::select(code_site, annee, statut_observation),
-            by = c("code_site", "annee")) %>%
+  left_join(
+    base_j25 %>% dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
   mutate(
     statut_final = case_when(
       statut_observation == "Présent" ~ "Présent",
@@ -421,7 +469,8 @@ obs_complete <- all_combos %>%
     )
   )
 
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+# Créer le graphique
+suivi_tregor <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_manual(
     values = c(
@@ -432,17 +481,22 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   ) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Petit Tregor (J25)",
+       title = "Secteur Petit Trégor",
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA),
-    legend.background = element_rect(fill = "grey95", color = "black")
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    axis.text.y = element_text(size = 8)  # au besoin, adapte la taille de texte
   )
+
+
+
 ```
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) ",fig.width = 9, fig.height = 7, echo = FALSE}
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) " , fig.width = 7, fig.height = 8}
 
 
 base_greve_spring <- base_greve %>%
@@ -469,7 +523,7 @@ obs_complete <- all_combos %>%
     )
   )
 
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+suivi_printemps <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_manual(values = c(
     "Présent" = "darkseagreen3",
@@ -478,7 +532,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   )) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Lieu greve, 1er passage (printemps)",
+       title = "Lieue greve, 1er passage",
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
@@ -488,7 +542,7 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   )
 ```
 
-```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver) ",fig.width = 9, fig.height = 7}
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver)",fig.width = 7, fig.height = 8 }
 
 
 base_greve_winter <- base_greve %>%
@@ -515,7 +569,7 @@ obs_complete <- all_combos %>%
     )
   )
 
-ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+suivi_hiver <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_manual(values = c(
     "Présent" = "darkseagreen3",
@@ -524,21 +578,123 @@ ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
   )) +
   labs(x = "Année",
        y = "Site",
-       title = "Suivi des sites de prospection - Secteur Lieu greve, 2e passage (hiver)", 
+       title = "Lieue greve, 2e passage", 
        fill = "Statut d'observation") +
   theme_minimal() +
   theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.title = element_text(hjust = 0.4, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA),
-    legend.background = element_rect(fill = "grey95", color = "black")
-  )
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    axis.text.y = element_text(size = 8))
+  
 ```
+
+
+```{r, fig.width = 14, fig.height = 9}
+library(ggpubr)
+library(gridExtra)
+
+fig_suivi_2 <- ggarrange(suivi_tregor, suivi_printemps,suivi_hiver,
+                       labels = c("A", "B", "C"),
+                    ncol = 3, nrow = 1, 
+                    common.legend = TRUE) 
+                   # layout_matrix = rbind(c(1,NA,3), c(NA,2,NA)))
+
+fig_suivi_2
+
+```
+### Mise en forme des données
+
+Les données ont été mises en forme sous le logiciel de statistiques R (v.4.4.1) au moyen des packages : *tidyverse, tidyterra, janitor* et *stringi.*
+
+## Analyses statistique
+
+**Modelisation** L'objectif de l'analyse de cette étude était de mettre en évidence une tendance temporelle de la loutre d'Europe basée sur l'observation des épreintes à l'échelle d'un bassin versant. La nature du jeu de données est spatio-temporel. Cependant, l'intérêt de l'analyse est porté sur l'effet temporel de la présence de l'espèce.
+
+Pour mettre en évidence la relation entre le statut de présence de la loutre d'Europe et l'année, un modèle linéaire généralisé mixte (GLMM) a été utilisé. La variable réponse étant qualitative binaire, la distribution de celle-ci est binomiale et la fonction de lien choisie est "logit". Pour interpréter la significativité des effets, un test de Wald (χ²) a été réalisé en fixant le risque α à 5% (i.e. p-value \<0,05). L’année est considérée comme une co-variable, en considérant qu’une relation linéaire existe entre celle-ci et le temps. Cette prise de décision permet au modèle d’obtenir un coefficient associée à une p-value et donc de répondre à la question d’une tendance entre les années, significatives ou non.
+
+Il est important de préciser que les séries sont appariées. En effet, les données récoltées chaque année sur les mêmes sites, les observations ne sont donc pas indépendantes. Ceci suggèrent l'intégration d'un facteur aléatoire dans l'analyse. C'est la variabilité spatiale du marquage par l'espèce entre les 60 sites du bassin versant qui a été considéré comme un facteur aléatoire. Malgré ça, l'autocorrélation spatiale a été négligée dans l'analyse.
+
+Avant l'interprétation des résultats du modèle, pour vérifier l'ajustement du modèle aux données, l’indépendance des résidus du modèle avec les valeurs prédites à été vérifiée.
+
+L'ensemble des analyses ont été effectuées sur le logiciel de statistique R (v.4.4.1) avec les packages suivants : lme4, RVAideMemoire, MuMIn et car. Pour des questions de réplicabilité de l'analyse, l'ensemble des scripts est disponible en accès libre sur la plateforme github :<https://github.com/PabloVigneron/Suivi_loutre> .
+
+**Simulation**
 
 # RESULTATS
 
-## Modelisation
+## Secteur Petit Trégor
 
-### Secteur Petit Trégor
+Aucune tendances n'est observe \@ref(fig:chunkname) 4 ne montre
+
+
+```{r}
+annees_completes <- 2011:2023
+
+combi <- expand_grid(annee = annees_completes)
+
+resume <- base_j25 %>%
+  group_by(annee) %>%
+  summarise(
+    n_obs = n(),
+    n_presences = sum(statut_presence == "1"),
+    pc_presences = n_presences / n_obs,
+    .groups = "drop"
+  )
+resume_complet <- combi %>%
+  left_join(resume, by = "annee") %>%
+  replace_na(list(
+    n_obs = 0,
+    n_presences = 0,
+    pc_presences = 0
+  )) %>%
+  dplyr::mutate(
+    annee = factor(annee, levels = annees_completes),
+    label_pc = ifelse(n_obs == 0, NA, scales::percent(pc_presences, accuracy = 1))
+  )
+ggplot(resume_complet, aes(x = factor(annee), y = pc_presences)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(
+    aes(label = label_pc),
+    position = position_dodge(width = 0.9),
+    vjust = -0.3,
+    size = 3
+  ) +
+  labs(x = "Année",
+       y = "Pourcentage de présence de la loutre",
+       fill = "Passage",
+       title = "Présence de la loutre par année - Secteur Petit Trégor") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1)) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(
+      color = "black",
+      fill = NA,
+      linewidth = 0.5
+    ),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.background = element_rect(fill = "grey94", color = "white"),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.background = element_rect(fill = "grey94", color = "black"),
+    panel.grid.major = element_line(color = "white"),
+    panel.grid.minor = element_line(color = "white")
+  )
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r,fig.cap="Pourcentages de présence de la loutre en fonction des passages et des années",fig.width = 8, fig.height = 5}
 
@@ -598,74 +754,6 @@ ggplot(resume_complet,
 
 ```
 
-| Modèle | Fonction de lien | Estimate coefficient, annee | p values |
-|:--:|:--:|:--:|:--:|
-| statut_presence \~ annee + (1 \| code_site) | Logit | 0.02853 | 0.411 NS |
-| statut_presence \~ annee + (1 \| code_site) | Probit | 0.013919 | 1.39e-09 \*\*\* |
-| statut_presence \~ annee + (1 \| code_site) | cauchit | 8.067e-02 | \<2e-16 \*\*\* |
-
-#Resultats tableau
-```{r}
-library(tibble)
-library(gt)
-
-# Données
-resultats_modele <- tibble::tibble(
-  Modèle = c(
-    "statut_presence ~ annee + (1 | code_site)",
-    "statut_presence ~ annee + (1 | code_site)",
-    "statut_presence ~ annee + (1 | code_site)"
-  ),
-  `Fonction de lien` = c("Logit", "Probit", "Cauchit"),
-  `Estimate coefficient, annee ± es` = c("0.028 ± 0.03", "0.014 ± 0.002", "0,08 ± 0.002"),
-  `p values` = c("0.411 NS", "1.39e-09 ***", "<2e-16 ***")
-)
-
-# Tableau GT stylé
-table_gt <- resultats_modele %>%
-  gt() %>%
-  tab_header(title = "Résultats des modèle linéaire généralisé mixte (GLMM)") %>%
-  fmt_number(columns = vars(`Estimate coefficient, annee ± es`),
-             decimals = 3) %>%
-  cols_align(align = "center", columns = everything()) %>%
-  opt_table_font(font = list(google_font("Times New Roman")))# pour compatibilité))
-                             
-                             # Export PNG
-                             gtsave(table_gt, "resultats_modele_tregor.png")
-
-```
-```{r}
-
-library(tibble)
-library(gt)
-
-# Données
-resultats_modele <- tibble::tibble(
-  Modèle = c(
-    "statut_presence ~ annee + (1 | code_site)",
-    "statut_presence ~ annee + (1 | code_site)",
-    "statut_presence ~ annee + (1 | code_site)"
-  ),
-  `Fonction de lien` = c("Logit", "Probit", "Cauchit"),
-  `Estimate coefficient, annee` = c("0.028 ", "0.014", "0,08"),
-  `p values` = c("0.411 NS", "1.39e-09 ***", "<2e-16 ***")
-)
-
-# Tableau GT stylé
-table_gt <- resultats_modele %>%
-  gt() %>%
-  tab_header(title = "Résultats des modèle linéaire généralisé mixte (GLMM)") %>%
-  fmt_number(columns = vars(`Estimate coefficient, annee`),
-             decimals = 3) %>%
-  cols_align(align = "center", columns = everything()) %>%
-  opt_table_font(font = list(google_font("Times New Roman")))# pour compatibilité))
-                             
-                             # Export PNG
-                             gtsave(table_gt, "resultats_modele_tregor_V2.png")
-
-```
-
-
 ```{r}
 base_j25_year_numeric <-  base_j25 %>%
   mutate(annee = as.numeric(annee), 
@@ -683,7 +771,7 @@ mod3.0 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "log
 ```
 
 ```{r}
-summary(mod3.0)
+#summary(mod3.0)
 ```
 
 ```{r}
@@ -696,7 +784,7 @@ mod3.1 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "pro
 ```
 
 ```{r}
-summary(mod3.1)
+#summary(mod3.1)
 ```
 
 ```{r}
@@ -709,13 +797,16 @@ mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cau
 ```
 
 ```{r}
-summary(mod3.2)
+#summary(mod3.2)
 ```
 
+| Modèle | Fonction de lien | Estimate coefficient, annee | p values |
+|:--------------------:|:---------------:|:---------------:|:---------------:|
+| statut_presence \~ annee + (1 \| code_site) | Logit | 0.02853 | 0.411 NS |
+| statut_presence \~ annee + (1 \| code_site) | Probit | 0.013919 | 1.39e-09 \*\*\* |
+| statut_presence \~ annee + (1 \| code_site) | cauchit | 8.067e-02 | \<2e-16 \*\*\* |
 
-## Modelisation
-
-### Secteur de la Lieue de grève
+## Secteur de la Lieue de grève
 
 ```{r,fig.cap="Pourcentages de présence de la loutre en fonction des passages et des années",fig.width = 8, fig.height = 5}
 base_greve_passage <- base_greve %>%
@@ -776,78 +867,6 @@ ggplot(resume_complet, aes(x = factor(annee), y = pc_presences, fill = passage_l
   )
 ```
 
-```{r,fig.cap="Pourcentages de présence de la loutre en fonction des passages et des années",fig.width = 8, fig.height = 5}
-base_greve_passage <- base_greve %>%
-  mutate(
-    passage_label = ifelse(mois <= 6, "Passage printemps", "Passage hiver"),
-    passage_label = factor(passage_label, levels = c("Passage printemps", "Passage hiver"))
-  )
-
-
-annees <- sort(unique(base_greve_passage$annee))
-passages <- c("Passage printemps", "Passage hiver")
-combi <- expand_grid(annee = annees, passage_label = passages)
-
-resume <- base_greve_passage %>%
-  group_by(annee, passage_label) %>%
-  summarise(
-    n_obs = n(),
-    n_presences = sum(statut_presence == '1'),
-    pc_presences = n_presences / n_obs,
-    .groups = "drop"
-  )
-
-resume_complet <- combi %>%
-  left_join(resume, by = c("annee", "passage_label")) %>%
-  replace_na(list(
-    n_obs = 0,
-    n_presences = 0,
-    pc_presences = 0
-  ))
-
-ggplot(resume_complet, aes(x = factor(annee), y = pc_presences, fill = passage_label)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_text(
-    data = subset(resume_complet, n_obs > 0),
-    aes(label = scales::percent(pc_presences, accuracy = 1)),
-    position = position_dodge(width = 0.9),
-    vjust = -0.3,
-    size = 3
-  ) +
-  scale_fill_manual(
-    values = c("Passage printemps" = "gray50", "Passage hiver" = "grey20")
-  ) +
-  labs(
-    x = "Année",
-    y = "Pourcentage de présence de la loutre",
-    fill = "Passage",
-    title = "Présence de la loutre par année et par passage - Secteur Lieue de Grève"
-  ) +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(0, 1)) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    panel.background = element_rect(fill = "grey94", color = "white"),
-    plot.background = element_rect(fill = "white", color = NA),
-    legend.background = element_rect(fill = "grey94", color = "black"), 
-    panel.grid.major = element_line(color = "white"),
-    panel.grid.minor = element_line(color = "white")
-  )
-
-```
-
-
-
-
-
-| Modèle | Fonction de lien | Estimate coefficient, annee | p values |
-|:-------------------:|:---------------:|:---------------:|:---------------:|
-| statut_presence \~ annee + passage + (1 \| code_site) | Logit | 0.001335 | 0.3071 NS |
-| statut_presence \~ annee + passage + (1 \| code_site) | Probit | 0.002219 | 0.5060 NS |
-| statut_presence \~ annee + passage + (1 \| code_site) | cauchit | -0.02917 | 0.7001 NS |
-
 ```{r}
 greve_year_factor_season <- base_greve%>%
   mutate(annee = as.numeric(annee), 
@@ -864,7 +883,7 @@ mod5.0<- glmer(statut_presence~annee + passage + (1|code_site), family=binomial(
 ```
 
 ```{r}
-summary(mod5.0)
+#summary(mod5.0)
 ```
 
 ```{r}
@@ -877,7 +896,7 @@ mod5.1<- glmer(statut_presence~annee + passage + (1|code_site), family=binomial(
 ```
 
 ```{r}
-summary(mod5.1)
+#summary(mod5.1)
 ```
 
 ```{r}
@@ -890,10 +909,14 @@ mod5.2<- glmer(statut_presence~annee + passage + (1|code_site), family=binomial(
 ```
 
 ```{r}
-summary(mod5.2)
+#summary(mod5.2)
 ```
 
-
+| Modèle | Fonction de lien | Estimate coefficient, annee | p values |
+|:-------------------:|:---------------:|:---------------:|:---------------:|
+| statut_presence \~ annee + passage + (1 \| code_site) | Logit | 0.001335 | 0.3071 NS |
+| statut_presence \~ annee + passage + (1 \| code_site) | Probit | 0.002219 | 0.5060 NS |
+| statut_presence \~ annee + passage + (1 \| code_site) | cauchit | -0.02917 | 0.7001 NS |
 
 ```{r}
 mod6.0<- glmer(statut_presence~annee + (1|code_site), family=binomial(link = "logit"), data = greve_year_factor_season)
@@ -933,301 +956,9 @@ mod6.2<- glmer(statut_presence~annee + (1|code_site), family=binomial(link = "ca
 
 | Modèle | Fonction de lien | Estimate coefficient, annee | p values |
 |:-------------------:|:---------------:|:---------------:|:---------------:|
-| statut_presence \~ annee + (1 \| code_site) | Logit | 0.042 | \<2e-16 \*\*\* |
-| statut_presence \~ annee + (1 \| code_site) | cauchit | 0.015 | 0.836 NS |
+| statut_presence \~ annee + (1 \| code_site) | Logit | 0.042909 | \<2e-16 \*\*\* |
+| statut_presence \~ annee + (1 \| code_site) | cauchit | 0.01462 | 0.836 NS |
 
-#Resulats
+# DISCUSSION
 
-```{r}
-library(tibble)
-library(gt)
-
-# Données
-resultats_modele <- tibble::tibble(
-  Modèle = c("statut_presence ~ annee + (1 | code_site)",
-             "statut_presence ~ annee + (1 | code_site)"),
-  `Fonction de lien` = c("Logit", "Cauchit"),
-  `Estimate coefficient, annee` = c("0.042 ±", "0.015 ±"),
-  `p values` = c("< 2e-16 ***", "0.836 NS"), 
-  `Estimate coefficient, passages` = c("-0.411935 ± 0.22", "0.015 ±"),
-  `p values` = c("< 2e-16 ***", "0.836 NS")
-)
-
-# Tableau GT stylé
-table_gt <- resultats_modele %>%
-  gt() %>%
-  tab_header(
-    title = "Résultats des modèle linéaire généralisé mixte (GLMM)"
-  ) %>%
-  fmt_number(columns = vars(`Estimate coefficient, annee`, `Estimate coefficient, passages` 
-                            ),
-             decimals = 3) %>%
-  cols_align(
-    align = "center",
-    columns = everything()
-  ) %>%
-  opt_table_font(
-    font = list(
-      google_font("Times New Roman") # pour compatibilité
-    )
-  )
-
-# Export PNG
-gtsave(table_gt, "resultats_modele_greve.png")
-
-```
-
-#V2 sans es
-```{r}
-# Données
-resultats_modele <- tibble::tibble(
-  Modèle = c(
-    "statut_presence ~ annee + passage + (1 | code_site)",
-    "statut_presence ~ annee + passage + (1 | code_site)", 
-    "statut_presence ~ annee + passage + (1 | code_site)"
-    
-  ),
-  `Fonction de lien` = c("Logit","Probit", "Cauchit"),
-  `Estimate coefficient, annee ± es` = c("0.001 ± 0.001", "0.002 ± 0.003", "-0.029 ± 0.07"),
-  `p values` = c("0.307 NS", "0.506 NS", "0.700 NS"),
-)
-
-# Tableau GT stylé
-table_gt <- resultats_modele %>%
-  gt() %>%
-  tab_header(title = "Résultats des modèle linéaire généralisé mixte (GLMM)") %>%
-  fmt_number(columns = vars(`Estimate coefficient, annee ± es`),
-             decimals = 3) %>%
-  cols_align(align = "center", columns = everything()) %>%
-  opt_table_font(font = list(google_font("Times New Roman"))) # pour compatibilité))
-                             
-                             # Export PNG
-                             gtsave(table_gt, "resultats_modele_greve.png")
-                             
-```
-
-## Simulation (Secteur Petit Trégor)
-
-```{r}
-library(tidyverse)
-library(lme4)
-load(file = "../processed_data/base_j25_year_numeric.rda")
-source(file = "../R/simulation.R")
-```
-
-```{r}
-set.seed(123)
-```
-
-```{r}
-df <- base_j25_year_numeric %>% 
-  mutate(code_site = as.factor(code_site),
-         statut_presence = as.integer(statut_presence) - 1,
-         date_annee = lubridate::yday(date_visite))
-```
-
-```{r}
-df_rand <- df %>% 
-  group_by(code_site) %>% 
-  mutate(annee_perm = gtools::permute(annee)) %>% 
-  ungroup() %>% 
-  mutate(annee_perm_index = annee_perm - min(annee_perm))
-```
-
-```{r}
-mod <- glmer(statut_presence~annee_perm+(1|code_site), family=binomial(link = "logit"), data = df_rand)
-#summary(mod)
-
-pente_obs <- summary(mod)$coefficients[2,1]
-```
-
-```{r}
-df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 1) #%>% 
-  # cbind(statut_presence_rand = df_rand$statut_presence) %>% 
-  # mutate(presence_ajoutee = (statut_presence_rand != statut_presence_sim))
-```
-
-# Test : le modèle permet-il de détecter la tendance ?
-
-On fait tourner le modèle avec `statut_presence_sim` en variable dépendante et la variable `annee_perm` en prédicteur, avec l'effet aléatoire du `code_site`.
-
-## Test initial
-
-```{r}
-mod_tend1 <- glmer(statut_presence_sim ~
-                     annee_perm +
-                     (1|code_site),
-                   family=binomial(link = "logit"),
-                   data = df_trend1)
-summary(mod_tend1)
-```
-
-Avec p\<1E-16 et une pente positive on a bien détecté la tendance à l'augmentation du signal au fil des années.
-
-## Test avec une tendance plus faible
-
-```{r}
-set.seed(124)
-df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 0.1)
-
-mod_trend1 <- glmer(statut_presence_sim ~
-                     annee_perm +
-                     (1|code_site),
-                   family=binomial(link = "logit"),
-                   data = df_trend1)
-summary(mod_trend1)
-```
-
-Tendance non détectée. Il faut dire qu'elle est très faible :
-
-```{r}
-table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
-table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
-my_point_plot(df_trend1)
-```
-
-## Avec un peu plus de tendance
-
-```{r}
-set.seed(125)
-df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 0.2)
-
-mod_trend1 <- glmer(statut_presence_sim ~
-                      annee_perm +
-                      (1|code_site),
-                    family=binomial(link = "logit"),
-                    data = df_trend1)
-summary(mod_trend1)
-```
-
-On a ici détection de la tendance, sans avoir ajouté énormément de présences :
-
-```{r}
-table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
-table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
-my_point_plot(df_trend1)
-```
-
-# Généralisation
-
-Pour chacun des tests ci-dessous, on enchaîne 100 fois les opérations suivantes :
-
--   Permutations des années pour gommer le signal
--   Ajout de présences
--   Calage du modèle
--   Récupération de la pente associée à l'année et de la p-value associée
--   Histogramme des pentes
-
-## En l'absence de tendance
-
-On s'attend pour ce modèle "neutre" à ce que les pentes soient non significatives dans 95% des cas et que la distribution soit centrée sur zéro et symétrique.
-
-```{r, fig.cap = "Histogramme des pentes (n=100) obtenues par le modèle après permutation des années. Les couleurs permettent de distinguer les pentes selon leur signe et leur significativité au seuil de 5%."}
-set.seed(NULL)
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0,
-                         n_permutations = 100)
-
-my_histo(test2) +
-  geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
-
-pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
-```
-
-On voit que la pente estimée sur le jeu de données non permuté (ligne verticale noire), de valeur très faible et non significative, est bien dans la gamme des valeurs NS après permutation.
-
-On va ensuite recommencer avec des tendances de plus en plus nettes, c'est-à-dire en rajoutant de plus en plus de présences chaque année.
-
-## Tendance faible
-
-```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.1,
-                         n_permutations = 100)
-
-my_histo(test2)
-pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
-```
-
-Pas vraiment de différence avec l'absence de tendance. Pas très surprenant car ça revient à ne rajouter qu'une présence en dernière année.
-
-## Tendance modérée
-
-```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.2,
-                         n_permutations = 100)
-
-my_histo(test2)
-pc_detec_aug_0.2 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
-```
-
-Là ça change. La plupart des pentes sont significatices. Bizarrement on en a plus de négatives qu'avec les jeu de données "neutres".
-
-## Tendance forte
-
-```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.5,
-                         n_permutations = 100)
-
-my_histo(test2)
-pc_detec_aug_0.5 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
-```
-
-## Tendance très forte
-
-```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 1,
-                         n_permutations = 100)
-
-my_histo(test2)
-pc_detec_aug_1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
-```
-
-# Synthèse
-
-On calcule un taux de détection pour différentes valeurs de la tendance injectée. Pour limiter le temps de calcul on ne recommence pas pour les valeurs déjà calculées.
-
-```{r}
-tendances <- c(0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1.5, 2)
-
-resultat <- map(
-  .x = tendances,
-  .f = get_pc_sig,
-  df = df,
-  n_permutations = 100
-)
-
-pc_detec_aug <- c(
-  pc_detec_aug_0,
-  pc_detec_aug_0.1,
-  pc_detec_aug_0.2,
-  resultat[1:2],
-  pc_detec_aug_0.5,
-  resultat[3:6],
-  pc_detec_aug_1,
-  resultat[7:8]
-) %>%
-  unlist()
-
-tendance <- c(seq(0, 1, 0.1), 1.5, 2)
-
-df_resume <- data.frame(tendance,
-                        pc_detec_aug)
-
-ggplot(data = df_resume,
-       aes(x = tendance,
-           y = pc_detec_aug)) +
-  geom_bar(stat = "identity",
-           fill = "darkgreen") +
-  geom_smooth(col = "red", se = FALSE) +
-  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
-  labs(x = "Tendance (nb de présences annuelles ajoutées)",
-       y = "Pourcentage de détection de la tendance à l'augmentation")
-
-```
+# REFERENCES BIBLIOGRAPHIQUES
