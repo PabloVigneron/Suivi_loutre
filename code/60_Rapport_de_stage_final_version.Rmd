@@ -1,0 +1,817 @@
+---
+title: "Evaluation d’un protocole de suivi de la Loutre d’Europe (Lutra lutra) à l’échelle d’un bassin versant en Bretagne"
+author: "PabloVigneron"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  bookdown::html_document2:
+   fig_caption: yes
+   tab_caption: yes
+   number_sections: yes
+   global_numbering: yes
+   toc: yes
+   toc_float:
+         toc_collapsed: yes
+         toc_depth: 2
+   code_folding: hide
+   css: "style.css"
+bibliography: library_biblio_otter.bib
+link-citations: true
+cls: apa.cls
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+# Importation des packages
+library(tidyverse)
+library(gridExtra)
+#library(lubridate)
+library(sf)
+library(mapview)
+library(maptiles)
+library(tidyterra)
+library(kableExtra)
+#library(knitr)
+library(janitor)
+library(RVAideMemoire)
+library(emmeans)
+library(car)
+library(MASS)
+library(lme4)
+library(MuMIn)
+#library(stringr)
+library(stringi)
+library(terra)
+library(ggspatial)
+library(slippymath)     
+library(rosm)           
+library(writexl)
+library(ggpubr)
+library(gridExtra)
+```
+
+```{r}
+# Importation des données - Secteur J25 : Petit Tregor 
+base_tregor <-
+  readxl::read_xlsx(path = '../raw_data/export_suiviloutrelocal_telecharger_csv_2025_04_03_10h58m17.xlsx') %>%
+  dplyr::select(
+    id_dataset,
+    code_secteur,
+    code_site,
+    nom_site,
+    x_l93,
+    y_l93,
+    date_visite,
+    observateurs,
+    condition_prospection,
+    nom_taxon,
+    nom_complet_taxon,
+    techn_observation,
+    statut_observation,
+    nb_ep_tot,
+    nb_ep_w,
+    nb_ep_dnf,
+    nb_ep_df
+  ) %>%
+  mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    nb_ep_w = abs(nb_ep_w),
+    statut_observation = ifelse(str_detect(statut_observation, '^Pr'), yes = 'Présent', no = 'Absent')
+  ) %>% 
+  filter(nom_complet_taxon =='Lutra lutra',
+         !(id_dataset == 85 & code_secteur == "FR5300006"),
+         code_secteur != "J401", 
+         !(annee == 2022)) %>%
+  dplyr::distinct(code_site, annee, .keep_all = T)
+#=> Suppression de la valeur de 2022 qui est une erreur de saisie
+  
+```
+
+```{r, echo=FALSE}
+base_j25 <- base_tregor %>%
+  filter(code_secteur == "J25") %>%
+  mutate(statut_presence = ifelse(as.character(statut_observation) == "Présent", 1, 0))
+```
+
+```{r, echo = FALSE}
+# Verifier les valeurs de la base de donnée 
+
+## Jeu de données issus du Excel du prof de BTS avec correction 
+tregor_bts_correct <-
+  readxl::read_xlsx(path = '../raw_data/data_brute_BTS.xlsx',
+                    col_names = TRUE,
+                    sheet = "analyse2 avec correct° coquille") %>%
+  janitor::clean_names() %>%
+  dplyr::select(
+    site,
+    nbre_empreintes_2011,
+    nbre_empreintes_2012,
+    nbre_empreintes_2014,
+    nbre_empreintes_2016,
+    nbre_empreintes_2017,
+    nbre_empreintes_2018,
+    nbre_empreintes_2019,
+    nbre_empreintes_2023
+  ) %>%
+  dplyr::rename(code_site = site) %>%
+  dplyr::filter(!is.na(code_site)) %>%
+  dplyr::rename(
+    "2011" = nbre_empreintes_2011,
+    "2012" = nbre_empreintes_2012,
+    "2014" = nbre_empreintes_2014,
+    "2016" = nbre_empreintes_2016,
+    "2017" = nbre_empreintes_2017,
+    "2018" = nbre_empreintes_2018,
+    "2019" = nbre_empreintes_2019,
+    "2023" = nbre_empreintes_2023
+  ) %>%
+  dplyr::mutate(across(
+    .cols = c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    .fns = ~ ifelse(!is.na(.) & as.numeric(.) >= 1, 1, .)
+  ))%>%
+  mutate(across(
+    c("2011", "2012", "2014", "2016", "2017", "2018", "2019", "2023"),
+    ~ as.character(.)
+  ))
+
+
+```
+
+```{r, echo=FALSE, results= 'hide'}
+## Jeu de données issus du Geonature du GMB
+
+tregor_geonat_correct <- base_j25 %>%
+  dplyr::mutate(statut_presence = as.factor(statut_presence),
+                annee = as.factor(annee)) %>%
+  dplyr::select(code_site, annee, statut_presence) 
+
+## Comparaison des 2 jeu de données pour voir les différences entre les deux 
+
+bts_long <- tregor_bts_correct %>%
+  pivot_longer(cols = -code_site,
+               names_to = "annee",
+               values_to = "valeur_bts") %>%
+  mutate(annee = as.character(annee), valeur_bts = as.character(valeur_bts))
+
+geonat_clean <- tregor_geonat_correct %>%
+  mutate(annee = as.character(annee),
+         valeur_geonat = as.character(statut_presence)) %>%
+  dplyr::select(code_site, annee, valeur_geonat)
+
+comparison_long <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  filter(valeur_bts != valeur_geonat)
+
+comparison_long
+
+```
+
+```{r, echo=FALSE, results= 'hide'}
+comparison_summary <- bts_long %>%
+  full_join(geonat_clean, by = c("code_site", "annee")) %>%
+  mutate(
+    comparaison = case_when(
+      is.na(valeur_bts) & is.na(valeur_geonat) ~ "Tous NA",
+      is.na(valeur_bts) ~ "NA dans bts uniquement",
+      is.na(valeur_geonat) ~ "NA dans geonat uniquement",
+      valeur_bts != valeur_geonat ~ "Différentes",
+      TRUE ~ "Identiques"
+    )
+  ) %>%
+  count(comparaison)
+
+comparison_summary 
+
+#On observe **32 erreurs** dans la base de données Geonature du GMB, sachant que les doublons ont été supprimé préalablement. On corrige donc le jeu de données base_j25 par les bonnes valeurs issus des valeurs du jeu de données bts.
+
+## Appliquer les correction du jeu de donnée BTS sur Base_J25
+
+corrections <- comparison_long %>%
+  filter(!is.na(valeur_bts)) %>%
+  dplyr::select(code_site, annee, new_valeur = valeur_bts)
+
+base_j25 <- base_j25 %>%
+  mutate(annee = as.character(annee)) %>%
+  left_join(corrections, by = c("code_site", "annee")) %>%
+  mutate(statut_presence = if_else(
+    !is.na(new_valeur),
+    new_valeur,
+    as.character(statut_presence)
+  )) %>%
+  dplyr::select(-new_valeur)
+```
+
+```{r, table1, tidy=FALSE}
+#tab_1 <- tribble(~"Comparaison", ~"n", 
+#                 "Identiques", "32")
+
+#knitr::kable((tab_1), booktabs = TRUE,
+##caption = 'A test table.')
+
+```
+
+```{r}
+# Importation avec data 2025 - Lieue de Greve 
+
+base_greve_raw <-
+  readxl::read_xls(path = '../raw_data/Suivi loutre mars_25.xls',
+                   skip = 1,
+                   col_names = T) 
+```
+
+```{r}
+
+# Export des bonnes coordonnées - Secteur Lieue de grève
+
+site_lg <-
+  readxl::read_xlsx(path = '../raw_data/coord_lieue_de_greve.xlsx', col_names = T) %>%
+  dplyr::mutate(point_n = as.numeric(Ponts)) %>%
+  dplyr::select(point_n, X_L93, Y_L93)
+
+```
+
+```{r}
+## Correction des données - Mise en forme - Secteur : Lieu Greve avec data 2025
+
+base_greve <- base_greve_raw %>%
+  janitor::clean_names() %>%
+  left_join(site_lg, by = "point_n") %>%
+  dplyr::select(
+    point_n,
+    itineraire,
+    X_L93,
+    Y_L93,
+    commune,
+    cours_deau,
+    bilan_choix_du_site,
+    epreinte_oct20,
+    date_suivi_fev_mars21,
+    marquage_suivi_fev_mars21,
+    date_suivi_oct21,
+    marquage_suivi_oct21,
+    observateurs_suivi_oct21,
+    date_suivi_mars22,
+    marquage_suivi_mars22,
+    observateurs_suivi_mars22,
+    date_suivi_decembre22,
+    marquage_suivi_decembre22,
+    observateurs_suivi_decembre22,
+    date_suivi_mars23,
+    marquage_suivi_mars23,
+    observateurs_suivi_mars23,
+    date_suivi_octobre_24,
+    marquage_suivi_octobre_24,
+    observateurs_suivi_octobre_24, 
+    date_suivi_mars_25, 
+    marquage_suivi_mars_25, 
+    observateurs_suivi_mars_25
+  ) %>%
+  dplyr::rename(
+    code_site = point_n,
+    x_l93 = X_L93,
+    y_l93 = Y_L93,
+    marquage_suivi_oct_20 = epreinte_oct20
+  ) %>%
+  dplyr::mutate(date_suivi_octobre_24 = as.Date(as.numeric(date_suivi_octobre_24), origin = "1899-12-30")) %>%
+  dplyr::mutate(date_suivi_oct_20 = as.Date("2020-10-01")) %>%
+  dplyr::mutate(across(
+    c(
+      date_suivi_fev_mars21,
+      date_suivi_oct21,
+      date_suivi_mars22,
+      date_suivi_decembre22,
+      date_suivi_mars23,
+      date_suivi_oct_20, 
+      date_suivi_mars_25
+    ),
+    ~ as.POSIXct(.x)
+  )) %>%
+  mutate(across(starts_with("marquage_suivi_"), as.character)) %>%
+  tidyr::pivot_longer(
+    cols = c(
+      date_suivi_oct_20,
+      marquage_suivi_oct_20,
+      date_suivi_fev_mars21,
+      marquage_suivi_fev_mars21,
+      date_suivi_oct21,
+      marquage_suivi_oct21,
+      observateurs_suivi_oct21,
+      date_suivi_mars22,
+      marquage_suivi_mars22,
+      observateurs_suivi_mars22,
+      date_suivi_decembre22,
+      marquage_suivi_decembre22,
+      observateurs_suivi_decembre22,
+      date_suivi_mars23,
+      marquage_suivi_mars23,
+      observateurs_suivi_mars23,
+      date_suivi_octobre_24,
+      marquage_suivi_octobre_24,
+      observateurs_suivi_octobre_24, 
+      date_suivi_mars_25, 
+      marquage_suivi_mars_25,
+      observateurs_suivi_mars_25
+    ),
+    names_to = c(".value", "session"),
+    names_pattern = "(date_suivi|marquage_suivi|observateurs_suivi)_(.*)"
+  ) %>%
+  rename(
+    date_visite = date_suivi,
+    statut_presence = marquage_suivi,
+    observateurs = observateurs_suivi
+  ) %>%
+  dplyr::mutate(
+    annee = year(date_visite),
+    mois = month(date_visite),
+    jour = day(date_visite),
+    code_site = as.factor(code_site),
+    statut_presence = case_when(
+      tolower(statut_presence) == "oui" ~ 1,
+      suppressWarnings(as.numeric(statut_presence)) >= 1 ~ 1,
+      tolower(statut_presence) %in% c("non", "peut_etre") ~ 0,
+      TRUE ~ 0
+    ),
+    statut_observation = ifelse(statut_presence == 1, "Présent", "Absent"),
+    statut_presence = as.factor (statut_presence),
+    jour = ifelse(jour == 1, NA, jour),
+    annee = ifelse(annee == 2002, 2021, annee),
+    y = str_replace_all(y_l93, ",", ""),
+    x = str_replace_all(x_l93, " ", ""),
+    passage = ifelse(mois <= 6, 1, 2),
+    date_visite = ifelse(
+      date_visite == as.Date("2002-02-24"),
+      "2021-02-24",
+      as.character(date_visite)
+    ),
+    observateurs_clean = observateurs %>%
+      str_to_lower() %>%
+      str_replace_all(" et ", "_") %>%
+      str_replace_all("[[:space:]]+", "_") %>%
+      str_replace_all("[^a-z0-9_]", "") %>%
+      stri_trans_general("latin-ascii")
+  ) %>%
+  dplyr::mutate(observateurs_clean = as.factor(
+    ifelse(
+      observateurs_clean == "maxime_chapelle_romain_salaun",
+      "maxime_chapelle_romain_salun",
+      observateurs_clean
+    )
+  )) %>%
+  dplyr::filter(!is.na(code_site), !is.na(itineraire))
+
+
+```
+
+```{r}
+# Export jeu de donnée pour carte SIG
+#readr::write_csv(base_greve,
+ #                   path = "../processed_data/base_Lieue_de_greve.csv"
+ #                   )
+```
+
+```{r}
+# Export jeu de donnée pour carte SIG
+#readr::write_csv(base_j25,
+ #                   path = "../processed_data/base_Petit_tregor.csv"
+   #                 )
+```
+
+**RESUME**
+
+**Evaluation d’un protocole de suivi de la Loutre d’Europe (Lutra lutra) à l’échelle d’un bassin versant en Bretagne.**
+
+Après une quasi-disparition au cours du XXe siècle, la Loutre d’Europe (Lutra lutra), a fait un retour de l’international jusqu'en Bretagne où elle a bien recolonisée grâce à la mise en place d’un statut de protection et la restauration de ses habitats. La présente étude a évalué un protocole destiné à un suivi local de l’espèce, à détecter des tendances temporelles et appliqué sur deux bassins versants bretons de 2011 à 2025. Le protocole, proposé initialement en Angleterre, est basé sur la recherche annuelle, sur 60 sites, des marquages de l’espèce utilisés comme indicateurs de présence. Un modèle linéaire généralisé mixte (GLMM) a été utilisé pour modéliser ces tendances temporelles et une approche de simulation de tendance basée sur le modèle nul a été réalisée pour tester la capacité du modèle à la détection de tendances temporelles. Les résultats montrent que le modèle GLMM n’a pas détecté de tendance et s’ajuste mal aux données. Toutefois, les simulations ont permis de détecter des tendances significatives à l'augmentation. L’étude met alors en lumière les difficultés des modèles utilisés à détecter des tendances significatives et à s’ajuster correctement aux jeux de données. Les simulations montrent des résultats intéressants qui méritent un approfondissement sachant que les dynamiques réelles y sont simplifiées. Pour conclure, le protocole de suivi semble pertinent, mais demande une application rigoureuse, dans une période suffisante en respectant la continuité des séries temporelles pour correctement estimer son efficacité.
+
+Mots-clés : Loutre d’Europe - Suivi - Tendance  temporelle - GLMM - Null Model - Simulation 
+
+**ABSTRACT**
+
+**Evaluation of protocol for monitoring the European Otters (Lutra lutra) in a catchment area in Brittany.**
+
+After almost disappearing in the 20th century, the European Otter (Lutra lutra), did an international come back in Brittany where she recolonised, thanks to the legal protection status and to the habitat restoration. This study evaluated a protocol for the local monitoring of the otter to detect temporal tendencies in two Breton catchment areas from 2011 to 2025. This protocol suggested in England  is based on annual surveys, on sixty sites, of spraint of otters, used as a presence indicator. A Generalized Linear Mixed Models (GLMM) was used to model temporal tendencies and a tendencies simulation approach based on a null model has been made to test the model capacities to detect temporal tendencies. The results show that the GLMM model did not detect a trend and did not fit the data correctly. However, simulations made it possible to detect significant increased tendencies and to adjust correctly to the datasets. Simulations show interesting results that deserve deepening, knowing that the real dynamics are simplified. To conclude, the monitoring protocol seems relevant, but it requires a rigorous application, in a sufficient period, while respecting the continuity of time series to estimate its efficiency. 
+
+Key- words : Loutre d’Europe - Monitoring - Temporal trend - GLMM - Null Model - Simulation
+
+
+# INTRODUCTION
+
+Malgré les politiques internationales pour tenter d’enrayer la crise d’érosion de la biodiversité, la perte d’espèces se poursuit à un rythme effréné pendant que les pressions sur celles-ci ne cessent d’augmenter (Butchart et al., 2010; Hochkirch et al., 2023).
+Le changement d’affectation des terres, la perte et dégradation d’habitats et la pollution constituent les principales causes d’extinction de la biodiversité selon l’IPBES, c’est typiquement le cas sur les mammifères terrestres européens (Díaz et al., 2019; Temple & Terry, 2009).
+Les carnivores représentent un des groupes cibles pour la conservation de la biodiversité par le rôle qu'ils occupent dans les écosystèmes (Fernández-Sepúlveda & Martín, 2022; Ritchie et al., 2012).
+Du fait de leur position haute dans la chaîne alimentaire, la protection de ces espèces dites “parapluies”, peut mener à la protection de nombreuses espèces voire d’écosystèmes tout entier (Roberge & Angelstam, 2004; Sergio et al., 2008).
+Pendant que certaines espèces de grands carnivores rétablissent leurs effectifs en Europe, l’état de menace de nombreuses populations de petits carnivores demeure très inquiétant (Chapron et al., 2014; Fernández-Sepúlveda & Martín, 2022).
+Un grand nombre de mustélidés sensibles aux activités anthropiques ont subi d'importants déclins durant ce dernier siècle (Chanin & Jefferies, 1978; Thompson, 1991; Wright et al., 2022).
+Cependant, la loutre d’Europe (Lutra lutra) représente un exemple rare et concret de rétablissement de populations de petit carnivore Mustelidae à l’échelle européenne (Lacombe et al., 2025).
+Au cours du XX e siècle, les populations de l'espèce ont chuté drastiquement dans la majeure partie de son aire de distribution, allant jusqu'à la moitié de son aire en France métropolitaine (Kuhn & Jacques, 2011).
+La forte diminution des populations de ce petit Mustelidae semi-aquatique s’explique par la chasse, la pollution, l'épuisement des ses ressources alimentaires et la perte de ses habitats (Loy et al., 2022).
+La mise en protection juridique avec l’inscription à l’annexe I de la CITES (1973) et à l’annexe II de la Convention de Berne (1979) a permis son retour à l’échelle internationale dans les années 90s (Lacombe et al., 2025).
+En France, l’interdiction de la chasse et du piégeage en 1972 a permis d’enrayer l’extinction de l’espèce (Grémillet & Simonnet, 2015; Kuhn & Jacques, 2011).
+Au cours des années 1990, une lente dynamique de recolonisation, probablement amorcée 15 à 20 ans plus tôt, est observée (Grémillet & Simonnet, 2015; Kuhn & Jacques, 2011).
+Cette dynamique s’expliquerait par l’inscription aux annexes II et IV de la Directive Habitats Faune Flore de 1992, mais aussi à l’amélioration de la qualité des cours d’eau avec la directive cadre sur l’eau (DCE) (Kuhn & Jacques, 2011).
+En trois décennies, la loutre a triplé son aire de répartition en Bretagne, occupant près de 60 % des bassins versants (Grémillet & Simonnet, 2015).
+La recolonisation s’est faite en “tâches d’huiles” à partir des noyaux de populations restants, par les têtes de bassin versant (Grémillet & Simonnet, 2015).
+C’est pourquoi l’espèce est aujourd’hui menacée par les collisions routières avec le développement du réseau routier (Kuhn & Jacques, 2011).
+Ce mustelidae a une telle dynamique qu’on le retrouve dans des cours d’eau de mauvaise qualité (i.e. qualité d’eau et biomasse piscicole) ainsi qu’en milieu urbain, alors qu’il était auparavant considéré comme indicateur de bonne qualité d’eau (Grémillet & Simonnet, 2015).
+Tant que l’espèce trouve, dans un milieu, des ressources alimentaires ainsi que des gîtes en quantité suffisante, elle peut s’y installer (Grémillet & Simonnet, 2015).
+En Bretagne, elle fréquente les ruisseaux salmonicoles aux ripisylves denses et naturelles mais également les cours d'eau cyprinicoles, les plans d’eau, les marais littoraux et estuaires (Grémillet & Simonnet, 2015).
+Les ressources trophiques de l’espèce sont principalement composées de poissons mais elle reste opportuniste et consomme aussi des amphibiens et écrevisses et occasionnellement de petits oiseaux et mammifères (Clavero et al., 2003; Mirone et al., 2024).
+Bien que de récents travaux montrent que le rétablissement de l’espèce est un succès pour la conservation des petits carnivores, il faut considérer son retour définitif en Bretagne avec prudence (Grémillet & Simonnet, 2015; Lacombe et al., 2025).
+Le second plan national d’actions (PNA) de la loutre d’europe (2019-2028) visant à favoriser le retour de l’espèce dans son aire de répartition originelle est actuellement en cours (Kuhn et al., 2019).
+Suivre les espèces est indispensable pour dégager des tendances populationnelles et orienter des mesures de conservation (Jones, 2011).
+Les programmes de suivi d'espèces sont coûteux en ressources et les scientifiques chargés de la conservation chercheront toujours à trouver un compromis en utilisant des méthodes ayant un bon rapport coût-efficacité, pour investir le reste dans d’autres actions (Murray et al., 2009).
+Néanmoins, la validation des méthodes de suivi peu coûteuses en donnée par rapport à des méthodes demandant beaucoup plus de données, est souvent négligée alors qu’elle représente une étape cruciale pour éviter de gaspiller de l'investissement en ressources (De Barba et al., 2010; Jones et al., 2008; Legg & Nagy, 2006).
+Dans ce sens, préalablement à la mise en place d’un programme de suivi, il est préférable d'estimer la puissance statistique nécessaire à l'analyse pour éviter d’avoir des résultats peu robustes ou de penser que le travail effectué a posteriori à servi à quelque chose (Legg & Nagy, 2006).
+La dynamique nationale et régionale est aussi d'améliorer la connaissance de la répartition de la Loutre d’Europe et suivre l’évolution et la dynamique de sa recolonisation pour contribuer à l’évaluation de son statut de conservation et d'identifier les menaces et contraintes locales (Kauffmann et al., 2024).
+Le suivi actuel de la loutre en Bretagne se fait selon le protocole standard du groupe loutre de l’UICN appliqué également au niveau national, parfois adapté et par des données ponctuelles d’observateurs d’un réseau de veille (Grémillet & Simonnet, 2015; Reuther et al., 2000).
+Comme la loutre est discrète et difficile à observer en plein jour, ce protocole standard se base sur des indices de présence (Kauffmann et al., 2024).
+Il se base sur le comportement de marquage qui se traduit par le dépôt d’urine et de crottes appelées épreintes, mêlées à des sécrétions anales, reconnaissables à leur odeur suave ou mielleuse (Kuhn & Jacques, 2011).
+Ce comportement a une double fonction, répulsive en marquant son territoire vis à vis des autres individus et attractive pour la recherche de partenaire sexuel (Kuhn & Jacques, 2011).
+Ces épreintes sont de bons indicateurs de présence de l’espèce et sont retrouvées la plupart du temps sur des sites de marquages traditionnels, qui sont visités plus ou moins régulièrement et remarqués avec un fréquence allant de 18 jours à 4 mois (Kuhn & Jacques, 2011; Lodé, 1995).
+Un autre protocole également basé sur le comportement de marquage a été mis au point pour suivre les populations de Loutre d'Europe (Lutra lutra) au sein du réseau Natura 2000 du Royaume-Uni dans le cadre du Life in UK Rivers Projects (Chanin, 2003, 2005).
+Cette méthode se focalise sur la prospection des ponts ou passerelles qui représentent des points stratégiques de marquage pour l’espèce.
+Il aurait l’avantage d’être relativement peu coûteux en temps de prospection (Chanin, 2003; Kauffmann et al., 2024).
+En outre, cette méthode serait complémentaire d’un suivi régional et s’appliquerait à l’échelle plus locale d’un bassin versant et permettrait donc de détecter des tendances fines.
+Comme il est préférable d’évaluer une méthode de suivi avant de la mettre en place en routine sur un long terme, la présente étude a pour objet d’évaluer l'efficacité de cette méthode en se basant sur un test de suivi réalisé par le Groupe Mammalogique Breton (GMB) en Bretagne, sur deux bassins versants entre la baie de Lannion et de Morlaix (Legg & Nagy, 2006).
+Plus précisément, la présente étude vise à évaluer si le protocole permet de détecter des tendances temporelles chez la Loutre d'Europe (Lutra lutra) à l'échelle d’un bassin versant.
+Cette tendance à été modélisée dans un premier temps, à partir d’un modèle linéaire généralisé mixte (GLMM).
+Une approche de simulation de tendance basée sur des permutations inspirées du modèle nul ont été réalisées dans un second temps (Gotelli & Entsminger, 2001; N. W. H. Mason et al., 2007).
+Ces simulations ont pour principal objectif de tester la “robustesse” du modèle GLMM pour la détection de tendances temporelles.
+
+# MATERIELS ET METHODES
+
+## Source de données
+
+Les données ont été transmises par le GMB.
+Les données du secteur “Petit Trégor” ont été acquises par les étudiants et étudiantes en BTS Gestion et Protection de la Nature (GPN) du Lycée agricole de Morlaix-Suscinio dans le Finistère (29).
+Les données du secteur “Lieue de Grève” ont été acquises par le personnel (conservateurs, stagiaires et service civique) de la Réserve naturelle régionale (RNR) des “Landes, prairies et étangs de Plounérin” dans le département des Côtes d'Armor (22), gérée par Lannion-Trégor Communauté.
+
+## Echantillonnage
+
+L'échantillonnage se base sur les travaux de Paul Chanin qui a mis au point un protocole pour suivre les populations de Loutre d'Europe (Lutra lutra) au sein du réseau Natura 2000 du Royaume-Uni dans le cadre du Life in UK Rivers Projects (Chanin, 2003, 2005).
+Les principaux objectifs visés du protocole sont, d’une part de surveiller la distribution des loutres dans les Zone Spéciale de Conservation (ZSC) en cherchant la présence de marquage à l’échelle d’un bassin-versant et d’autre part de détecter des modifications dans l’habitat de l’espèce (i.e. disponibilité en ressources alimentaires).
+Secteurs d’études
+
+## Secteurs d'études
+
+La présente étude se base sur des données récoltées en Bretagne à la frontière entre le département du Finistère (29) et des Côtes d'Armor (22) (Fig 1).
+Le premier site d’étude “Petit Trégor” est situé sur les bassins-versants de “Trégor” et du “Côtiers du Trégor” entre la baie de Morlaix et de Lannion dans le Finistère (29) (INRAE, n.d.).
+Le second site d’étude “Lieue de Grève” est situé sur le bassin versant de la “Lieue de Grève” entre la baie de Morlaix et de Lannion dans les Côtes d'Armor (22) (INRAE, n.d.).
+
+```{r, fig.cap=" Localisation des secteurs et sites d’études entre la baie de Morlaix et de Lannion, limite entre le Finistère et les Côtes d’Armor en région Bretagne.",fig.width = 7, fig.height = 5}
+# Représentation cartographique du secteur d'étude et des sites correspondants
+
+sites_geo_1 <- base_greve %>%
+  mutate(
+    code_secteur = "J22", 
+    y = str_replace_all(y, ",", "."),
+    x = str_replace_all(x, ",", "."),
+    y = as.numeric(y),
+    x = as.numeric(x)
+  ) %>%
+  filter(!is.na(x) & !is.na(y)) %>%
+  rename(nom_site = commune) %>%
+  dplyr::select(nom_site, code_site, code_secteur, statut_observation, annee, x_l93, y_l93) %>%
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+  
+  
+sites_geo_2 <- base_tregor %>% 
+  filter(code_secteur == "J25") %>%
+  dplyr::select(nom_site:y_l93, code_site, code_secteur, statut_observation, annee) %>% 
+  st_as_sf(coords = c("x_l93", "y_l93"), crs = 2154)
+
+common_cols <- dplyr::intersect(names(sites_geo_1), names(sites_geo_2))
+
+sites_geo <- bind_rows(
+  sites_geo_1[, common_cols],
+  sites_geo_2[, common_cols]
+)
+
+mapview(sites_geo, zcol = "code_secteur", col.regions = c("darkseagreen3", "indianred1"))
+
+```
+
+### Mise en place du réseau de site
+
+Une étude préliminaire a été nécessaire pour définir chaque secteur d'étude correspondant à une section ou un sous-bassin-versant en repérant 80 à 100 sites d'études.
+Chaque site est situé au niveau d'un pont, d'un gué ou d'une passerelle appropriés au marquage de l'espèce (i.e. épreintes et empreintes).
+Selon ce protocole, parmi ces sites, en fonction des secteurs, 60 ont été sélectionnés.
+Les sites situés sur des terrains privés ont préférablement été évités.
+La facilité d'accès de ces sites a également été prise en compte pour leur sélection.
+La prospection est réalisée sous les ponts, gués ou passerelles ainsi que sur les berges adjacentes.
+Si aucun indice de présence n'a été trouvé (i.e. épreintes ou empreintes), la recherche s'étend à 50 m de chaque côté du pont, avec l'utilisation de jumelles si inaccessibles.
+La présence ou l'absence d'indice de présence de la loutre d'Europe sont relevées.
+Pour l’ensemble des sites, une fiche descriptive est réalisée, comportant les coordonnées GPS, le lieu de stationnement, la facilité d’accès, des photographies des lieux, l’endroit où des indices de présence de l’espèce sont observés.
+Ces fiches permettent aux observateurs et observatrices de faciliter l'échantillonnage les années suivantes.
+Les 60 sites ont été sélectionnés parmi la liste et constituent ceux qui ont été prospectés les années suivantes.
+
+### Suivis temporels.
+
+À la suite de l'étude préliminaire, le suivi des 60 sites sélectionnés a pu démarrer dès l'année suivante.
+Contrairement au protocole initial qui stipulait un contrôle annuel puis tous les trois ans, le suivi ultérieur du secteur d'étude a été réalisé annuellement.
+Le suivi du secteur Petit Trégor comporte 60 sites qui ont été prospectés dans une période de 2011 à 2023 allant de mars à mai selon les années (Fig. 2A).
+Pour le secteur de la Lieue de grève, 63 sites ont été prospectés avec deux passages annuels effectués de 2020 à 2025.
+Un passage plutôt printanier vers mars-avril (Fig. 2B) et un passage plutôt automnal-hivernal vers octobre et décembre (Fig. 2C).
+Le protocole initial indique que la période de prospection doit s'effectuer durant la période s'étalant de mai à septembre pour éviter des variations des niveaux d'eau.
+De plus, il a été recommandé à l'opérateur ou à l'opératrice de ne pas effectuer de prospection lors de fortes pluies, au moins 1 semaine à 15 jours sans pluie avant la prospection.
+La prospection des sites chaque année, s'est faite à la manière de l'étude préliminaire.
+Il est important de noter que certaines années sont manquantes dans les séries temporelles sur les deux secteurs d’étude “Petit Trégor” et “Lieue de Grève” (Fig 2).
+De plus, certains voire de nombreux sites n'ont pas été prospectés certaines années (Fig 2), ceci étant particulièrement marqué dans le secteur “Petit Trégor”(Fig 2A).
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années ",fig.width = 8, fig.height = 7}
+base_j25 <- base_j25 %>%
+  mutate(annee = year(date_visite))
+
+# Définir la plage complète d'années à afficher
+annees_completes <- 2010:2023  # modifie cette plage si nécessaire
+
+# Toutes les combinaisons site x année
+all_combos <- expand_grid(
+  code_site = unique(base_j25$code_site),
+  annee = annees_completes
+)
+
+# Joindre et ajouter les statuts finaux
+obs_complete <- all_combos %>%
+  left_join(
+    base_j25 %>% dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
+  mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+# Créer le graphique
+suivi_tregor <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(
+    values = c(
+      "Présent" = "darkseagreen3",
+      "Absent" = "indianred1",
+      "Non prospecté" = "grey80"
+    )
+  ) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Secteur Petit Trégor",
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    axis.text.y = element_text(size = 8)  # au besoin, adapte la taille de texte
+  )
+
+
+
+```
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 1er passage (printemps) " , fig.width = 7, fig.height = 8}
+
+
+base_greve_spring <- base_greve %>%
+  dplyr::filter(passage == 1)
+
+annees_completes <- 2020:2025
+
+all_combos <- expand_grid(
+  code_site = unique(base_greve_spring$code_site),
+  annee = annees_completes
+)
+
+obs_complete <- all_combos %>%
+  left_join(
+    base_greve_spring %>%
+      dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
+  dplyr::mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+suivi_printemps <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1",
+    "Non prospecté" = "grey80"
+  )) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Lieue greve, 1er passage",
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black")
+  )
+```
+
+```{r, fig.cap="Statut d'observation des sites prospectée en fonction des années, 2e passage (hiver)",fig.width = 7, fig.height = 8 }
+
+
+base_greve_winter <- base_greve %>%
+  dplyr::filter(passage == 2)
+
+annees_completes <- 2020:2024
+
+all_combos <- expand_grid(
+  code_site = unique(base_greve_winter$code_site),
+  annee = annees_completes 
+)
+
+obs_complete <- all_combos %>%
+  left_join(
+    base_greve_winter %>%
+      dplyr::select(code_site, annee, statut_observation),
+    by = c("code_site", "annee")
+  ) %>%
+  dplyr::mutate(
+    statut_final = case_when(
+      statut_observation == "Présent" ~ "Présent",
+      statut_observation == "Absent" ~ "Absent",
+      TRUE ~ "Non prospecté"
+    )
+  )
+
+suivi_hiver <- ggplot(obs_complete, aes(x = annee, y = code_site, fill = statut_final)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_manual(values = c(
+    "Présent" = "darkseagreen3",
+    "Absent" = "indianred1",
+    "Non prospecté" = "grey80"
+  )) +
+  labs(x = "Année",
+       y = "Site",
+       title = "Lieue greve, 2e passage", 
+       fill = "Statut d'observation") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.4, face = "bold"),
+    panel.border = element_rect(color = "black", fill = NA),
+    legend.background = element_rect(fill = "grey95", color = "black"),
+    axis.text.y = element_text(size = 8))
+  
+```
+
+```{r, fig.cap = "Statut d'observation (présence/absence) de la Loutre d’Europe sur les sites prospectées par secteurs d’études en fonction des années : (A) secteur Petit Trégor; (B) secteur de la Lieue de Grève, passage printanier et (C) secteur de la Lieue de Grève, passage automne-hiver", fig.width = 14, fig.height = 9}
+
+fig_suivi_2 <- ggarrange(suivi_tregor, suivi_printemps,suivi_hiver,
+                       labels = c("A", "B", "C"),
+                    ncol = 3, nrow = 1, 
+                    common.legend = TRUE) 
+                   # layout_matrix = rbind(c(1,NA,3), c(NA,2,NA)))
+
+fig_suivi_2
+
+```
+
+## Mise en forme des données
+
+Les données ont été mises en forme sous le logiciel de statistiques (V.4.1.1) (R Core Team, 2024) au moyen des packages : tidyverse, tidyterra, janitor et stringi.
+
+## Analyses statistiques
+
+L'objectif de l'analyse de cette étude est double.
+En effet, le premier objectif de l’analyse est de déterminer si le protocole mis en œuvre permet de détecter une tendance temporelle.
+Le second objectif était de mettre en évidence une éventuelle tendance temporelle de la Loutre d'Europe sur les jeux de données de chacun des secteurs concernés.
+Si la nature du jeu de données est spatio-temporelle, l'analyse porte sur l'effet temporel de la présence de l'espèce.
+
+### Modélisation. 
+
+Pour mettre en évidence la relation entre la présence de la loutre d'Europe et l'année, un modèle linéaire généralisé mixte (GLMM) a été utilisé.
+La variable réponse étant qualitative binaire (présence/absence), la distribution de celle-ci est binomiale et la fonction de lien choisie est "logit" (modèle dit standard).
+Pour le secteur “Lieue de Grève”, l’effet passage catégorisé “passage printemps” et “passage automne-hiver” à été intégrée en facteur fixe au modèle en raison des passages réalisés à des saisonnalités différentes.
+Pour interpréter la significativité des effets, un test de Wald (χ²) a été réalisé en fixant le risque α à 5% (i.e. p-value \<0,05).
+Il est important de préciser que les séries sont appariées.
+En effet, les données étant récoltées chaque année sur les mêmes sites, les observations ne sont donc pas indépendantes.
+Ceci suggère l'intégration d'un facteur aléatoire dans l'analyse.
+C'est la variabilité spatiale du marquage par l'espèce entre les 60 sites du bassin versant qui a été considérée comme un facteur aléatoire.
+Malgré ça, l'autocorrélation spatiale a été négligée dans l'analyse.
+Avant l'interprétation des résultats du modèle, pour vérifier l'ajustement du modèle aux données, l’indépendance des résidus du modèle avec les valeurs prédites à été vérifiée.
+Le modèle ne s'ajustant pas correctement aux jeux de données, d’autres fonctions de lien (“probit” et “cauchit”) ont été testées (Bolker et al., 2009).
+Aucune amélioration de l’ajustement n’a été observée.
+Aucune amélioration n'a été observée en considérant l'année en facteur, ni en intégrant l’effet observateur au modèle pour le secteur de la Lieue de grève.
+L’ajout de cette variable a complexifié le modèle mais n’a pas permis d’améliorer et d’avoir un ajustement correct du modèle aux données.
+Une grande prudence quant à l’interprétation des résultats de l’analyse des modèles GLMM est à prendre au vu de la faiblesse de l’ajustement du modèle aux données.
+
+### Simulation 
+
+Une approche complémentaire a été utilisée pour déterminer la “robustesse” de la détection des tendances par le modèle GLMM dit standard.
+
+Pour répondre à la question, dans un premier temps une approche par permutation randomisée a été utilisée uniquement sur le jeu de données “Petit Trégor” en s’inspirant de travaux sur le modèle nul (Gotelli & Entsminger, 2001; N. W. H. Mason et al., 2007).
+Cette approche permet d’éliminer les tendances dans le jeu de données.
+Comme la présence ou non d’une tendance interannuelle dans les données était inconnue, la variable "année" du tableau de données a été permutée aléatoirement, toutes les autres colonnes restant inchangées.
+La permutation a été réalisée par site, afin de conserver une des caractéristiques essentielles du jeu de données qui est la période sur laquelle chaque site a été contrôlé.
+On obtient ainsi un jeu de données en tout point identique au jeu de donné initial, sauf que le potentiel signal interannuel a été effacé.
+
+Dans un deuxième temps, une tendance temporelle connue a été introduite dans le jeu de données permuté.
+Cette tendance, simplifiée, est une tendance arithmétique à la croissance positive, en ajoutant une détection par année (i.e. une absence est transformée en présence) qui sera randomisé chaque année, autrement dit le site qui devient positif peut ne pas l’être l’année suivante.
+Il est important de souligner que le taux d’occupation de la loutre sur l’ensemble du jeu de données a été augmenté artificiellement avec la tendance introduite.
+On obtient ainsi un tableau de données dont on sait qu'il correspond à une population en croissance.
+Ce tableau va nous permettre d'estimer la capacité du modèle GLMM (traitée dans la partie modélisation), à détecter une tendance connue.
+Dans un troisième temps, la démarche a été renouvelée une centaine de fois pour estimer la "robustesse" du résultat avec la fonction suivante : tester tendances ( ).
+Cette fonction nécessite : un jeu de donnée, la tendance (i.e. nombre de présences à rajouter par année) et le nombre de permutations aléatoires à effectuer (fixé à 10 par défaut).
+Elle retourne un dataframe résumant l'effet “année” des modèles construits à chaque permutation.
+La fonction va effectuer les tâches suivantes une centaine de fois et compiler les résultats : Permutations des années pour gommer le signal Ajout de présences (tendance positive) dans le jeu de donnée permuté Exécution du modèle GLMM avec le jeu de donnée permutée dont une tendance à été introduite : statut de présence \~ année + (1 \| site) Récupération de la pente (coefficient) associée à l’année et de la p-value associée du modèle GLMM 
+
+
+L'ensemble des analyses ont été effectuées sur le logiciel de statistique (R Core Team, 2024) avec les packages suivants : lme4, RVAideMemoire, MuMIn et car.
+La seed 123 de la fonction de R set.seed ( ) à été utilisée.
+Selon le principe FAIR (Findable, Accessible, Interoperable, Reusable) en science, pour assurer la reproductibilité de l'analyse, l'ensemble des scripts et des données brutes ont été rendus disponible en accès libre sur la plateforme github (Horton et al., 2022; Wilkinson et al., 2016) : <https://github.com/PabloVigneron/Suivi_loutre> .
+
+# RESULTATS
+
+## Modélisation
+
+### Secteur Petit Trégor
+
+Aucune tendance temporelle du marquage de la loutre n’est graphiquement observée entre les années sur le secteur du Petit Trégor, bien qu’une variabilité est présente avec une présence moyenne de l’espèce autour de 24% et atteignant 33 % au maximum (Fig. 3). 
+
+
+```{r, fig.cap = "Figure 3 : Pourcentages de présence de la loutre sur l’ensemble des sites prospectés en fonction des années." }
+
+```
+
+
+Les résultats de l'analyse du modèle GLMM montrent qu’aucune tendance significative (p value = 0.41 > 0.05)  n’est observée entre les années sur ce même secteur d’étude (Tab. 1). Cependant lorsque l’on change la fonction de lien du modèle avec “probit”, une faible tendance à l’augmentation significative est observée (p value < 0.05 ; coef = 0.01). De surcroît,  avec la fonction de lien “cauchit” (p value < 0.05 ; coef = 0.008),  une tendance positive est observée.
+
+```{r, fig.cap ="Tab 1 : Résultats des modèles linéaires généralisés mixtes (GLMM), du statut de présence de la loutre en fonction de l’année, secteur Petit Trégor."}
+
+```
+
+
+### Secteur de la Lieue de Grève
+
+Aucune tendance temporelle du marquage de la loutre n’est graphiquement observée entre les années sur le secteur de la Lieue de Grève, bien qu’une variabilité est présente avec une présence moyenne de l’espèce autour de 34% et atteignant 51% au maximum (Fig. 4). 
+
+```{r, fig.cap ="Figure 4 : Pourcentages de présence de la loutre sur l’ensemble des sites prospectés en fonction des années et du passage."}
+
+```
+
+Les résultats de l'analyse du modèle GLMM montrent qu’aucune tendance significative (p value = 0.307 > 0.05)  n’est observée entre les années sur ce secteur d’étude avec la fonction de lien “logit”  (Tab. 2). Lorsque l’on change la fonction de lien du modèle avec “cauchit”,  aucune tendance significative n’est observée (p value = 0.506 > 0.05). Il en est de même avec la fonction de lien “cauchit à la seule différence que la tendance non significative est  négative (p value = 0.7 > 0.05 ; coef = - 0.029).
+
+
+```{r, fig.cap = "Tab 2 : Résultats des modèles linéaires généralisés mixtes (GLMM), du statut de présence de l’espèce en fonction de l’année et du passage  secteur de la Lieue de Grève."}
+
+```
+
+## Simulation
+
+La pente estimée (Fig. 5A) sur le jeu de données de “Petit Trégor” non permuté (ligne verticale noire), de valeur très faible et non significative (p-value > 0.05) (Tab. 1), est dans la gamme des valeurs non significatives (NS) après permutation et introduction d’une tendance nulle. La simulation d’une tendance faible introduite (t = 0.1) (Fig. 5B), ne permet pas de détecter cette faible tendance. Cependant lorsqu’on introduit une tendance modérée (t = 0,2), on commence à pouvoir détecter avec la simulation des tendances et la plupart sont significatives (p-value < 0.05) (Fig. 5C). On détecte plus de pentes négatives qu’avec les précédentes simulations. Dès lors qu’on introduit une tendance forte (t = 0.5) ou très forte (t = 1) dans la simulation, on détecte quasiment systématiquement l’augmentation significative de présence (Fig 5D et 5E). 
+
+```{r, fig.cap="Figure 5 : Histogrammes des pentes (n=100) significatives (p-values < 0.05) obtenues après simulation par le modèle GLMM. La tendance t  (i.e. nombre d’absences transformé en présence, supplémentaire par an) (A) Aucune tendance t = 0; (B) tendance faible t = 0,1; (C) tendance modérée t = 0,2; (D) tendance forte t = 0,5; (E) tendance très forte t = 1.  La ligne verticale noire correspond au jeu de données non permuté"}
+
+```
+
+Le modèle GLMM permet de détecter à tous les coups en fixant un risque α à 5%,  une tendance à l’augmentation significative lorsque celle-ci est d’au moins 0,8 présences annuelles ajoutées, ce qui correspond à un augmentation de 16% de site positif (Fig. 6). En dessous de cette valeur, le risque de ne pas détecter la tendance augmente exponentiellement.
+
+
+```{r, fig.cap = "Figure 6 : Synthèse du pourcentage de détection de la tendance positive significative (p value < 0.05) par le modèle GLMM des simulations, en fonction de la tendance introduite (i.e. nombres de présences annuelles ajoutées)."}
+
+```
+
+#Aucune tendances n'est observe \@ref(fig:chunkname) 4 ne montre
+
+# DISCUSSION
+
+Cette étude présente une première évaluation de l'efficacité du protocole proposé par Paul Chanin,  pour détecter des tendances temporelles de la présence de la Loutre d’Europe (Lutra lutra) (Chanin, 2003). En outre, le GMB fait partie des premier organismes à mettre en application ce protocole en plus du test d’application de l’auteur (Chanin, 2005). 
+## Modélisation tendances temporelles
+
+Ajustement des modèles aux données. La modélisation de tendances temporelles avec des modèles linéaires généralisés mixtes (GLMM) a montré des résultats relativement similaires entre les deux secteurs d’étude. Les modèles dits plus standards (i.e. avec une fonction de lien “logit”) n’ont détecté aucune tendance significative (Bolker et al., 2009). Néanmoins, un problème d’ajustement correct des modèles aux jeux de données est rencontré. Aucun de ces modèles ne vérifie l'indépendance entre les valeurs prédites par les modèles et les résidus. L’interprétation de leurs résultats tels quels serait un réel manque de rigueur scientifique. L’utilisation d'autres fonctions de lien que “logit”, c'est-à-dire  “probit” et “cauchit” a permis d’identifier une tendance significative sur le secteur “Petit Trégor” mais leur utilisation n’a pas permis d'améliorer l’ajustement (Bolker et al., 2009). Ce mauvais ajustement du modèle pourrait venir de biais d'hypothèses posées pour construire la base du modèle GLMM. 
+En effet, d’une part, considérer l’année en co-variable permet de dégager un coefficient “pente”, mais émet l’hypothèse assez contraignante d’une relation linéaire de cette variable avec le temps. On peut tout de même noter que la modification de cette variable en facteur permet de mesurer la variabilité annuelle mais elle n’a pas permis d'améliorer l’ajustement. Or l’intensité de marquage de la Loutre et la dynamique de ses populations est dépendante de nombreux facteurs comme les ressources alimentaires qui induisent une variabilité dans le temps peu compatible avec cette hypothèse (Kuhn & Jacques, 2011).
+D’autre part, la complexité d’un traitement spatio-temporel impose de faire un choix pour faciliter l’analyse. L’utilisation de GLMM dans l’étude à émis l’hypothèse d’une autocorrélation spatiale négligée, autrement dit une indépendance entre les sites d’études. Ceci paraît peu représentatif,  puisque cela ne prend pas en compte l’habitat hydrographique régi par un gradient amont/aval et des gradients trophiques jouant un rôle important sur la présence de la loutre et du marquage (Kruuk, 2006; Prenda & Granado-Lorencio, 1996). 
+En outre, la probabilité de détection n’est pas incluse dans le modèle au contraire des modèles d’occupation (Guillera-Arroita & Lahoz-Monfort, 2012). Ceci suggère une homogénéité dans la probabilité de détection et une non détection des faux négatifs. Là encore, cela semble peu représentatif de la réalité au vu du nombre de facteurs pouvant régir cette probabilité. 
+Enfin, de nombreux facteurs environnementaux jouent un rôle essentiel sur la présence de ce petit mustélidé semi-aquatique et c’est également le cas du marquage de l’espèce qui dépend beaucoup des ressources alimentaire par exemple (Hong et al., 2020; Kruuk, 2006; Sittenthaler et al., 2020). Ainsi, bien que le traitement des données soit temporel, le manque d’intégration des facteurs explicatifs joue certainement un rôle dans l’ajustement du modèle aux données. Cette variabilité des résultats selon la fonction de lien utilisée sans amélioration de l’ajustement met évidence le manque de représentativité des présents modèles aux phénomènes temporels réels par le nombre de biais avec lequel ils sont construits. 
+
+## Qualité des jeux de données et application du protocole. 
+
+Les jeux de données des deux secteurs d’études présentent d’importants trous dans leurs séries temporelles dûs à un manque de rigueur d’application du protocole. L’estimation de tendance temporelle avec des séries continues et un recul annuel important est déjà difficile, aussi, un jeu de données partiel réduit la puissance statistique de l’analyse (Irz et al., 2024). Ceci étant d’autant plus vrai sur le secteur du “Petit Trégor" qui possède des manques de prospection des sites interannuels. Sur la base de critère de liste rouge IUCN, sachant que la Loutre d’Europe atteint la maturité sexuelle entre 2 et 3 ans et a une espérance de vie moyenne de 3 à 5 ans en milieu naturel, il faudrait théoriquement une série temporelle minimale de 10 à 15 ans de suivi annuel continu, voire plus pour certaines études, pour pouvoir statuer de l'évolution temporelle d’une population de l’espèce (Capber, 2006; Hauer et al., 2002; Kruuk, 2006; C. F. Mason & Macdonald, 2004).
+Par ailleurs, les prospections du secteur “Petit Trégor” présentent une proportion de sites positifs faible - seulement un tiers de sites positifs au mieux - comparativement à d’autres tests  comme celui réalisé sur le bassin versant de l’Ellé en Bretagne qui présentait une proportion de 70 à 100 % , ce qui se trouve dans une fourchette haute par rapport aux tests effectués en Angleterre (Carter, 2009; Chanin, 2005; Simonnet, 2012). Ceci suggère l’effet d’un biais observateur dans le jeu de données. En effet, la prospection de ces bassins versants a été réalisée par des experts naturalistes de l’espèce induisant un biais avantageux dans sa détection et la connaissance des habitudes des populations bien installées (Chanin, 2005; Simonnet, 2012). Alors que le secteur “Petit Trégor” est composé d’équipes de prospections peu expérimentées, renouvelées chaque année (i.e. étudiant de BTS GPN). 
+
+## Simulation tendances temporelles
+Les simulations effectuées sur le secteur “Petit Trégor” et basées sur le modèle nul et l’introduction de tendance, ont permis de détecter des tendances à l'augmentation significative avec le modèle GLMM standard précédent, bien que cette détection dépende du nombre présence introduite (N. W. H. Mason et al., 2007; Gotelli & Entsminger, 2001). Cette approche complémentaire permet de répondre en partie à la question initialement posée. Les résultats suggèrent qu'une forte tendance positive représente un changement d’environ 10% de sites positifs à sur une période de 12 ans. Or comment ce changement se traduit-il au niveau biologique, sachant que cette tendance se base sur des indices de marquage et pas sur un nombre de Loutre. Le marquage d'épreintes est un indicateur largement utilisé pour détecter et suivre les populations de loutre (Kauffmann et al., 2024). Bien qu’il n’y ait pas consensus en fonction de la localisation, l’intensité de marquage peut dépendre de la saison, des sites de marquage etc (Sittenthaler et al., 2020). Il représente en générale sauf exception, un mauvais indicateur d’estimation d’une densité de population (Sittenthaler et al., 2020). Toutefois, ces résultats sont simulés et présentent des limites notamment sur le mauvais ajustement du modèle aux données et sur la méthode de tendance arithmétique discutable qui introduit de la présence de manière très simplifiée par rapport à la dynamique complexe des populations de Loutre d’Europe (C. F. Mason & Macdonald, 2004; Seignobosc et al., 2011). 
+
+# CONCLUSION
+
+L’étude a mis en lumière les difficultés des modèles utilisés à détecter des tendances significatives et à s’ajuster aux jeux de données. L’approche de simulation a quant à elle montré des résultats intéressants et encourageants en montrant la “robustesse” du modèle à détecter des tendances à l’augmentation bien que des problèmes d'ajustement aux données subsistent. Pour améliorer l’ajustement du modèle, la prise en compte de l'autocorrélation spatiale dans de futures analyses ferait sens au même titre qu’une évaluation de la probabilité de détection et de l’ajout de variables explicatives alliées à de la sélection de modèle. Enfin, le protocole semble pertinent pour le suivi de la Loutre, mais demande une application rigoureuse dans la continuité des séries temporelles et sur un pas de temps suffisant pour vraiment estimer son efficacité.  
+
+
+
+# REFERENCES BIBLIOGRAPHIQUES
