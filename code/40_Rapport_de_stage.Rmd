@@ -364,9 +364,9 @@ base_greve <- base_greve_raw %>%
 
 ```{r}
 # Export jeu de donnée pour carte SIG
-#readr::write_csv(base_j25,
- #                   path = "../processed_data/base_Petit_tregor.csv"
-   #                 )
+readr::write_csv(base_j25,
+                   path = "../processed_data/base_Petit_tregor.csv"
+                   )
 ```
 
 # INTRODUCTION

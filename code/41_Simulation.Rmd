@@ -1,6 +1,6 @@
 ---
 title: "Etude loutre"
-subtitle: "Tests simulation"
+subtitle: "Tests simulation Lieue de grève"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   bookdown::html_document2:
@@ -49,7 +49,7 @@ library(tidyverse)
 library(lme4)
 library(ggpubr)
 library(gridExtra)
-load(file = "../processed_data/base_j25_year_numeric.rda")
+load(file = "../processed_data/greve_year_numeric_season.rda")
 source(file = "../R/simulation.R")
 ```
 
@@ -65,53 +65,33 @@ set.seed(123)
 ## Mise en forme
 
 ```{r}
-df <- base_j25_year_numeric %>% 
-  mutate(code_site = as.factor(code_site),
-         statut_presence = as.integer(statut_presence) - 1,
-         date_annee = lubridate::yday(date_visite))
+df <- greve_year_numeric_season %>%
+  #filter(passage == 2) %>%
+  mutate(
+    code_site = as.factor(code_site),
+    statut_presence = as.integer(statut_presence) - 1,
+    date_annee = lubridate::yday(date_visite)
+  ) %>%
+  mutate(time_index = (annee - min(annee)) * 2 + as.numeric(factor(passage)) - 1)
+
 ```
 
 ## Effacement du signal interannuel
 
+On permute les années pour effacer tout signal de tendance interannuelle. La valeur de l'année permutée est stockée dans la variable `annee_perm`. On crée aussi une variable `annee_perm_index` qui compte les années depuis la première année de collecte. Elle vaut zéro en 2011, un en 2012, etc.
+
 ```{r}
 df_rand <- df %>% 
   group_by(code_site) %>% 
-  mutate(annee_perm = gtools::permute(annee)) %>% 
+  mutate(time_perm = gtools::permute(time_index)) %>% 
   ungroup() %>% 
-  mutate(annee_perm_index = annee_perm - min(annee_perm))
+  mutate(time_perm_index = time_perm - min(time_perm))
 ```
-
-On permute les années pour effacer tout signal de tendance interannuelle. La valeur de l'année permutée est stockée dans la variable `annee_perm`. On crée aussi une variable `annee_perm_index` qui compte les années depuis la première année de collecte. Elle vaut zéro en 2011, un en 2012, etc.
-
-
-
-
-#########################################################################
-# Pour diapo : permutations
-
-# Export jeu de donnée : non permuté
-
-```{r}
-readr::write_csv(df,
-                   path = "../processed_data/df_Petit_tregor.csv"
-                   )
-```
-
-# Export jeu de donnée permuté
-
-```{r}
-readr::write_csv(df_rand,
-                   path = "../processed_data/df_rand_Petit_tregor.csv"
-                   )
-```
-
-#############################################################################
-
 
 Vérification. On ne doit pas avoir de pente année significative (sauf une fois sur 20)
 
 ```{r}
-mod <- glmer(statut_presence~annee_perm+(1|code_site), family=binomial(link = "logit"), data = df_rand)
+mod <- glmer(statut_presence~time_perm+ (1|code_site), family=binomial(link = "logit"), data = df_rand)
 summary(mod)
 
 pente_obs <- summary(mod)$coefficients[2,1]
@@ -121,49 +101,48 @@ Avec une p-value à 0,98 on est rassurés, il n'y a pas d'effet "année" signifi
 
 ## Ajout du signal choisi
 
-On utilise la fonction `ajouter_presences_annuelles()` qui ajoute au dataframe une variable `statut_presence_sim` qui est le statut de présence simulé.
+On utilise la fonction `ajouter_presences_season()` qui ajoute au dataframe une variable `statut_presence_sim` qui est le statut de présence simulé.
 
 ```{r}
 df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 1) #%>% 
-  # cbind(statut_presence_rand = df_rand$statut_presence) %>% 
-  # mutate(presence_ajoutee = (statut_presence_rand != statut_presence_sim))
+  ajouter_presences_season(n_pres_suppl_par_season = 1) 
+
 ```
 
 **Vérifications**
 
-Nombre d'observations par année
+Nombre d'observations par saison
 
 ```{r}
-table(df_trend1$annee)
+table(df_trend1$time_index)
 ```
 
 Nombre de présences dans le tableau d'origine permuté.
 
 ```{r}
-table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
+table(df_trend1$time_perm[df_trend1$statut_presence == 1])
 ```
 
 Nombre de présences dans le tableau où des présences ont été ajoutées pour une tendance choisie.
 
 ```{r}
-table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
+table(df_trend1$time_perm[df_trend1$statut_presence_sim == 1])
 ```
 
 ```{r, fig.cap="Présentation du jeu de données après permutation et ajout de la tendance. Parmi les points représentant les présences, de couleur violette, les plus gros sont ceux qui ont été rajoutés pour créer la tendance."}
-my_point_plot(df_trend1)
+my_point_plot_season(df_trend1)
 ```
 
 
 # Test : le modèle permet-il de détecter la tendance ?
 
-On fait tourner le modèle avec `statut_presence_sim` en variable dépendante et la variable `annee_perm` en prédicteur, avec l'effet aléatoire du `code_site`.
+On fait tourner le modèle avec `statut_presence_sim` en variable dépendante et la variable `time_perm` en prédicteur, avec l'effet aléatoire du `code_site`.
 
 ## Test initial
 
 ```{r}
 mod_tend1 <- glmer(statut_presence_sim ~
-                     annee_perm +
+                     time_perm +
                      (1|code_site),
                    family=binomial(link = "logit"),
                    data = df_trend1)
@@ -177,10 +156,10 @@ Avec p<1E-16 et une pente positive on a bien détecté la tendance à l'augmenta
 ```{r}
 set.seed(124)
 df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 0.1)
+  ajouter_presences_season(n_pres_suppl_par_season = 0.1)
 
 mod_trend1 <- glmer(statut_presence_sim ~
-                     annee_perm +
+                     time_perm +
                      (1|code_site),
                    family=binomial(link = "logit"),
                    data = df_trend1)
@@ -190,9 +169,9 @@ summary(mod_trend1)
 Tendance non détectée. Il faut dire qu'elle est très faible :
 
 ```{r}
-table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
-table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
-my_point_plot(df_trend1)
+table(df_trend1$time_perm[df_trend1$statut_presence == 1])
+table(df_trend1$time_perm[df_trend1$statut_presence_sim == 1])
+my_point_plot_season(df_trend1)
 ```
 
 ## Avec un peu plus de tendance
@@ -200,10 +179,10 @@ my_point_plot(df_trend1)
 ```{r}
 set.seed(125)
 df_trend1 <- df_rand %>% 
-  ajouter_presences_annuelles(n_pres_suppl_par_an = 0.2)
+  ajouter_presences_season(n_pres_suppl_par_season = 0.2)
 
 mod_trend1 <- glmer(statut_presence_sim ~
-                      annee_perm +
+                      time_perm +
                       (1|code_site),
                     family=binomial(link = "logit"),
                     data = df_trend1)
@@ -215,7 +194,7 @@ On a ici détection de la tendance, sans avoir ajouté énormément de présence
 ```{r}
 table(df_trend1$annee_perm[df_trend1$statut_presence == 1])
 table(df_trend1$annee_perm[df_trend1$statut_presence_sim == 1])
-my_point_plot(df_trend1)
+my_point_plot_season(df_trend1)
 ```
 
 # Généralisation
@@ -232,16 +211,18 @@ Pour chacun des tests ci-dessous, on enchaîne 100 fois les opérations suivante
 
 On s'attend pour ce modèle "neutre" à ce que les pentes soient non significatives dans 95% des cas et que la distribution soit centrée sur zéro et symétrique.
 
-```{r, fig.cap = "Histogramme des pentes (n=100) obtenues par le modèle après permutation des années. Les couleurs permettent de distinguer les pentes selon leur signe et leur significativité au seuil de 5%."}
+```{r, fig.cap = "Histogramme des pentes (n=100) obtenues par le modèle après permutation des saison entre les années. Les couleurs permettent de distinguer les pentes selon leur signe et leur significativité au seuil de 5%."}
 set.seed(NULL)
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0,
+test2 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0,
                          n_permutations = 100)
 
-trend_0 <- my_histo(test2) +
+trend_0 <- my_histo_season(test2) +
   geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
 
 pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+trend_0
 ```
 
 On voit que la pente estimée sur le jeu de données non permuté (ligne verticale noire), de valeur très faible et non significative, est bien dans la gamme des valeurs NS après permutation.
@@ -251,60 +232,92 @@ On va ensuite recommencer avec des tendances de plus en plus nettes, c'est-à-di
 ## Tendance faible
 
 ```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.1,
+test2 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0.1,
                          n_permutations = 100)
 
-trend_1 <-my_histo(test2)
+trend_1 <-my_histo_season(test2)
 pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
 
 Pas vraiment de différence avec l'absence de tendance. Pas très surprenant car ça revient à ne rajouter qu'une présence en dernière année.
 
 ## Tendance modérée
-
 ```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.2,
+test3 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0.2,
                          n_permutations = 100)
 
-trend_2 <- my_histo(test2)
-pc_detec_aug_0.2 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+trend_2 <-my_histo_season(test3)
+pc_detec_aug_0.2 <- nrow(test3[test3$tendance == "Augmentation",]) / nrow(test3)
 ```
 
-Là ça change. La plupart des pentes sont significatices. Bizarrement on en a plus de négatives qu'avec les jeu de données "neutres".
 
 ## Tendance forte
 
 ```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 0.5,
+test4 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0.5,
                          n_permutations = 100)
 
-trend_3 <- my_histo(test2)
-pc_detec_aug_0.5 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+trend_3 <-my_histo_season(test4)
+pc_detec_aug_0.5 <- nrow(test4[test4$tendance == "Augmentation",]) / nrow(test4)
+
 ```
+
 
 ## Tendance très forte
 
 ```{r}
-test2 <- tester_tendance(df = df,
-                         n_pres_suppl_par_an = 1,
+test5<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 1,
                          n_permutations = 100)
 
-trend_4 <- my_histo(test2)
-pc_detec_aug_1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+trend_4 <-my_histo_season(test5)
+pc_detec_aug_1 <- nrow(test5[test5$tendance == "Augmentation",]) / nrow(test5)
+
 ```
 
+## Tendance très très forte
 
+```{r}
+test6<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 1.5,
+                         n_permutations = 100)
+
+trend_5 <-my_histo_season(test6)
+pc_detec_aug_1.5 <- nrow(test6[test6$tendance == "Augmentation",]) / nrow(test6)
+
+```
+
+## Tendance très très forte
+```{r}
+test7<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 1.8,
+                         n_permutations = 100)
+
+trend_6 <-my_histo_season(test7)
+pc_detec_aug_1.8 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
+
+```
+
+## Tendance très très forte
+```{r}
+test8<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 2,
+                         n_permutations = 100)
+
+trend_7 <-my_histo_season(test8)
+pc_detec_aug_2 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
+
+```
 # Figure synthétique
 
 ```{r}
 
-
-figure <- ggarrange(trend_0, trend_1, trend_2, trend_3, trend_4,
-                    labels = c("A", "B", "C", "D", "E"),
-                    ncol = 3, nrow = 2, 
+figure <- ggarrange(trend_0, trend_1, trend_2, trend_3, trend_4,trend_5,trend_6,trend_7,
+                    labels = c("A", "B", "C", "D", "E", "F", "H"),
+                    ncol = 3, nrow = 3, 
                     common.legend = TRUE, legend = "bottom")
 
 figure
@@ -320,7 +333,7 @@ tendances <- c(0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1.5, 2)
 
 resultat <- map(
   .x = tendances,
-  .f = get_pc_sig,
+  .f = get_pc_sig_season,
   df = df,
   n_permutations = 100
 )
@@ -349,8 +362,9 @@ ggplot(data = df_resume,
            fill = "darkseagreen3") +
   geom_smooth(col = "red", se = FALSE) +
   scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
-  labs(x = "Tendance (nb de présences annuelles ajoutées)",
+  labs(x = "Tendance (nb de présences saisonières temporelles ajoutées)",
        y = "Pourcentage de détection de la tendance à l'augmentation")
 
 ```
+
 
