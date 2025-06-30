@@ -87,6 +87,9 @@ df_rand <- df %>%
   ungroup() %>% 
   mutate(time_perm_index = time_perm - min(time_perm))
 ```
+```{r}
+summary(df_rand$time_index)
+```
 
 Vérification. On ne doit pas avoir de pente année significative (sauf une fois sur 20)
 
@@ -217,7 +220,7 @@ test2 <- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 0,
                          n_permutations = 100)
 
-trend_0 <- my_histo_season(test2) +
+trend_0 <- my_histo_season(test2, "A") +
   geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
 
 pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
@@ -236,7 +239,7 @@ test2 <- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 0.1,
                          n_permutations = 100)
 
-trend_1 <-my_histo_season(test2)
+trend_1 <-my_histo_season(test2, "B")
 pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
 ```
 
@@ -248,7 +251,7 @@ test3 <- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 0.2,
                          n_permutations = 100)
 
-trend_2 <-my_histo_season(test3)
+trend_2 <-my_histo_season(test3, "C")
 pc_detec_aug_0.2 <- nrow(test3[test3$tendance == "Augmentation",]) / nrow(test3)
 ```
 
@@ -260,7 +263,7 @@ test4 <- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 0.5,
                          n_permutations = 100)
 
-trend_3 <-my_histo_season(test4)
+trend_3 <-my_histo_season(test4, "D")
 pc_detec_aug_0.5 <- nrow(test4[test4$tendance == "Augmentation",]) / nrow(test4)
 
 ```
@@ -273,7 +276,7 @@ test5<- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 1,
                          n_permutations = 100)
 
-trend_4 <-my_histo_season(test5)
+trend_4 <-my_histo_season(test5, "E")
 pc_detec_aug_1 <- nrow(test5[test5$tendance == "Augmentation",]) / nrow(test5)
 
 ```
@@ -285,7 +288,7 @@ test6<- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 1.5,
                          n_permutations = 100)
 
-trend_5 <-my_histo_season(test6)
+trend_5 <-my_histo_season(test6, "F")
 pc_detec_aug_1.5 <- nrow(test6[test6$tendance == "Augmentation",]) / nrow(test6)
 
 ```
@@ -296,7 +299,7 @@ test7<- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 1.8,
                          n_permutations = 100)
 
-trend_6 <-my_histo_season(test7)
+trend_6 <-my_histo_season(test7, "G")
 pc_detec_aug_1.8 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
 
 ```
@@ -307,7 +310,7 @@ test8<- tester_tendance_season(df = df,
                          n_pres_suppl_par_season = 2,
                          n_permutations = 100)
 
-trend_7 <-my_histo_season(test8)
+trend_7 <-my_histo_season(test8, "H")
 pc_detec_aug_2 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
 
 ```
@@ -316,7 +319,7 @@ pc_detec_aug_2 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
 ```{r}
 
 figure <- ggarrange(trend_0, trend_1, trend_2, trend_3, trend_4,trend_5,trend_6,trend_7,
-                    labels = c("A", "B", "C", "D", "E", "F", "H"),
+                 #   labels = c("A", "B", "C", "D", "E", "F", "H"),
                     ncol = 3, nrow = 3, 
                     common.legend = TRUE, legend = "bottom")
 

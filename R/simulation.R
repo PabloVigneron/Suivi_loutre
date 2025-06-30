@@ -281,7 +281,7 @@ get_pc_sig_season <- function(df, n_pres_suppl_par_season = 0, n_permutations = 
 
 
 #############################
-my_histo_season <- function(test_df) {
+my_histo_season <- function(test_df, titre) {
   test_df %>%
     ggplot(aes(x = coef_time,
                fill = tendance)) +
@@ -292,6 +292,8 @@ my_histo_season <- function(test_df) {
     scale_fill_manual(values = c("green", "red", "grey50")) +
     labs(x = "Pente saison",
          y = "Fréquence",
-         fill = "Tendance")
+         fill = "Tendance",
+         title = {{titre}}
+         )
   
 }
