@@ -774,19 +774,220 @@ Les résultats de l'analyse du modèle GLMM montrent qu’aucune tendance signif
 
 ## Simulation
 
+### Secteur du Petit trégor
+
 La pente estimée (Fig. 5A) sur le jeu de données de “Petit Trégor” non permuté (ligne verticale noire), de valeur très faible et non significative (p-value > 0.05) (Tab. 1), est dans la gamme des valeurs non significatives (NS) après permutation et introduction d’une tendance nulle. La simulation d’une tendance faible introduite (t = 0.1) (Fig. 5B), ne permet pas de détecter cette faible tendance. Cependant lorsqu’on introduit une tendance modérée (t = 0,2), on commence à pouvoir détecter avec la simulation des tendances et la plupart sont significatives (p-value < 0.05) (Fig. 5C). On détecte plus de pentes négatives qu’avec les précédentes simulations. Dès lors qu’on introduit une tendance forte (t = 0.5) ou très forte (t = 1) dans la simulation, on détecte quasiment systématiquement l’augmentation significative de présence (Fig 5D et 5E). 
 
 ```{r, fig.cap="Figure 5 : Histogrammes des pentes (n=100) significatives (p-values < 0.05) obtenues après simulation par le modèle GLMM. La tendance t  (i.e. nombre d’absences transformé en présence, supplémentaire par an) (A) Aucune tendance t = 0; (B) tendance faible t = 0,1; (C) tendance modérée t = 0,2; (D) tendance forte t = 0,5; (E) tendance très forte t = 1.  La ligne verticale noire correspond au jeu de données non permuté"}
 
+set.seed(NULL)
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0,
+                         n_permutations = 100)
+
+trend_0 <- my_histo(test2) +
+  geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
+
+pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+## Tendance faible
+
+
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0.1,
+                         n_permutations = 100)
+
+trend_1 <-my_histo(test2)
+pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+## Tendance modérée
+
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0.2,
+                         n_permutations = 100)
+
+trend_2 <- my_histo(test2)
+pc_detec_aug_0.2 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+## Tendance forte
+
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 0.5,
+                         n_permutations = 100)
+
+trend_3 <- my_histo(test2)
+pc_detec_aug_0.5 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+## Tendance très forte
+
+test2 <- tester_tendance(df = df,
+                         n_pres_suppl_par_an = 1,
+                         n_permutations = 100)
+
+trend_4 <- my_histo(test2)
+pc_detec_aug_1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+# Figure synthétique
+
+figure <- ggarrange(trend_0, trend_1, trend_2, trend_3, trend_4,
+                    labels = c("A", "B", "C", "D", "E"),
+                    ncol = 3, nrow = 2, 
+                    common.legend = TRUE, legend = "bottom")
+
+figure
 ```
 
 Le modèle GLMM permet de détecter à tous les coups en fixant un risque α à 5%,  une tendance à l’augmentation significative lorsque celle-ci est d’au moins 0,8 présences annuelles ajoutées, ce qui correspond à un augmentation de 16% de site positif (Fig. 6). En dessous de cette valeur, le risque de ne pas détecter la tendance augmente exponentiellement.
 
+```{r, fig.cap = "Figure 6 : Synthèse du pourcentage de détection de la tendance positive significative (p value < 0.05), Secteur Petit trégor, par le modèle GLMM des simulations, en fonction de la tendance introduite (i.e. nombres de présences annuelles ajoutées)."}
+tendances <- c(0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1.5, 2)
 
-```{r, fig.cap = "Figure 6 : Synthèse du pourcentage de détection de la tendance positive significative (p value < 0.05) par le modèle GLMM des simulations, en fonction de la tendance introduite (i.e. nombres de présences annuelles ajoutées)."}
+resultat <- map(
+  .x = tendances,
+  .f = get_pc_sig,
+  df = df,
+  n_permutations = 100
+)
+
+pc_detec_aug <- c(
+  pc_detec_aug_0,
+  pc_detec_aug_0.1,
+  pc_detec_aug_0.2,
+  resultat[1:2],
+  pc_detec_aug_0.5,
+  resultat[3:6],
+  pc_detec_aug_1,
+  resultat[7:8]
+) %>%
+  unlist()
+
+tendance <- c(seq(0, 1, 0.1), 1.5, 2)
+
+df_resume <- data.frame(tendance,
+                        pc_detec_aug)
+
+ggplot(data = df_resume,
+       aes(x = tendance,
+           y = pc_detec_aug)) +
+  geom_bar(stat = "identity",
+           fill = "darkseagreen3") +
+  geom_smooth(col = "red", se = FALSE) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  labs(x = "Tendance (nb de présences annuelles ajoutées)",
+       y = "Pourcentage de détection de la tendance à l'augmentation")
+```
+
+### Secteur de la Lieue de Grève
+
+```{r, fig.cap = "Figure 7 : Histogramme des pentes (n=100), Secteur de la Lieue de Grève, obtenues par le modèle après permutation des saison entre les années. Les couleurs permettent de distinguer les pentes selon leur signe et leur significativité au seuil de 5%."}
+set.seed(NULL)
+test2 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0,
+                         n_permutations = 100)
+
+trend_0 <- my_histo_season(test2) +
+  geom_vline(xintercept = pente_obs, col = "black", lwd = 1)
+
+pc_detec_aug_0 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+trend_0
+
+test2 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0.1,
+                         n_permutations = 100)
+
+trend_1 <-my_histo_season(test2)
+pc_detec_aug_0.1 <- nrow(test2[test2$tendance == "Augmentation",]) / nrow(test2)
+
+test3 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0.2,
+                         n_permutations = 100)
+
+trend_2 <-my_histo_season(test3)
+pc_detec_aug_0.2 <- nrow(test3[test3$tendance == "Augmentation",]) / nrow(test3)
+
+test4 <- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 0.5,
+                         n_permutations = 100)
+
+trend_3 <-my_histo_season(test4)
+pc_detec_aug_0.5 <- nrow(test4[test4$tendance == "Augmentation",]) / nrow(test4)
+
+test5<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 1,
+                         n_permutations = 100)
+
+trend_4 <-my_histo_season(test5)
+pc_detec_aug_1 <- nrow(test5[test5$tendance == "Augmentation",]) / nrow(test5)
+
+test6<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 1.5,
+                         n_permutations = 100)
+
+trend_5 <-my_histo_season(test6)
+pc_detec_aug_1.5 <- nrow(test6[test6$tendance == "Augmentation",]) / nrow(test6)
+
+test7<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 1.8,
+                         n_permutations = 100)
+
+trend_6 <-my_histo_season(test7)
+pc_detec_aug_1.8 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
+
+test8<- tester_tendance_season(df = df,
+                         n_pres_suppl_par_season = 2,
+                         n_permutations = 100)
+
+trend_7 <-my_histo_season(test8)
+pc_detec_aug_2 <- nrow(test7[test7$tendance == "Augmentation",]) / nrow(test7)
+
+figure <- ggarrange(trend_0, trend_1, trend_2, trend_3, trend_4,trend_5,trend_6,trend_7,
+                    labels = c("A", "B", "C", "D", "E", "F", "H"),
+                    ncol = 3, nrow = 3, 
+                    common.legend = TRUE, legend = "bottom")
+
+figure
 
 ```
 
+
+```{r, fig.cap = "Figure 8 : Synthèse du pourcentage de détection de la tendance positive significative (p value < 0.05), Secteur de la Lieue de Grève,  par le modèle GLMM des simulations, en fonction de la tendance introduite (i.e. nombres de présences saisonnière temporelles ajoutées)."}
+tendances <- c(0.3, 0.4, 0.6, 0.7, 0.8, 0.9, 1.5, 2)
+
+resultat <- map(
+  .x = tendances,
+  .f = get_pc_sig_season,
+  df = df,
+  n_permutations = 100
+)
+
+pc_detec_aug <- c(
+  pc_detec_aug_0,
+  pc_detec_aug_0.1,
+  pc_detec_aug_0.2,
+  resultat[1:2],
+  pc_detec_aug_0.5,
+  resultat[3:6],
+  pc_detec_aug_1,
+  resultat[7:8]
+) %>%
+  unlist()
+
+tendance <- c(seq(0, 1, 0.1), 1.5, 2)
+
+df_resume <- data.frame(tendance,
+                        pc_detec_aug)
+
+ggplot(data = df_resume,
+       aes(x = tendance,
+           y = pc_detec_aug)) +
+  geom_bar(stat = "identity",
+           fill = "darkseagreen3") +
+  geom_smooth(col = "red", se = FALSE) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  labs(x = "Tendance (nb de présences saisonières temporelles ajoutées)",
+       y = "Pourcentage de détection de la tendance à l'augmentation")
+
+```
 #Aucune tendances n'est observe \@ref(fig:chunkname) 4 ne montre
 
 # DISCUSSION

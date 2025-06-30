@@ -1,1 +1,17 @@
 # Suivi_loutre
+
+**RESUME**
+
+**Evaluation d’un protocole de suivi de la Loutre d’Europe (Lutra lutra) à l’échelle d’un bassin versant en Bretagne.**
+
+Après une quasi-disparition au cours du XXe siècle, la Loutre d’Europe (Lutra lutra), a fait un retour de l’international jusqu'en Bretagne où elle a bien recolonisée grâce à la mise en place d’un statut de protection et la restauration de ses habitats. La présente étude a évalué un protocole destiné à un suivi local de l’espèce, à détecter des tendances temporelles et appliqué sur deux bassins versants bretons de 2011 à 2025. Le protocole, proposé initialement en Angleterre, est basé sur la recherche annuelle, sur 60 sites, des marquages de l’espèce utilisés comme indicateurs de présence. Un modèle linéaire généralisé mixte (GLMM) a été utilisé pour modéliser ces tendances temporelles et une approche de simulation de tendance basée sur le modèle nul a été réalisée pour tester la capacité du modèle à la détection de tendances temporelles. Les résultats montrent que le modèle GLMM n’a pas détecté de tendance et s’ajuste mal aux données. Toutefois, les simulations ont permis de détecter des tendances significatives à l'augmentation. L’étude met alors en lumière les difficultés des modèles utilisés à détecter des tendances significatives et à s’ajuster correctement aux jeux de données. Les simulations montrent des résultats intéressants qui méritent un approfondissement sachant que les dynamiques réelles y sont simplifiées. Pour conclure, le protocole de suivi semble pertinent, mais demande une application rigoureuse, dans une période suffisante en respectant la continuité des séries temporelles pour correctement estimer son efficacité.
+
+Mots-clés : Loutre d’Europe - Suivi - Tendance  temporelle - GLMM - Null Model - Simulation 
+
+**ABSTRACT**
+
+**Evaluation of protocol for monitoring the European Otters (Lutra lutra) in a catchment area in Brittany.**
+
+After almost disappearing in the 20th century, the European Otter (Lutra lutra), did an international come back in Brittany where she recolonised, thanks to the legal protection status and to the habitat restoration. This study evaluated a protocol for the local monitoring of the otter to detect temporal tendencies in two Breton catchment areas from 2011 to 2025. This protocol suggested in England  is based on annual surveys, on sixty sites, of spraint of otters, used as a presence indicator. A Generalized Linear Mixed Models (GLMM) was used to model temporal tendencies and a tendencies simulation approach based on a null model has been made to test the model capacities to detect temporal tendencies. The results show that the GLMM model did not detect a trend and did not fit the data correctly. However, simulations made it possible to detect significant increased tendencies and to adjust correctly to the datasets. Simulations show interesting results that deserve deepening, knowing that the real dynamics are simplified. To conclude, the monitoring protocol seems relevant, but it requires a rigorous application, in a sufficient period, while respecting the continuity of time series to estimate its efficiency. 
+
+Key- words : Loutre d’Europe - Monitoring - Temporal trend - GLMM - Null Model - Simulation
