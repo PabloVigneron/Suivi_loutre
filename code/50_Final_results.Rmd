@@ -599,12 +599,13 @@ ggplot(resume_complet,
 ```
 
 | Modèle | Fonction de lien | Estimate coefficient, annee | p values |
-|:--:|:--:|:--:|:--:|
+|:----------------:|:----------------:|:----------------:|:----------------:|
 | statut_presence \~ annee + (1 \| code_site) | Logit | 0.02853 | 0.411 NS |
 | statut_presence \~ annee + (1 \| code_site) | Probit | 0.013919 | 1.39e-09 \*\*\* |
 | statut_presence \~ annee + (1 \| code_site) | cauchit | 8.067e-02 | \<2e-16 \*\*\* |
 
 #Resultats tableau
+
 ```{r}
 library(tibble)
 library(gt)
@@ -634,6 +635,7 @@ table_gt <- resultats_modele %>%
                              gtsave(table_gt, "resultats_modele_tregor.png")
 
 ```
+
 ```{r}
 
 library(tibble)
@@ -664,7 +666,6 @@ table_gt <- resultats_modele %>%
                              gtsave(table_gt, "resultats_modele_tregor_V2.png")
 
 ```
-
 
 ```{r}
 base_j25_year_numeric <-  base_j25 %>%
@@ -711,7 +712,6 @@ mod3.2 <- glmer(statut_presence~annee+(1|code_site), family=binomial(link = "cau
 ```{r}
 summary(mod3.2)
 ```
-
 
 ## Modelisation
 
@@ -838,12 +838,8 @@ ggplot(resume_complet, aes(x = factor(annee), y = pc_presences, fill = passage_l
 
 ```
 
-
-
-
-
 | Modèle | Fonction de lien | Estimate coefficient, annee | p values |
-|:-------------------:|:---------------:|:---------------:|:---------------:|
+|:------------------:|:---------------:|:---------------:|:---------------:|
 | statut_presence \~ annee + passage + (1 \| code_site) | Logit | 0.001335 | 0.3071 NS |
 | statut_presence \~ annee + passage + (1 \| code_site) | Probit | 0.002219 | 0.5060 NS |
 | statut_presence \~ annee + passage + (1 \| code_site) | cauchit | -0.02917 | 0.7001 NS |
@@ -893,8 +889,6 @@ mod5.2<- glmer(statut_presence~annee + passage + (1|code_site), family=binomial(
 summary(mod5.2)
 ```
 
-
-
 ```{r}
 mod6.0<- glmer(statut_presence~annee + (1|code_site), family=binomial(link = "logit"), data = greve_year_factor_season)
 ```
@@ -932,7 +926,7 @@ mod6.2<- glmer(statut_presence~annee + (1|code_site), family=binomial(link = "ca
 ```
 
 | Modèle | Fonction de lien | Estimate coefficient, annee | p values |
-|:-------------------:|:---------------:|:---------------:|:---------------:|
+|:------------------:|:---------------:|:---------------:|:---------------:|
 | statut_presence \~ annee + (1 \| code_site) | Logit | 0.042 | \<2e-16 \*\*\* |
 | statut_presence \~ annee + (1 \| code_site) | cauchit | 0.015 | 0.836 NS |
 
@@ -978,6 +972,7 @@ gtsave(table_gt, "resultats_modele_greve.png")
 ```
 
 #V2 sans es
+
 ```{r}
 # Données
 resultats_modele <- tibble::tibble(
@@ -1231,7 +1226,6 @@ ggplot(data = df_resume,
        y = "Pourcentage de détection de la tendance à l'augmentation")
 
 ```
-
 
 ```{r}
 # Pour matériels et méthodes : soutenance
